@@ -6,7 +6,7 @@ const morgan = require('morgan');
 dotenv.config({ path: './config.env' });
 const app = express();
 
-const authRouter = require('./routes/authRouter');
+const userRouter = require('./routes/userRoutes');
 
 const globalErrorHandler = require('./controllers/errorController');
 
@@ -41,7 +41,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // routes
-app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', userRouter);
 
 // catach errors (all verbs: get post put patch ,etc.)
 app.all('*', (req, res, next) => {
