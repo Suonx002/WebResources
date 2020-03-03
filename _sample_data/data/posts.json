@@ -1,0 +1,130 @@
+[
+  {
+    "_id": "5d7a514b5d2c12c7449be020",
+    "title": "The Modern JavaScript Tutorial",
+    "category": "javascript",
+    "summary": "Modern JavaScript Tutorial: simple, but detailed explanations with examples and tasks, including: closures, document and events, object oriented programming and more.",
+    "link": "https://www.udemy.com/course/modern-javascript-from-the-beginning/",
+    "user": "5c8a1d5b0190b214360dc050"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be021",
+    "title": "The Complete JavaScript Course 2019: Build Real Projects",
+    "category": "javascript",
+    "summary": "Master JavaScript with the most complete course on the market! Projects, challenges, quizzes, ES6+, OOP, AJAX, Webpack.",
+    "link": "https://www.udemy.com/course/the-complete-javascript-course/",
+    "user": "5c8a1d5b0190b214360dc051"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be022",
+    "title": "Eloquent JavaScript ",
+    "category": "javascript",
+    "summary": "A modern introduction to programming book",
+    "link": "https://eloquentjavascript.net/",
+    "user": "5c8a1d5b0190b214360dc052"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be023",
+    "title": "You Don't Know JS",
+    "category": "javascript",
+    "summary": "A book series on JavaScript. @YDKJS on twitter. Contribute to getify/You-Dont-Know-JS development by creating an account on GitHub.",
+    "link": "https://github.com/getify/You-Dont-Know-JS",
+    "user": "5c8a1d5b0190b214360dc053"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be024",
+    "title": "Modern React with Redux",
+    "category": "react",
+    "summary": "The difference between this course and all the others: you will understand the design patterns used by top companies to build massively popular web apps.",
+    "link": "https://www.udemy.com/course/react-redux/",
+    "user": "5c8a1d5b0190b214360dc054"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be025",
+    "title": "Fullstack Advanced React and GraphQL",
+    "category": "react",
+    "summary": "Just as React has transformed the way we build web applications, GraphQL is changing how we build APIs to query and mutate data.",
+    "link": "https://advancedreact.com/",
+    "user": "5c8a1d5b0190b214360dc055"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be026",
+    "title": "React Front To Back 2019 ",
+    "category": "react",
+    "summary": "In this course you will learn to master React 16.8+ concepts including how to create a Flux pattern using the Context API with the useContext and useReducer hooks. ",
+    "link": "https://www.udemy.com/course/modern-react-front-to-back/",
+    "user": "5c8a1d5b0190b214360dc056"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be027",
+    "title": "Complete React Developer in 2020 (w/ Redux, Hooks, GraphQL)",
+    "category": "react",
+    "summary": "Become a Senior React Developer! Build a massive E-commerce app with Redux, Hooks, GraphQL, ContextAPI, Stripe, Firebase",
+    "link": "https://www.udemy.com/course/complete-react-developer-zero-to-mastery/",
+    "user": "5c8a1d5b0190b214360dc057"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be028",
+    "title": "Build Responsive Real World Websites with HTML5 and CSS3",
+    "category": "html",
+    "summary": "The easiest way to learn modern web design, HTML5 and CSS3 step-by-step from scratch. Design AND code a huge project.",
+    "link": "https://www.udemy.com/course/design-and-develop-a-killer-website-with-html5-and-css3/",
+    "user": "5c8a1d5b0190b214360dc058"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be029",
+    "title": "HTML Crash Course For Absolute Beginners",
+    "category": "html",
+    "summary": "In this crash course I will cram as much about HTML that I can. This is meant for absolute beginners.",
+    "link": "https://www.youtube.com/watch?v=UB1O30fR-EE",
+    "user": "5c8a1d5b0190b214360dc059"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be030",
+    "title": "HTML Full Course - Build a Website Tutorial",
+    "category": "html",
+    "summary": "Learn the basics of HTML5 and web development in this awesome course for beginners.",
+    "link": "https://www.youtube.com/watch?v=pQN-pnXPaVg",
+    "user": "5c8a1d5b0190b214360dc060"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be031",
+    "title": "Animated Counter With JavaScript (HTML, CSS)",
+    "category": "html",
+    "summary": "In this mini-project, I will show you how to create an animated counter that counts up to any number using JavaScript with HTML & CSS.",
+    "link": "https://www.youtube.com/watch?v=a6XIMIKmj9k&t=578s",
+    "user": "5c8a1d5b0190b214360dc061"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be032",
+    "title": "Official Sass Documentation",
+    "category": "sass",
+    "summary": "Sass is a stylesheet language that’s compiled to CSS. It allows you to use variables, nested rules, mixins, functions, and more, all with a fully CSS-compatible syntax.",
+    "link": "",
+    "user": "5c8a1d5b0190b214360dc062"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be033",
+    "title": "Sass Crash Course",
+    "category": "sass",
+    "summary": "In this video we will talk about what Sass is and look at its features as well as create a landing page header to display things like variables, nesting, mixins, etc",
+    "link": "https://www.youtube.com/watch?v=nu5mdN2JIwM&t=21s",
+    "user": "5c8a1d5b0190b214360dc063"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be034",
+    "title": "Learn Sass In 20 Minutes | Sass Crash Course",
+    "category": "sass",
+    "summary": "In this mini crash course we are going to learn everything about Sass.What Sass allows us to do is write alot of cool things that we would normally wouldn't be able to do in normal CSS.",
+    "link": "https://www.youtube.com/watch?v=Zz6eOVaaelI",
+    "user": "5c8a1d5b0190b214360dc064"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be035",
+    "title": "Learn Sass in this Free Crash Course - Give your CSS Superpowers!",
+    "category": "sass",
+    "summary": "Sass enables you to write CSS with features that don't yet exist within CSS itself. In this free crash course, I'm going to show you how to get up and running with Sass while creating a simple responsive landing page from scratch.",
+    "link": "https://www.youtube.com/watch?v=roywYSEPSvc&t=156s",
+    "user": "5c8a1d5b0190b214360dc065"
+  }
+]

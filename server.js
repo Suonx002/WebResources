@@ -7,6 +7,8 @@ const app = express();
 
 const authRouter = require('./routes/authRouter');
 
+const globalErrorHandler = require('./controllers/errorController');
+
 // database
 const connectDB = async () => {
   const database = process.env.DATABASE.replace(
@@ -35,6 +37,43 @@ app.use(express.json());
 // routes
 app.use('/api/v1/auth', authRouter);
 
+// catach errors (all verbs: get post put patch ,etc.)
+app.all('*', (req, res, next) => {
+  new new AppError(`Can't find ${req.originalUrl} on this server!`, 400)();
+});
+
+// Global express handling erros middleware (error controller)
+app.use(globalErrorHandler);
+
 // server listener
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+const server = app.listen(PORT, () => {
+  console.log(`App running on port ${PORT}...`);
+});
+
+// Uncaught exception error
+process.on('uncaughtException', err => {
+  console.log('UNCAUGHT EXCEPTION!!!! Shutting down....');
+  console.log(err.name, err.message);
+  // 1 uncaught, 0 success
+  process.exit(1);
+});
+
+// UnhandledRejection error
+process.on('unhandledRejection', err => {
+  console.log(err.name, err.message);
+  console.log('UNHANDLER REJECTION!!!! Shutting down....');
+  server.close(() => {
+    // 1 uncaught, 0 success
+    process.exit(1);
+  });
+});
+
+// dyno heroku sig term signal
+process.on('SIGTERM', () => {
+  console.log('DIGTERM RECEIVED. Shutting down gracefully');
+
+  server.close(() => {
+    console.log('Process terminated');
+  });
+});

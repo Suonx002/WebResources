@@ -1,0 +1,114 @@
+[
+  {
+    "_id": "5c8a1d5b0190b214360dc050",
+    "name": "Admin",
+    "email": "admin@webresources.io",
+    "role": "admin",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc051",
+    "name": "Mod",
+    "email": "mod@webresources.io",
+    "role": "mod",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc052",
+    "name": "Krista Walters",
+    "email": "krista@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc053",
+    "name": "Selena Glover",
+    "email": "selena@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc054",
+    "name": "Alia Mora",
+    "email": "Alia@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc055",
+    "name": "Amy Dinh",
+    "email": "amy@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc056",
+    "name": "Jackson Haley",
+    "email": "jackson@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc057",
+    "name": "Ray J",
+    "email": "ray@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc058",
+    "name": "Marvin Keller",
+    "email": "@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc059",
+    "name": "Matt Spence",
+    "email": "matt@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc060",
+    "name": "Logan Drake",
+    "email": "logan@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc061",
+    "name": "Allen Solis",
+    "email": "allen@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc062",
+    "name": "Aleena Meyers",
+    "email": "aleena@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc063",
+    "name": "Jordan Smith",
+    "email": "jordan@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc064",
+    "name": "Stella Hall",
+    "email": "stella@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1d5b0190b214360dc065",
+    "name": "Lucy Young",
+    "email": "lucy@webresources.io",
+    "role": "user",
+    "password": "pass1234"
+  }
+]
