@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -42,6 +43,29 @@ const userSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
+// mongoose middlewares
+// "pre" only works on create and save
+userSchema.pre('save', async function(next) {
+  // only run this if the password is actually modified
+  if (!this.isModified) return next();
+
+  //hash password
+  this.password = await bcrypt.hash(this.password, 12);
+
+  this.passwordConfirm = undefined;
+
+  next();
+});
+
+// instance methods (available on all user documents)
+userSchema.methods.correctPassword = async function(
+  candiatePassword,
+  databasePassword
+) {
+  // check whether user password matched with database password
+  return await bcrypt.compare(candiatePassword, databasePassword);
+};
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

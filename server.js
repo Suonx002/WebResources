@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 
 dotenv.config({ path: './config.env' });
 const app = express();
@@ -33,6 +34,11 @@ connectDB();
 // middlewares
 // bodyparser for req.body
 app.use(express.json());
+
+// development logging
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 // routes
 app.use('/api/v1/auth', authRouter);
