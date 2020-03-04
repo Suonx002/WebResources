@@ -2,33 +2,22 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+const cors = require('cors');
 
 dotenv.config({ path: './config.env' });
 const app = express();
-
-const userRouter = require('./routes/userRoutes');
+const connectDB = require('./database/connectDB');
 
 const globalErrorHandler = require('./controllers/errorController');
 
-// database
-const connectDB = async () => {
-  const database = process.env.DATABASE.replace(
-    '<password>',
-    process.env.DATABASE_PASSWORD
-  );
+const userRouter = require('./routes/userRoutes');
 
-  try {
-    await mongoose.connect(database, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true
-    });
-    console.log('Database connection successfully!');
-  } catch (err) {
-    console.log('Database connection failed...');
-  }
-};
+// database
 connectDB();
 
 // middlewares
@@ -39,6 +28,12 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+// implement CORS, set Access-COntrol-Allow-Origin to everywhere
+app.use(cors());
+
+// http methods response for preflight phase
+app.options('*', cors());
 
 // routes
 app.use('/api/v1/users', userRouter);
