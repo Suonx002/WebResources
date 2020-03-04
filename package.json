@@ -32,6 +32,7 @@
     "mongoose": "^5.9.3",
     "morgan": "^1.9.1",
     "prettier": "^1.19.1",
+    "react-router-dom": "^5.1.2",
     "validator": "^12.2.0",
     "xss-clean": "^0.1.1"
   },
