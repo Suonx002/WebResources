@@ -32,7 +32,7 @@ const ElevationScroll = props => {
 const useStyles = makeStyles(theme => ({
   toolbarMargin: {
     ...theme.mixins.toolbar,
-    marginBottom: '2em'
+    marginBottom: '1em'
   },
   appbar: {
     padding: '0.5rem 0',
@@ -58,8 +58,8 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 'auto'
   },
   drawerIcon: {
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 40,
     color: theme.palette.common.white
   },
 
