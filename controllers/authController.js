@@ -62,6 +62,32 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, req, res);
 });
 
+// @desc      Update user
+// @route     PATCH /api/v1/users/updatePassword
+// @access    Private
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const { currentPassword, password, passwordConfirm } = req.body;
+
+  // find user with decoded id from req.user (protected route)
+  const user = await User.findById(req.user.id).select('+password');
+  // console.log(user);
+
+  if (!(await user.correctPassword(currentPassword, user.password))) {
+    return next(
+      new AppError('Your current password is wrong. Please try again.', 401)
+    );
+  }
+
+  // update password
+  user.password = password;
+  user.passwordConfirm = passwordConfirm;
+  await user.save();
+
+  // log in user and send token
+  createSendToken(user, 200, req, res);
+});
+
 // @desc      Protected Middleware for logged in user
 // @route     middleware
 // @access    middleware
@@ -88,8 +114,11 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
+  // console.log(decoded);
+
   // check if user still exists
   const currentUser = await User.findById(decoded.id);
+
   if (!currentUser) {
     return next(
       new AppError('The user beloing to this token is no longer exist', 401)
