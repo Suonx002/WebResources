@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please provide your name!'],
+    required: [true, 'Please provide your name'],
     min: 3,
     max: 40
   },
@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please provide a password'],
     select: false
   },
+
   passwordConfirm: {
     type: String,
     required: [true, 'Please confirm your password'],
@@ -35,7 +36,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'mod', 'admin'],
+    enum: ['user'],
     default: 'user'
   },
   createdAt: {

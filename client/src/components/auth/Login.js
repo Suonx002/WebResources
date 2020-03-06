@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -7,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
+
+import { loginUser, clearError } from '../../redux/actions/authActions';
 
 const useStyles = makeStyles(theme => ({
   formContainer: {
@@ -20,13 +24,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = () => {
+const Login = props => {
+  const {
+    auth: { error },
+    loginUser,
+    clearError
+  } = props;
+
+  // console.log(auth);
+
   const classes = useStyles();
   const [user, setUser] = useState({
     email: '',
     password: ''
   });
-  const [error, setError] = useState('');
+
+  const { email, password } = user;
 
   const handleChange = e => {
     setUser({
@@ -38,14 +51,16 @@ const Login = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (!user.email || !user.password) {
-      setError('Please provide email and password');
-    }
-
-    setTimeout(() => {
-      setError('');
-    }, 2000);
+    loginUser({ email, password });
   };
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        clearError();
+      }, 2500);
+    }
+  }, [error]);
 
   return (
     <Container maxWidth="sm">
@@ -58,23 +73,20 @@ const Login = () => {
           <Grid item align="center" style={{ marginBottom: '2rem' }}>
             <Typography variant="h2">Login Account</Typography>
           </Grid>
-          <Grid item alignItems="center">
-            {error.length > 0 ? (
-              <Alert
-                variant="outlined"
-                severity="error"
-                style={{ marginLeft: '0.4rem', marginTop: '1rem' }}
-              >
-                {error}
+          <Grid item>
+            {error !== null && (
+              <Alert variant="filled" severity="error">
+                {error.message}
               </Alert>
-            ) : null}
+            )}
           </Grid>
+
           <Grid item>
             <TextField
               id="email"
               label="Email Address"
               fullWidth
-              value={user.email}
+              value={email}
               onChange={handleChange}
             />
           </Grid>
@@ -83,7 +95,7 @@ const Login = () => {
               id="password"
               label="Password"
               fullWidth
-              value={user.password}
+              value={password}
               onChange={handleChange}
             />
           </Grid>
@@ -104,4 +116,13 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+const actions = {
+  loginUser,
+  clearError
+};
+
+export default connect(mapStateToProps, actions)(Login);

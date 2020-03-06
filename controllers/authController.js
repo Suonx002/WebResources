@@ -33,10 +33,10 @@ const createSendToken = (user, statusCode, req, res) => {
   });
 };
 
-// @desc      Sign up user
-// @route     POST /api/v1/users/signup
+// @desc      Register user
+// @route     POST /api/v1/users/register
 // @access    Public
-exports.signup = catchAsync(async (req, res, next) => {
+exports.register = catchAsync(async (req, res, next) => {
   const { name, email, password, passwordConfirm } = req.body;
   const newUser = await User.create({ name, email, password, passwordConfirm });
 
@@ -75,7 +75,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   if (!(await user.correctPassword(currentPassword, user.password))) {
     return next(
-      new AppError('Your current password is wrong. Please try again.', 401)
+      new AppError('Your current password is wrong. Please try again', 401)
     );
   }
 
@@ -88,7 +88,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, req, res);
 });
 
-// @desc      Protected Middleware for logged in user
+// @desc      Protected Middleware
 // @route     middleware
 // @access    middleware
 

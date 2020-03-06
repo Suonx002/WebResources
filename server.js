@@ -14,6 +14,7 @@ const app = express();
 const connectDB = require('./database/connectDB');
 
 const globalErrorHandler = require('./controllers/errorController');
+const AppError = require('./utils/appError');
 
 const userRouter = require('./routes/userRoutes');
 
@@ -33,14 +34,14 @@ if (process.env.NODE_ENV === 'development') {
 app.use(cors());
 
 // http methods response for preflight phase
-app.options('*', cors());
+// app.options('*', cors());
 
 // routes
 app.use('/api/v1/users', userRouter);
 
 // catach errors (all verbs: get post put patch ,etc.)
 app.all('*', (req, res, next) => {
-  new new AppError(`Can't find ${req.originalUrl} on this server!`, 400)();
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 400));
 });
 
 // Global express handling erros middleware (error controller)

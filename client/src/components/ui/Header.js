@@ -113,6 +113,11 @@ const Header = () => {
       name: 'Login',
       link: '/login',
       activeIndex: 2
+    },
+    {
+      name: 'Test',
+      link: '/admin',
+      activeIndex: 3
     }
   ];
 

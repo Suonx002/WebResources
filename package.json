@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "engines": {
+    "node": "^12"
+  },
   "scripts": {
     "client": "npm start --prefix client",
     "server": "nodemon server.js",
     "start": "node server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client-prod": "concurrently \"NODE_ENV=production npm run server\" \"npm run client\"",
     "prod": "NODE_ENV=production nodemon server.js"
   },
   "keywords": [],
