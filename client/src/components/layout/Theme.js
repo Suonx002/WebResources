@@ -43,5 +43,12 @@ export default createMuiTheme({
       color: arcBlue,
       fontWeight: 700
     }
+  },
+  overrides: {
+    MuiTypography: {
+      root: {
+        marginTop: '0.5rem'
+      }
+    }
   }
 });

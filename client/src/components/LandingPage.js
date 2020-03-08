@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import CategoryCard from './ui/CategoryCard';
+import CategoryCard from './layout/category/CategoryCard';
 import Grid from '@material-ui/core/Grid';
-import Searchbar from './ui/Searchbar';
+import Searchbar from './layout/Searchbar';
 import { Typography } from '@material-ui/core';
 
 const LandingPage = () => {

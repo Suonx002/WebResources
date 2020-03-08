@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 
-import sprite from './../../img/sprite.svg';
+import sprite from './../../../img/sprite.svg';
 
 const useStyles = makeStyles(theme => ({
   cardContainer: {
@@ -43,7 +43,7 @@ const CategoryCard = props => {
 
   return (
     <Grid item>
-      <Link to={`${link}`} className={classes.link}>
+      <Link to={`/category/${link}`} className={classes.link}>
         <Card
           className={classes.cardContainer}
           className={classes.cardContainer}
