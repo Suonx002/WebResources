@@ -8,7 +8,8 @@ export default createMuiTheme({
   palette: {
     common: {
       blue: arcBlue,
-      orange: arcOrange
+      orange: arcOrange,
+      grey: arcGrey
     },
     primary: {
       main: arcBlue
@@ -33,6 +34,12 @@ export default createMuiTheme({
     h3: {
       fontFamily: 'Raleway',
       fontSize: '1.75rem',
+      color: arcBlue,
+      fontWeight: 700
+    },
+    h4: {
+      fontFamily: 'Raleway',
+      fontSize: '1.25rem',
       color: arcBlue,
       fontWeight: 700
     }
