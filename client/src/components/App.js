@@ -19,6 +19,7 @@ import LandingPage from './LandingPage';
 import Register from './auth/Register';
 import Login from './auth/Login';
 import CategoryList from './layout/category/CategoryList';
+import CategoryDetail from './layout/category/CategoryDetail';
 
 const App = () => {
   useEffect(() => {
@@ -42,6 +43,11 @@ const App = () => {
                 exact
                 path="/category/:category"
                 component={CategoryList}
+              />
+              <Route
+                exact
+                path="/category/:category/:categoryId"
+                component={CategoryDetail}
               />
             </Switch>
           </Container>
