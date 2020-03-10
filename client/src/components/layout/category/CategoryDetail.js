@@ -29,7 +29,8 @@ const useStyles = makeStyles(theme => ({
   postContainer: {
     border: '2px solid #eee',
     borderRadius: 5,
-    marginTop: '1rem'
+    marginTop: '1rem',
+    padding: '6px'
   }
 }));
 
@@ -113,33 +114,117 @@ const CategoryDetail = () => {
           </form>
         </Grid>
         {/* Comments */}
-        <Grid item container className={classes.postContainer}>
-          <Grid
-            item
-            container
-            direction="column"
-            xs
-            style={{ maxWidth: 120 }}
-            alignItems="center"
-          >
-            <Grid item>
-              <img
-                className={classes.authorImage}
-                src="https://randomuser.me/api/portraits/women/65.jpg"
-                alt="random user 2"
-              />
+        <Grid item container direction="column">
+          <Grid item container className={classes.postContainer}>
+            <Grid
+              item
+              container
+              direction="column"
+              xs
+              style={{ maxWidth: 120 }}
+              alignItems="center"
+              justify="center"
+            >
+              <Grid item>
+                <img
+                  className={classes.authorImage}
+                  src="https://randomuser.me/api/portraits/women/65.jpg"
+                  alt="random user 2"
+                />
+              </Grid>
+              <Grid item>
+                <Typography variant="subtitle2" align="center">
+                  Jessica Song
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Typography variant="subtitle1">Jessica Song</Typography>
+            <Grid item xs>
+              <Typography
+                variant="body1"
+                align="left"
+                style={{ marginLeft: '0.5rem' }}
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
+                rerum incidunt eaque cumque laborum repellendus adipisci
+                pariatur dolor, qui labore?
+              </Typography>
             </Grid>
           </Grid>
-          <Grid item xs>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-              rerum incidunt eaque cumque laborum repellendus adipisci pariatur
-              dolor, qui labore?
-            </Typography>
+          {/* next */}
+          <Grid item container className={classes.postContainer}>
+            <Grid
+              item
+              container
+              direction="column"
+              xs
+              style={{ maxWidth: 120 }}
+              alignItems="center"
+              justify="center"
+            >
+              <Grid item>
+                <img
+                  className={classes.authorImage}
+                  src="https://randomuser.me/api/portraits/women/65.jpg"
+                  alt="random user 2"
+                />
+              </Grid>
+              <Grid item>
+                <Typography variant="subtitle2" align="center">
+                  Jessica Song
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item xs>
+              <Typography
+                variant="body1"
+                align="left"
+                style={{ marginLeft: '0.5rem' }}
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Mollitia ut, nobis omnis corporis a voluptatum rerum pariatur
+                consequatur qui sed enim ducimus illo voluptatibus ullam
+                inventore iusto impedit molestias cum.
+              </Typography>
+            </Grid>
           </Grid>
+          {/* next */}
+          <Grid item container className={classes.postContainer}>
+            <Grid
+              item
+              container
+              direction="column"
+              xs
+              style={{ maxWidth: 120 }}
+              alignItems="center"
+              justify="center"
+            >
+              <Grid item>
+                <img
+                  className={classes.authorImage}
+                  src="https://randomuser.me/api/portraits/women/65.jpg"
+                  alt="random user 2"
+                />
+              </Grid>
+              <Grid item>
+                <Typography variant="subtitle2" align="center">
+                  Jessica Song
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item xs>
+              <Typography
+                variant="body1"
+                align="left"
+                style={{ marginLeft: '0.5rem' }}
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
+                numquam deserunt laudantium deleniti dolorem soluta harum
+                repellat et optio delectus voluptatibus, facilis officia
+                distinctio dolore fuga recusandae voluptate pariatur. Libero?
+              </Typography>
+            </Grid>
+          </Grid>
+          {/* next */}
         </Grid>
       </Grid>
     </Container>

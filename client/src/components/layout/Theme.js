@@ -55,8 +55,8 @@ export default createMuiTheme({
       color: arcGrey
     },
     subtitle2: {
-      color: 'white',
-      fontSize: '1.25rem',
+      color: arcGrey,
+      fontSize: '1rem',
       fontWeight: 300
     },
     body1: {
