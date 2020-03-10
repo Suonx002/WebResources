@@ -10,6 +10,9 @@ import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles(theme => ({
+  container: {
+    marginTop: '5rem'
+  },
   heroImage: {
     height: 400,
     width: '100%',
@@ -38,24 +41,19 @@ const CategoryDetail = () => {
   const classes = useStyles();
   const theme = useTheme();
 
+  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
-    <Container maxWidth="md">
-      <Grid
-        container
-        direction="column"
-        style={{ marginTop: '5rem' }}
-        spacing={3}
-        alignItems="center"
-      >
+    <Container maxWidth="md" className={classes.container}>
+      <Grid container direction="column" spacing={3} alignItems="center">
         <Grid item>
           <Typography variant="h3">The Modern Javascript Tutorial</Typography>
         </Grid>
         <Grid item>
           <img
             className={classes.heroImage}
-            src="https://images.unsplash.com/photo-1583743220494-3da91330c2fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=80"
+            src="https://images.unsplash.com/photo-1583743220494-3da91330c2fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
             alt="placeholder"
           />
         </Grid>
@@ -142,11 +140,11 @@ const CategoryDetail = () => {
               <Typography
                 variant="body1"
                 align="left"
-                style={{ marginLeft: '0.5rem' }}
+                style={{ marginLeft: '0.5rem', hyphens: 'auto' }}
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-                rerum incidunt eaque cumque laborum repellendus adipisci
-                pariatur dolor, qui labore?
+                Lorem ipsum dolor sit amet consec teadi isicing elit. Quas rerum
+                incidunt eaque cumque laborum repellendus adipisci pariatur
+                dolor, qui labore?
               </Typography>
             </Grid>
           </Grid>
@@ -178,12 +176,11 @@ const CategoryDetail = () => {
               <Typography
                 variant="body1"
                 align="left"
-                style={{ marginLeft: '0.5rem' }}
+                style={{ marginLeft: '0.5rem', hyphens: 'auto' }}
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Mollitia ut, nobis omnis corporis a voluptatum rerum pariatur
-                consequatur qui sed enim ducimus illo voluptatibus ullam
-                inventore iusto impedit molestias cum.
+                Lorem ipsum dolor sit amet consec teadi isicing elit. Quas rerum
+                incidunt eaque cumque laborum repellendus adipisci pariatur
+                dolor, qui labore?
               </Typography>
             </Grid>
           </Grid>
@@ -215,12 +212,11 @@ const CategoryDetail = () => {
               <Typography
                 variant="body1"
                 align="left"
-                style={{ marginLeft: '0.5rem' }}
+                style={{ marginLeft: '0.5rem', hyphens: 'auto' }}
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
-                numquam deserunt laudantium deleniti dolorem soluta harum
-                repellat et optio delectus voluptatibus, facilis officia
-                distinctio dolore fuga recusandae voluptate pariatur. Libero?
+                Lorem ipsum dolor sit amet consec teadi isicing elit. Quas rerum
+                incidunt eaque cumque laborum repellendus adipisci pariatur
+                dolor, qui labore?
               </Typography>
             </Grid>
           </Grid>
