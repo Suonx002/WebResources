@@ -13,12 +13,23 @@ const useStyles = makeStyles(theme => ({
   heroImage: {
     height: 400,
     width: '100%',
-    objectFit: 'cover'
+    objectFit: 'cover',
+    [theme.breakpoints.down('sm')]: {
+      height: 300
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: 250
+    }
   },
   authorImage: {
     height: 50,
     width: 50,
     borderRadius: 50
+  },
+  postContainer: {
+    border: '2px solid #eee',
+    borderRadius: 5,
+    marginTop: '1rem'
   }
 }));
 
@@ -38,7 +49,7 @@ const CategoryDetail = () => {
         alignItems="center"
       >
         <Grid item>
-          <Typography variant="h2">The Modern Javascript Tutorial</Typography>
+          <Typography variant="h3">The Modern Javascript Tutorial</Typography>
         </Grid>
         <Grid item>
           <img
@@ -48,7 +59,7 @@ const CategoryDetail = () => {
           />
         </Grid>
         <Grid item container direction="row" alignItems="center">
-          <Grid item container sm>
+          <Grid item container xs>
             <Grid item>
               <img
                 className={classes.authorImage}
@@ -62,7 +73,7 @@ const CategoryDetail = () => {
               </Typography>
             </Grid>
           </Grid>
-          <Grid item container sm justify="flex-end">
+          <Grid item container xs justify="flex-end">
             <Button component={Link} to="/" color="primary" variant="contained">
               View Tutorial
             </Button>
@@ -79,7 +90,7 @@ const CategoryDetail = () => {
                 fullWidth
                 multiline
                 variant="outlined"
-                rows="6"
+                rows="4"
                 label="Message"
               />
             </Grid>
@@ -100,6 +111,35 @@ const CategoryDetail = () => {
               </Button>
             </Grid>
           </form>
+        </Grid>
+        {/* Comments */}
+        <Grid item container className={classes.postContainer}>
+          <Grid
+            item
+            container
+            direction="column"
+            xs
+            style={{ maxWidth: 120 }}
+            alignItems="center"
+          >
+            <Grid item>
+              <img
+                className={classes.authorImage}
+                src="https://randomuser.me/api/portraits/women/65.jpg"
+                alt="random user 2"
+              />
+            </Grid>
+            <Grid item>
+              <Typography variant="subtitle1">Jessica Song</Typography>
+            </Grid>
+          </Grid>
+          <Grid item xs>
+            <Typography variant="body1">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
+              rerum incidunt eaque cumque laborum repellendus adipisci pariatur
+              dolor, qui labore?
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
     </Container>
