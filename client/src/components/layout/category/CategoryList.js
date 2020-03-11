@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import List from '@material-ui/core/List';
@@ -6,10 +6,12 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { getPostsByCategory } from '../../../redux/actions/postActions';
 
 import CategoryItem from './CategoryItem';
+import CategoryDialog from './CategoryDialog';
 
 const useStyles = makeStyles(theme => ({
   containerButton: {
@@ -21,6 +23,10 @@ const useStyles = makeStyles(theme => ({
     border: '2px solid #eee',
     padding: '2rem',
     borderRadius: 5
+  },
+  progress: {
+    display: 'flex',
+    justifyContent: 'center'
   }
 }));
 
@@ -33,28 +39,53 @@ const CategoryList = props => {
   // console.log(props);
   const classes = useStyles();
 
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
+
+  console.log('running category list');
+
   useEffect(() => {
     getPostsByCategory(match.params.category);
 
     // eslint-disable-next-line
-  }, [match.params.category]);
+  }, []);
 
   return (
     <Container maxWidth="md" style={{ marginTop: '5rem' }}>
       <div className={classes.containerButton}>
-        <Button variant="outlined" color="primary" size="large">
+        <Button
+          variant="outlined"
+          color="primary"
+          size="large"
+          onClick={handleClickOpen}
+        >
           Create A Post
         </Button>
+        <CategoryDialog open={openDialog} handleClose={handleClose} />
       </div>
-      {posts !== null && posts.length === 0 && (
-        <Typography
-          align="center"
-          variant="subtitle1"
-          className={classes.noResult}
-        >
-          Sorry, there is no results with the following search. Please try
-          something else :)
-        </Typography>
+      {posts === null ? (
+        <div className={classes.progress}>
+          <CircularProgress variant="determinate" />
+        </div>
+      ) : (
+        posts !== null &&
+        posts.length === 0 && (
+          <Typography
+            align="center"
+            variant="subtitle1"
+            className={classes.noResult}
+          >
+            Sorry, there is no results with the following search. Please try
+            something else :)
+          </Typography>
+        )
       )}
       <List>
         {posts !== null &&

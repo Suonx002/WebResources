@@ -30,7 +30,8 @@ const postSchema = new mongoose.Schema({
       'vue',
       'node',
       'mongo'
-    ]
+    ],
+    lowercase: true
   },
   link: {
     type: String,

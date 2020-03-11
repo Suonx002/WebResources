@@ -27,6 +27,7 @@ const App = () => {
       store.dispatch(loadUser());
     }
   }, []);
+  console.log('running app');
 
   return (
     <Provider store={store}>
