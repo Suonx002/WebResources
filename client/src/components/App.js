@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { connect } from 'react-redux';
 
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';

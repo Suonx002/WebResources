@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import CategoryCard from './layout/category/CategoryCard';
 import Grid from '@material-ui/core/Grid';
 import Searchbar from './layout/Searchbar';

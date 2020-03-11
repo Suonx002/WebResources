@@ -17,6 +17,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
 const userRouter = require('./routes/userRoutes');
+const postRouter = require('./routes/postRoutes');
 
 // database
 connectDB();
@@ -38,6 +39,7 @@ app.use(cors());
 
 // routes
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/posts', postRouter);
 
 // catach errors (all verbs: get post put patch ,etc.)
 app.all('*', (req, res, next) => {

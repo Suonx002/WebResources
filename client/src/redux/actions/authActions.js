@@ -15,7 +15,7 @@ const baseURL = 'http://localhost:5000';
 
 export const loadUser = () => async dispatch => {
   try {
-    const res = await axios.get('/api/v1/users/me');
+    const res = await axios.get(`${baseURL}/api/v1/users/me`);
     // console.log(res.data);
 
     dispatch({
@@ -61,6 +61,8 @@ export const loginUser = data => async dispatch => {
       type: LOGIN_SUCCESS,
       payload: res.data
     });
+
+    loadUser();
   } catch (err) {
     // console.log(err.response.data);
     dispatch({

@@ -66,6 +66,7 @@ const Register = props => {
         clearError();
       }, 2500);
     }
+    // eslint-disable-next-line
   }, [error]);
 
   return (

@@ -1,24 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { IconButton } from '@material-ui/core';
-
-const data = {
-  title: 'The Modern JavaScript Tutorial',
-  description:
-    'Modern JavaScript Tutorial: simple, but detailed explanations with examples and tasks, including: closures, document and events, object oriented programming and more.',
-  categoryList: ['Free', 'Beginner', 'Paid'],
-  tutorialLink: 'https://javascript.info/',
-  upvotes: 100
-};
 
 const useStyles = makeStyles(theme => ({
   listItemContainer: {
@@ -65,57 +55,57 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryItem = props => {
   const classes = useStyles();
-  const { match } = props;
-  //   const [secondary, setSecondary] = useState(false);
+  const { match, post } = props;
 
   return (
-    <ListItem className={classes.listItemContainer}>
-      <div className={classes.listItemIcon}>
-        <IconButton style={{ padding: '2px' }}>
-          <ExpandLessIcon className={classes.arrowIcon} />
-        </IconButton>
-        <span className={classes.upvotes}>{data.upvotes}</span>
-      </div>
-      {/* <Link to={`/category/${match.params.category}/${1}`} >
-      </Link> */}
-      <ListItemText
-        primary={
-          data.title ? (
-            <Link
-              to={`/category/${match.params.category}/${1}`}
-              className={classes.title}
-            >
-              {data.title}
-            </Link>
-          ) : null
-        }
-        secondary={
-          data.categoryList
-            ? data.categoryList.map((category, index) => (
-                <span
-                  key={`${category}-${index}`}
-                  className={classes.categorySpan}
-                >
-                  {category}
-                </span>
-              ))
-            : null
-        }
-      />
-
-      <ListItemSecondaryAction>
-        <a
-          href={data.tutorialLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={classes.link}
-        >
-          <IconButton>
-            <OpenInNewIcon color="primary" />
+    post !== null && (
+      <ListItem className={classes.listItemContainer}>
+        <div className={classes.listItemIcon}>
+          <IconButton style={{ padding: '2px' }}>
+            <ExpandLessIcon className={classes.arrowIcon} />
           </IconButton>
-        </a>
-      </ListItemSecondaryAction>
-    </ListItem>
+          <span className={classes.upvotes}>100</span>
+        </div>
+        {/* <Link to={`/category/${match.params.category}/${1}`} >
+      </Link> */}
+        <ListItemText
+          primary={
+            post ? (
+              <Link
+                to={`/category/${match.params.category}/${post._id}`}
+                className={classes.title}
+              >
+                {post.title}
+              </Link>
+            ) : null
+          }
+          secondary={
+            post.tags
+              ? post.tags.map((tag, index) => (
+                  <span
+                    key={`${tag}-${index}`}
+                    className={classes.categorySpan}
+                  >
+                    {tag}
+                  </span>
+                ))
+              : null
+          }
+        />
+        <ListItemSecondaryAction>
+          <a
+            href={post.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={classes.link}
+          >
+            <IconButton>
+              <OpenInNewIcon color="primary" />
+            </IconButton>
+          </a>
+        </ListItemSecondaryAction>
+      </ListItem>
+    )
   );
 };
 

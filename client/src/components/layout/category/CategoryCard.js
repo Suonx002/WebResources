@@ -39,15 +39,13 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryCard = props => {
   const { icon, name, link } = props;
+  // console.log(props);
   const classes = useStyles();
 
   return (
     <Grid item>
       <Link to={`/category/${link}`} className={classes.link}>
-        <Card
-          className={classes.cardContainer}
-          className={classes.cardContainer}
-        >
+        <Card className={classes.cardContainer}>
           <svg className={classes.svgIcon}>
             <use href={`${sprite}#icon-${icon}`}></use>
           </svg>
