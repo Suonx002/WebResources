@@ -33,7 +33,7 @@ module.exports = (err, req, res, next) => {
   error.message = err.message;
 
   // Log to console for dev
-  console.log(err);
+  // console.log(err);
 
   // Mongoose bad ObjectId
   if (error.name === 'CastError') error = handleCastErrorDB(error);
@@ -48,7 +48,7 @@ module.exports = (err, req, res, next) => {
   if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
 
   res.status(error.statusCode || 500).json({
-    success: false,
+    success: 'fail',
     message: error.message || 'Server Error'
   });
 };

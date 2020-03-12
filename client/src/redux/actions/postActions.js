@@ -5,7 +5,9 @@ import {
   POST_ERROR,
   CREATE_POST,
   CLEAR_POST_ERROR,
-  CLEAR_POST
+  CLEAR_POST,
+  LIKE_POST,
+  DISLIKE_POST
 } from './types';
 // import setAuthorizationToken from '../../utils/setAuthorizationToken';
 
@@ -21,6 +23,7 @@ export const getPostsByCategory = category => async dispatch => {
     });
   } catch (err) {
     console.log(err.response);
+
     dispatch({
       type: POST_ERROR,
       payload: err.response.data
@@ -84,4 +87,38 @@ export const clearPostError = () => dispatch => {
   return dispatch({
     type: CLEAR_POST_ERROR
   });
+};
+
+export const likePost = id => async dispatch => {
+  try {
+    const res = await axios.patch(`${baseURL}/api/v1/posts/like/${id}`);
+
+    // console.log(res);
+    dispatch({
+      type: LIKE_POST,
+      payload: id
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: err.response.data
+    });
+  }
+};
+
+export const dislikePost = id => async dispatch => {
+  try {
+    const res = await axios.patch(`${baseURL}/api/v1/posts/dislike/${id}`);
+
+    // console.log(res);
+    dispatch({
+      type: DISLIKE_POST,
+      payload: id
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: err.response.data
+    });
+  }
 };

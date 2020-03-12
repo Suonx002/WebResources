@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { IconButton } from '@material-ui/core';
+
+import { likePost, dislikePost } from '../../../redux/actions/postActions';
 
 const useStyles = makeStyles(theme => ({
   listItemContainer: {
@@ -35,10 +38,16 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     marginRight: '1rem'
   },
-  arrowIcon: {
+  arrowUpIcon: {
     cursor: 'pointer',
     '&:hover': {
       color: theme.palette.success.main
+    }
+  },
+  arrowDownIcon: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.error.main
     }
   },
   upvotes: {
@@ -55,16 +64,25 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryItem = props => {
   const classes = useStyles();
-  const { match, post } = props;
+  const { match, post, likePost, dislikePost } = props;
 
   return (
     post !== null && (
       <ListItem className={classes.listItemContainer}>
         <div className={classes.listItemIcon}>
-          <IconButton style={{ padding: '2px' }}>
-            <ExpandLessIcon className={classes.arrowIcon} />
+          <IconButton
+            style={{ padding: '2px' }}
+            onClick={() => likePost(post._id)}
+          >
+            <ExpandLessIcon className={classes.arrowUpIcon} />
           </IconButton>
-          <span className={classes.upvotes}>100</span>
+          <span className={classes.upvotes}>{post.likes.length}</span>
+          <IconButton
+            style={{ padding: '2px' }}
+            onClick={() => dislikePost(post._id)}
+          >
+            <ExpandMoreIcon className={classes.arrowDownIcon} />
+          </IconButton>
         </div>
         {/* <Link to={`/category/${match.params.category}/${1}`} >
       </Link> */}
@@ -111,4 +129,13 @@ const CategoryItem = props => {
   );
 };
 
-export default withRouter(CategoryItem);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+const actions = {
+  likePost,
+  dislikePost
+};
+
+export default connect(mapStateToProps, actions)(withRouter(CategoryItem));

@@ -12,6 +12,7 @@ import { getPostsByCategory } from '../../../redux/actions/postActions';
 
 import CategoryItem from './CategoryItem';
 import CategoryDialog from './CategoryDialog';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles(theme => ({
   containerButton: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryList = props => {
   const {
-    posts: { posts },
+    posts: { posts, error },
     getPostsByCategory,
     match
   } = props;
@@ -60,6 +61,17 @@ const CategoryList = props => {
 
   return (
     <Container maxWidth="md" style={{ marginTop: '5rem' }}>
+      {error && error.message === 'Post already liked' && (
+        <Alert severity="error" style={{ marginBottom: '1rem' }}>
+          {error.message}
+        </Alert>
+      )}
+      {error && error.message === 'Post has not yet been liked' && (
+        <Alert severity="warning" style={{ marginBottom: '1rem' }}>
+          {error.message}
+        </Alert>
+      )}
+
       <div className={classes.containerButton}>
         <Button
           variant="outlined"
@@ -91,7 +103,9 @@ const CategoryList = props => {
       <List>
         {posts !== null &&
           posts.length > 0 &&
-          posts.map(post => <CategoryItem key={post._id} post={post} />)}
+          posts.map(post => (
+            <CategoryItem key={post._id} post={post} error={error} />
+          ))}
       </List>
     </Container>
   );
