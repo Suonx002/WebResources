@@ -6,6 +6,7 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT,
   CLEAR_ERROR,
   USER_LOADED,
   AUTH_ERROR
@@ -35,7 +36,7 @@ export const registerUser = data => async dispatch => {
   try {
     const res = await axios.post(`${baseURL}/api/v1/users/register`, data);
 
-    // console.log(res);
+    console.log(res);
     setAuthorizationToken(res.data.token);
 
     dispatch({
@@ -64,7 +65,8 @@ export const loginUser = data => async dispatch => {
 
     loadUser();
   } catch (err) {
-    // console.log(err.response.data);
+    console.log(err.response);
+    console.log(err.response.data);
     dispatch({
       type: LOGIN_FAIL,
       payload: err.response.data
@@ -76,4 +78,10 @@ export const clearError = () => {
   return {
     type: CLEAR_ERROR
   };
+};
+
+export const logoutUser = () => dispatch => {
+  dispatch({
+    type: LOGOUT
+  });
 };

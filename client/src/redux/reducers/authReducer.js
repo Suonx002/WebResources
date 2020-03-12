@@ -5,7 +5,8 @@ import {
   LOGIN_FAIL,
   CLEAR_ERROR,
   USER_LOADED,
-  AUTH_ERROR
+  AUTH_ERROR,
+  LOGOUT
 } from '../actions/types';
 
 const intialState = {
@@ -30,12 +31,22 @@ export default (state = intialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        token: action.payload.token
+        token: action.payload.token,
+        user: action.payload.data.user
       };
+
+    case LOGOUT:
+      localStorage.removeItem('jwtToken');
+      return {
+        ...state,
+        isAuthenticated: null,
+        user: null,
+        token: null,
+        error: null
+      };
+    case AUTH_ERROR:
     case REGISTER_FAIL:
     case LOGIN_FAIL:
-    case AUTH_ERROR:
-      localStorage.removeItem('jwtToken');
       return {
         ...state,
         isAuthenticated: null,

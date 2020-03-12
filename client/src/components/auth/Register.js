@@ -25,10 +25,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Register = props => {
+  console.log(props);
   const {
-    auth: { error },
+    auth: { error, isAuthenticated },
     registerUser,
-    clearError
+    clearError,
+    history
   } = props;
   // console.log(registerUser);
 
@@ -61,13 +63,17 @@ const Register = props => {
   };
 
   useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/');
+    }
+
     if (error) {
       setTimeout(() => {
         clearError();
       }, 2500);
     }
     // eslint-disable-next-line
-  }, [error]);
+  }, [isAuthenticated, error]);
 
   return (
     <Container maxWidth="sm">

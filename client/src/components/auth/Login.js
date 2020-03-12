@@ -26,9 +26,10 @@ const useStyles = makeStyles(theme => ({
 
 const Login = props => {
   const {
-    auth: { error },
+    auth: { error, isAuthenticated },
     loginUser,
-    clearError
+    clearError,
+    history
   } = props;
 
   // console.log(auth);
@@ -55,13 +56,18 @@ const Login = props => {
   };
 
   useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/');
+    }
+
     if (error) {
       setTimeout(() => {
         clearError();
       }, 2500);
     }
+
     // eslint-disable-next-line
-  }, [error]);
+  }, [isAuthenticated, error]);
 
   return (
     <Container maxWidth="sm">
@@ -77,13 +83,14 @@ const Login = props => {
           <Grid item>
             {error !== null && (
               <Alert variant="filled" severity="error">
-                {error.message}
+                {error.message || 'Invalid Credentials'}
               </Alert>
             )}
           </Grid>
 
           <Grid item>
             <TextField
+              type="email"
               id="email"
               label="Email Address"
               fullWidth
@@ -93,6 +100,7 @@ const Login = props => {
           </Grid>
           <Grid item>
             <TextField
+              type="password"
               id="password"
               label="Password"
               fullWidth

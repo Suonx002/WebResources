@@ -1,5 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -15,6 +16,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+
+import { logoutUser } from '../../redux/actions/authActions';
 
 const ElevationScroll = props => {
   const { children } = props;
@@ -84,7 +87,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Header = () => {
+const Header = props => {
+  const {
+    auth: { isAuthenticated, user },
+    logoutUser,
+    history
+  } = props;
   const classes = useStyles();
   const theme = useTheme();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -96,6 +104,10 @@ const Header = () => {
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
+  };
+
+  const handleClick = () => {
+    logoutUser();
   };
 
   const routes = [
@@ -116,21 +128,77 @@ const Header = () => {
     }
   ];
 
+  const authRoutes = [
+    {
+      name: 'Home',
+      link: '/',
+      activeIndex: 0
+    },
+    {
+      name: `Hello ${user !== null && user.name}`,
+      link: '/me',
+      activeIndex: 1
+    },
+    {
+      name: 'Logout',
+      link: '/',
+      activeIndex: 2,
+      logout: handleClick
+    }
+  ];
+
+  console.log('testing app');
+
   useEffect(() => {
-    [...routes].forEach(route => {
-      switch (window.location.pathname) {
-        case `${route.link}`:
-          if (value !== route.activeIndex) {
-            setValue(route.activeIndex);
-          }
-          break;
-        default:
-          break;
-      }
-    });
+    switch (window.location.pathname) {
+      case '/':
+        if (value !== 0) {
+          setValue(0);
+        }
+        break;
+      case '/register':
+        if (value !== 1) {
+          setValue(1);
+        }
+        break;
+      case '/login':
+        if (value !== 2) {
+          setValue(2);
+        }
+        break;
+      case 'me':
+        if (value !== 1) {
+          setValue(1);
+        }
+        break;
+      case '/logout':
+        if (value !== 2) {
+          setValue(2);
+        }
+      default:
+        break;
+    }
   }, [value, routes]);
 
-  const tabs = (
+  const tabs = isAuthenticated ? (
+    <Tabs
+      className={classes.tabContainer}
+      value={value}
+      onChange={handleChange}
+      indicatorColor="primary"
+    >
+      {authRoutes.map((route, index) => (
+        <Tab
+          key={`${route}-${index}`}
+          className={classes.tab}
+          label={route.name}
+          component={Link}
+          to={route.link}
+          onClick={route.logout ? route.logout : null}
+        />
+      ))}
+    </Tabs>
+  ) : (
     <Tabs
       className={classes.tabContainer}
       value={value}
@@ -160,28 +228,54 @@ const Header = () => {
         classes={{ paper: classes.drawer }}
       >
         <div className={classes.toolbarMargin} />
-        <List disablePadding className={classes.listContainer}>
-          {routes.map((route, index) => (
-            <ListItem
-              className={classes.listItem}
-              key={`${route}~${index}`}
-              divider
-              button
-              component={Link}
-              to={route.link}
-              selected={value === route.activeIndex}
-              classes={{ selected: classes.drawerItemSelected }}
-              onClick={() => {
-                setOpenDrawer(false);
-                setValue(route.activeIndex);
-              }}
-            >
-              <ListItemText className={classes.drawerItem} disableTypography>
-                {route.name}
-              </ListItemText>
-            </ListItem>
-          ))}
-        </List>
+
+        {isAuthenticated ? (
+          <List disablePadding className={classes.listContainer}>
+            {authRoutes.map((route, index) => (
+              <ListItem
+                className={classes.listItem}
+                key={`${route}~${index}`}
+                divider
+                button
+                component={Link}
+                to={route.link}
+                selected={value === route.activeIndex}
+                classes={{ selected: classes.drawerItemSelected }}
+                onClick={() => {
+                  setOpenDrawer(false);
+                  setValue(route.activeIndex);
+                }}
+              >
+                <ListItemText className={classes.drawerItem} disableTypography>
+                  {route.name}
+                </ListItemText>
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <List disablePadding className={classes.listContainer}>
+            {routes.map((route, index) => (
+              <ListItem
+                className={classes.listItem}
+                key={`${route}~${index}`}
+                divider
+                button
+                component={Link}
+                to={route.link}
+                selected={value === route.activeIndex}
+                classes={{ selected: classes.drawerItemSelected }}
+                onClick={() => {
+                  setOpenDrawer(false);
+                  setValue(route.activeIndex);
+                }}
+              >
+                <ListItemText className={classes.drawerItem} disableTypography>
+                  {route.name}
+                </ListItemText>
+              </ListItem>
+            ))}
+          </List>
+        )}
       </SwipeableDrawer>
       <IconButton
         onClick={() => setOpenDrawer(!openDrawer)}
@@ -215,4 +309,12 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+const actions = {
+  logoutUser
+};
+
+export default connect(mapStateToProps, actions)(Header);
