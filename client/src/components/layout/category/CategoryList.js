@@ -53,9 +53,10 @@ const CategoryList = props => {
 
   useEffect(() => {
     getPostsByCategory(match.params.category);
+    console.log('running in effect of category list');
 
     // eslint-disable-next-line
-  }, []);
+  }, [match.params.category]);
 
   return (
     <Container maxWidth="md" style={{ marginTop: '5rem' }}>

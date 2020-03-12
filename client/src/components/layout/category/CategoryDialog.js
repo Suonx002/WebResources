@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import uuid from 'uuid/v4';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -9,12 +12,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
-
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
+import Alert from '@material-ui/lab/Alert';
+
+import { createPost, clearPostError } from '../../../redux/actions/postActions';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -40,7 +45,7 @@ const categoryOptions = [
   'mongo'
 ];
 
-const tagOptions = ['free', 'paid', 'beginner', 'book', 'video'];
+const tagsOptions = ['free', 'paid', 'beginner', 'book', 'video'];
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -54,19 +59,46 @@ const MenuProps = {
 };
 
 const CategoryDialog = props => {
-  console.log('run');
-  const { open, handleClose } = props;
+  console.log(props);
+  console.log('run dialog');
+  const {
+    open,
+    handleClose,
+    createPost,
+    clearPostError,
+    post: { error, post },
+    auth: { user }
+  } = props;
 
   const classes = useStyles();
 
   const [category, setCategory] = useState('');
-  const [tag, setTag] = useState([]);
+  const [tags, setTags] = useState([]);
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
   const [link, setLink] = useState('');
 
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        clearPostError();
+      }, 3000);
+    }
+
+    // eslint-disable-next-line
+  }, [error]);
+
   const handleSubmit = e => {
     e.preventDefault();
+
+    createPost({
+      title,
+      tags,
+      summary,
+      link,
+      category,
+      user: user._id
+    });
   };
 
   return (
@@ -82,6 +114,17 @@ const CategoryDialog = props => {
           <DialogContentText>Please fill out all fields</DialogContentText>
 
           <Grid container direction="column">
+            <Grid item container direction="column">
+              {error !== null &&
+                error.message.split(',').map(alert => (
+                  <Grid item key={uuid()} style={{ marginBottom: '0.5rem' }}>
+                    <Alert variant="filled" severity="error">
+                      {alert}
+                    </Alert>{' '}
+                  </Grid>
+                ))}
+            </Grid>
+
             <Grid item className={classes.textField}>
               <TextField
                 autoFocus
@@ -132,16 +175,16 @@ const CategoryDialog = props => {
               </Grid>
               <Grid item>
                 <FormControl variant="outlined">
-                  <InputLabel id="tag">Tag</InputLabel>
+                  <InputLabel id="tags">Tags</InputLabel>
                   <Select
                     style={{ width: 250 }}
-                    labelId="tag"
-                    id="tag"
+                    labelId="tags"
+                    id="tags"
                     multiple
-                    value={tag}
-                    onChange={e => setTag(e.target.value)}
+                    value={tags}
+                    onChange={e => setTags(e.target.value)}
                   >
-                    {tagOptions.map(tag => (
+                    {tagsOptions.map(tag => (
                       <MenuItem key={tag} value={tag}>
                         {tag[0].toUpperCase() + tag.slice(1)}
                       </MenuItem>
@@ -168,7 +211,7 @@ const CategoryDialog = props => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button type="submit" color="primary">
+          <Button type="submit" color="primary" onClick={handleClose}>
             Submit
           </Button>
         </DialogActions>
@@ -177,4 +220,14 @@ const CategoryDialog = props => {
   );
 };
 
-export default CategoryDialog;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  post: state.post
+});
+
+const actions = {
+  createPost,
+  clearPostError
+};
+
+export default connect(mapStateToProps, actions)(withRouter(CategoryDialog));

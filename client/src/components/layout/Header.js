@@ -175,6 +175,7 @@ const Header = props => {
         if (value !== 2) {
           setValue(2);
         }
+        break;
       default:
         break;
     }

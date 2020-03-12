@@ -13,11 +13,12 @@ const postSchema = new mongoose.Schema({
   tags: [
     {
       type: String,
+      enum: ['free', 'beginner', 'paid', 'video', 'book'],
       required: [true, 'Please provide a tag'],
-      enum: ['free', 'beginner', 'paid', 'video'],
       default: 'free'
     }
   ],
+
   category: {
     type: String,
     required: [true, 'Please select a category'],

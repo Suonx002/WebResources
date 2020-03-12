@@ -11,4 +11,6 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 
 export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY';
 export const GET_POST_BY_ID = 'GET_POST_BY_ID';
+export const CREATE_POST = 'CREATE_POST';
 export const POST_ERROR = 'POST_ERROR';
+export const CLEAR_POST_ERROR = 'CLEAR_POST_ERROR';
