@@ -49,7 +49,7 @@ const CategoryList = props => {
     setOpenDialog(false);
   };
 
-  console.log('running category list');
+  // console.log('running category list');
 
   useEffect(() => {
     getPostsByCategory(match.params.category);

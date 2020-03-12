@@ -3,7 +3,8 @@ import {
   GET_POST_BY_ID,
   POST_ERROR,
   CREATE_POST,
-  CLEAR_POST_ERROR
+  CLEAR_POST_ERROR,
+  CLEAR_POST
 } from '../actions/types';
 
 const initialState = {
@@ -21,6 +22,8 @@ export default (state = initialState, action) => {
       return { ...state, post: action.payload, loading: false };
     case CREATE_POST:
       return { ...state, post: action.payload, loading: false };
+    case CLEAR_POST:
+      return { ...state, post: null, loading: false };
     case POST_ERROR:
       return { ...state, error: action.payload, loading: false };
     case CLEAR_POST_ERROR:

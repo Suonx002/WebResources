@@ -4,9 +4,10 @@ import {
   GET_POST_BY_ID,
   POST_ERROR,
   CREATE_POST,
-  CLEAR_POST_ERROR
+  CLEAR_POST_ERROR,
+  CLEAR_POST
 } from './types';
-import setAuthorizationToken from '../../utils/setAuthorizationToken';
+// import setAuthorizationToken from '../../utils/setAuthorizationToken';
 
 const baseURL = 'http://localhost:5000';
 
@@ -28,9 +29,9 @@ export const getPostsByCategory = category => async dispatch => {
 };
 
 export const getPostById = id => async dispatch => {
-  if (localStorage.jwtToken) {
-    setAuthorizationToken(localStorage.jwtToken);
-  }
+  // if (localStorage.jwtToken) {
+  //   setAuthorizationToken(localStorage.jwtToken);
+  // }
 
   try {
     const res = await axios.get(`${baseURL}/api/v1/posts/${id}`);
@@ -48,9 +49,9 @@ export const getPostById = id => async dispatch => {
 };
 
 export const createPost = dataForm => async dispatch => {
-  if (localStorage.jwtToken) {
-    setAuthorizationToken(localStorage.jwtToken);
-  }
+  // if (localStorage.jwtToken) {
+  //   // setAuthorizationToken(localStorage.jwtToken);
+  // }
 
   try {
     const res = await axios.post(`${baseURL}/api/v1/posts/`, dataForm);
@@ -62,7 +63,7 @@ export const createPost = dataForm => async dispatch => {
       payload: res.data.post
     });
   } catch (err) {
-    // console.log(err.response);
+    console.log(err.response);
     // console.log(err);
     // console.error(err);
 
@@ -71,6 +72,12 @@ export const createPost = dataForm => async dispatch => {
       payload: err.response.data
     });
   }
+};
+
+export const clearPost = () => dispatch => {
+  return dispatch({
+    type: CLEAR_POST
+  });
 };
 
 export const clearPostError = () => dispatch => {

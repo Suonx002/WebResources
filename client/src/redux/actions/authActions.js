@@ -15,6 +15,8 @@ import {
 const baseURL = 'http://localhost:5000';
 
 export const loadUser = () => async dispatch => {
+  setAuthorizationToken(localStorage.jwtToken);
+
   try {
     const res = await axios.get(`${baseURL}/api/v1/users/me`);
     // console.log(res.data);
@@ -35,9 +37,6 @@ export const loadUser = () => async dispatch => {
 export const registerUser = data => async dispatch => {
   try {
     const res = await axios.post(`${baseURL}/api/v1/users/register`, data);
-
-    console.log(res);
-    setAuthorizationToken(res.data.token);
 
     dispatch({
       type: REGISTER_SUCCESS,

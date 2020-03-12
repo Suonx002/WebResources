@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import uuid from 'uuid/v4';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -19,7 +18,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import Alert from '@material-ui/lab/Alert';
 
-import { createPost, clearPostError } from '../../../redux/actions/postActions';
+import {
+  createPost,
+  clearPostError,
+  clearPost
+} from '../../../redux/actions/postActions';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -59,13 +62,14 @@ const MenuProps = {
 };
 
 const CategoryDialog = props => {
-  console.log(props);
-  console.log('run dialog');
+  // console.log(props);
+  // console.log('run dialog');
   const {
     open,
     handleClose,
     createPost,
     clearPostError,
+    clearPost,
     post: { error, post },
     auth: { user }
   } = props;
@@ -79,6 +83,21 @@ const CategoryDialog = props => {
   const [link, setLink] = useState('');
 
   useEffect(() => {
+    if (post) {
+      setTitle('');
+      setTags([]);
+      setSummary('');
+      setLink('');
+      setCategory('');
+      handleClose();
+
+      window.location.reload();
+
+      setTimeout(() => {
+        clearPost();
+      }, 1000);
+    }
+
     if (error) {
       setTimeout(() => {
         clearPostError();
@@ -86,7 +105,7 @@ const CategoryDialog = props => {
     }
 
     // eslint-disable-next-line
-  }, [error]);
+  }, [post, error]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -211,7 +230,7 @@ const CategoryDialog = props => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button type="submit" color="primary" onClick={handleClose}>
+          <Button type="submit" color="primary">
             Submit
           </Button>
         </DialogActions>
@@ -227,7 +246,8 @@ const mapStateToProps = state => ({
 
 const actions = {
   createPost,
-  clearPostError
+  clearPostError,
+  clearPost
 };
 
-export default connect(mapStateToProps, actions)(withRouter(CategoryDialog));
+export default connect(mapStateToProps, actions)(CategoryDialog);

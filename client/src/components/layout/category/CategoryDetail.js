@@ -62,7 +62,7 @@ const CategoryDetail = props => {
           <Grid item>
             <Typography variant="h3">{post.title}</Typography>
           </Grid>
-          <Grid item container>
+          <Grid item container direction="column">
             <Grid item>
               <Typography variant="h4">Summary</Typography>
             </Grid>

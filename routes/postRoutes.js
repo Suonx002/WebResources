@@ -13,4 +13,12 @@ router
 
 router.route('/:postId').get(authController.protect, postController.getPost);
 
+router.patch('/like/:postId', authController.protect, postController.like);
+
+router.patch(
+  '/dislike/:postId',
+  authController.protect,
+  postController.dislike
+);
+
 module.exports = router;

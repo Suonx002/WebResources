@@ -94,7 +94,9 @@ const CategoryItem = props => {
         />
         <ListItemSecondaryAction>
           <a
-            href={post.link}
+            href={
+              post.link.startsWith('http') ? post.link : `http://${post.link}`
+            }
             target="_blank"
             rel="noopener noreferrer"
             className={classes.link}

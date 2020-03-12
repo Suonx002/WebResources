@@ -8,7 +8,7 @@ const postSchema = new mongoose.Schema({
   summary: {
     type: String,
     required: [true, 'Please provide a summary'],
-    min: [30, 'Must be at least 30 characters long']
+    min: [120, 'Must be at least 120 characters long']
   },
   tags: [
     {
@@ -18,7 +18,6 @@ const postSchema = new mongoose.Schema({
       default: 'free'
     }
   ],
-
   category: {
     type: String,
     required: [true, 'Please select a category'],
@@ -38,6 +37,12 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a tutorial link']
   },
+  likes: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User'
+    }
+  ],
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
