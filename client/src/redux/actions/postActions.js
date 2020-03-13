@@ -91,7 +91,7 @@ export const clearPostError = () => dispatch => {
 
 export const likePost = id => async dispatch => {
   try {
-    const res = await axios.patch(`${baseURL}/api/v1/posts/like/${id}`);
+    await axios.patch(`${baseURL}/api/v1/posts/like/${id}`);
 
     // console.log(res);
     dispatch({
@@ -108,7 +108,7 @@ export const likePost = id => async dispatch => {
 
 export const dislikePost = id => async dispatch => {
   try {
-    const res = await axios.patch(`${baseURL}/api/v1/posts/dislike/${id}`);
+    await axios.patch(`${baseURL}/api/v1/posts/dislike/${id}`);
 
     // console.log(res);
     dispatch({

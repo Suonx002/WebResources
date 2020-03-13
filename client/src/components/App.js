@@ -19,6 +19,7 @@ import Register from './auth/Register';
 import Login from './auth/Login';
 import CategoryList from './layout/category/CategoryList';
 import CategoryDetail from './layout/category/CategoryDetail';
+import Me from './Me';
 
 const App = () => {
   useEffect(() => {
@@ -39,6 +40,7 @@ const App = () => {
               <Route exact path="/" component={LandingPage} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/me" component={Me} />
               <Route
                 exact
                 path="/category/:category"

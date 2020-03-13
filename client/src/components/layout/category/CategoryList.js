@@ -72,6 +72,14 @@ const CategoryList = props => {
         </Alert>
       )}
 
+      {error &&
+        error.message ===
+          'You are not logged in to access this. Please log in to get access!' && (
+          <Alert severity="error" style={{ marginBottom: '1rem' }}>
+            {error.message}
+          </Alert>
+        )}
+
       <div className={classes.containerButton}>
         <Button
           variant="outlined"

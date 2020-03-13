@@ -18,3 +18,6 @@ export const CLEAR_POST = 'CLEAR_POST';
 
 export const LIKE_POST = 'LIKE_POST';
 export const DISLIKE_POST = 'DISLIKE_POST';
+
+export const FILTER_CATEGORY = 'FILTER_CATEGORY';
+export const CLEAR_FILTER_CATEGORY = 'CLEAR_FILTER_CATEGORY';

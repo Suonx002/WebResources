@@ -172,6 +172,78 @@ const CategoryDetail = props => {
               </Grid>
             </Grid>
             {/* next */}
+            <Grid item container className={classes.postContainer}>
+              <Grid
+                item
+                container
+                direction="column"
+                xs
+                style={{ maxWidth: 120 }}
+                alignItems="center"
+                justify="center"
+              >
+                <Grid item>
+                  <img
+                    className={classes.authorImage}
+                    src="https://randomuser.me/api/portraits/women/65.jpg"
+                    alt="random user 2"
+                  />
+                </Grid>
+                <Grid item>
+                  <Typography variant="subtitle2" align="center">
+                    Jessica Song
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid item xs>
+                <Typography
+                  variant="body1"
+                  align="left"
+                  style={{ marginLeft: '0.5rem', hyphens: 'auto' }}
+                >
+                  Lorem ipsum dolor sit amet consec teadi isicing elit. Quas
+                  rerum incidunt eaque cumque laborum repellendus adipisci
+                  pariatur dolor, qui labore?
+                </Typography>
+              </Grid>
+            </Grid>
+            {/* next */}
+            <Grid item container className={classes.postContainer}>
+              <Grid
+                item
+                container
+                direction="column"
+                xs
+                style={{ maxWidth: 120 }}
+                alignItems="center"
+                justify="center"
+              >
+                <Grid item>
+                  <img
+                    className={classes.authorImage}
+                    src="https://randomuser.me/api/portraits/women/65.jpg"
+                    alt="random user 2"
+                  />
+                </Grid>
+                <Grid item>
+                  <Typography variant="subtitle2" align="center">
+                    Jessica Song
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid item xs>
+                <Typography
+                  variant="body1"
+                  align="left"
+                  style={{ marginLeft: '0.5rem', hyphens: 'auto' }}
+                >
+                  Lorem ipsum dolor sit amet consec teadi isicing elit. Quas
+                  rerum incidunt eaque cumque laborum repellendus adipisci
+                  pariatur dolor, qui labore?
+                </Typography>
+              </Grid>
+            </Grid>
+            {/* next */}
           </Grid>
         </Grid>
       )}

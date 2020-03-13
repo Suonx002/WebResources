@@ -28,8 +28,8 @@ const postSchema = new mongoose.Schema({
       'react',
       'angular',
       'vue',
-      'node',
-      'mongo'
+      'nodejs',
+      'mongodb'
     ],
     lowercase: true
   },

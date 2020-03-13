@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
@@ -26,8 +26,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Searchbar = () => {
+const Searchbar = props => {
+  const { filterCategory, clearFilterCategory } = props;
   const classes = useStyles();
+  const text = useRef('');
+
+  const handleChange = e => {
+    if (text.current.value !== '') {
+      filterCategory(e.target.value);
+      // console.log(text);
+    } else {
+      clearFilterCategory();
+    }
+  };
+
   return (
     <div className={classes.search}>
       <div>
@@ -37,6 +49,8 @@ const Searchbar = () => {
         placeholder="Search for the language you want to learn: Javascript, React"
         inputProps={{ 'aria-label': 'search' }}
         className={classes.searchInput}
+        ref={text}
+        onChange={handleChange}
       />
     </div>
   );

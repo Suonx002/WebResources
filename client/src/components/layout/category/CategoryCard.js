@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 
@@ -14,9 +13,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     padding: '1rem',
-    transition: 'background-color 0.2s ease-in-out',
+    transition: 'all 0.2s ease-in-out',
     '&:hover': {
-      backgroundColor: '#eee'
+      backgroundColor: '#eee',
+      transform: 'translateY(-3px)'
     },
     [theme.breakpoints.down('md')]: {
       minWidth: 300
@@ -43,18 +43,16 @@ const CategoryCard = props => {
   const classes = useStyles();
 
   return (
-    <Grid item>
-      <Link to={`/category/${link}`} className={classes.link}>
-        <Card className={classes.cardContainer}>
-          <svg className={classes.svgIcon}>
-            <use href={`${sprite}#icon-${icon}`}></use>
-          </svg>
-          <Typography variant="h4" style={{ marginLeft: '0.5rem' }}>
-            {name}
-          </Typography>
-        </Card>
-      </Link>
-    </Grid>
+    <Link to={`/category/${link}`} className={classes.link}>
+      <Card className={classes.cardContainer}>
+        <svg className={classes.svgIcon}>
+          <use href={`${sprite}#icon-${icon}`}></use>
+        </svg>
+        <Typography variant="h4" style={{ marginLeft: '0.5rem' }}>
+          {name}
+        </Typography>
+      </Card>
+    </Link>
   );
 };
 

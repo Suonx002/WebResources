@@ -90,8 +90,7 @@ const useStyles = makeStyles(theme => ({
 const Header = props => {
   const {
     auth: { isAuthenticated, user },
-    logoutUser,
-    history
+    logoutUser
   } = props;
   const classes = useStyles();
   const theme = useTheme();
