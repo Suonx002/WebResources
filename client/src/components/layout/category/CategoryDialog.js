@@ -36,32 +36,36 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const categoryOptions = [
-  'html',
-  'css',
-  'sass',
-  'bootstrap',
-  'materialui',
-  'javascript',
-  'react',
-  'angular',
-  'vue',
-  'graphql',
-  'typescript',
-  'redux',
-  'nodejs',
-  'mongodb',
-  'postgreesql',
-  'php',
-  'swift',
-  'android',
-  'java',
-  'git',
-  'c++',
-  'flutter',
-  'python',
-  'ruby'
-];
+// const categoryOptions = [
+//   {
+//     name: 'HTML',
+
+//   }
+//   'html',
+//   'css',
+//   'sass',
+//   'bootstrap',
+//   'materialui',
+//   'javascript',
+//   'react',
+//   'angular',
+//   'vue',
+//   'graphql',
+//   'typescript',
+//   'redux',
+//   'nodejs',
+//   'mongodb',
+//   'postgreesql',
+//   'php',
+//   'swift',
+//   'android',
+//   'java',
+//   'git',
+//   'c++',
+//   'flutter',
+//   'python',
+//   'ruby'
+// ];
 
 const tagsOptions = ['free', 'paid', 'beginner', 'book', 'video'];
 
@@ -75,7 +79,8 @@ const CategoryDialog = props => {
     clearPostError,
     clearPost,
     post: { error, post },
-    auth: { user }
+    auth: { user },
+    categories
   } = props;
 
   const classes = useStyles();
@@ -188,9 +193,9 @@ const CategoryDialog = props => {
                     value={category}
                     onChange={e => setCategory(e.target.value)}
                   >
-                    {categoryOptions.map(item => (
-                      <MenuItem key={item} value={item}>
-                        {item[0].toUpperCase() + item.slice(1)}
+                    {categories.category.map(item => (
+                      <MenuItem key={item} value={item.link}>
+                        {item.name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -245,7 +250,8 @@ const CategoryDialog = props => {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  post: state.post
+  post: state.post,
+  categories: state.category
 });
 
 const actions = {
