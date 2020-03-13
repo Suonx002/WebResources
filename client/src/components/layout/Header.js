@@ -134,7 +134,8 @@ const Header = props => {
       activeIndex: 0
     },
     {
-      name: `Hello ${user !== null && user.name}`,
+      name: `Hello, ${user !== null &&
+        user.name[0].toUpperCase() + user.name.slice(1)}`,
       link: '/me',
       activeIndex: 1
     },

@@ -31,8 +31,7 @@ export default (state = intialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        token: action.payload.token,
-        user: action.payload.data.user
+        token: action.payload.token
       };
 
     case LOGOUT:

@@ -25,8 +25,8 @@ const App = () => {
   useEffect(() => {
     if (localStorage.jwtToken) {
       setAuthorizationToken(localStorage.jwtToken);
+      store.dispatch(loadUser());
     }
-    store.dispatch(loadUser());
   }, []);
   console.log('running app');
 

@@ -44,6 +44,8 @@ export const registerUser = data => async dispatch => {
       type: REGISTER_SUCCESS,
       payload: res.data
     });
+
+    dispatch(loadUser());
   } catch (err) {
     // console.log(err.response.data);
 
@@ -65,7 +67,7 @@ export const loginUser = data => async dispatch => {
       payload: res.data
     });
 
-    loadUser();
+    dispatch(loadUser());
   } catch (err) {
     console.log(err.response);
     console.log(err.response.data);
