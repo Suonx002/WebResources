@@ -140,7 +140,6 @@ const CategoryDialog = props => {
         <DialogTitle id="form-dialog-title">Create New Post</DialogTitle>
         <DialogContent>
           <DialogContentText>Please fill out all fields</DialogContentText>
-
           <Grid container direction="column">
             <Grid item container direction="column">
               {error !== null &&
