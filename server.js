@@ -42,19 +42,20 @@ app.use(cors());
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
 
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  );
+}
+
 // catach errors (all verbs: get post put patch ,etc.)
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 400));
 });
-
-// Static Asset in productions
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
 
 // Global express handling erros middleware (error controller)
 app.use(globalErrorHandler);
