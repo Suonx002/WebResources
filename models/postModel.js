@@ -8,14 +8,13 @@ const postSchema = new mongoose.Schema({
   summary: {
     type: String,
     required: [true, 'Please provide a summary'],
-    min: [120, 'Must be at least 120 characters long']
+    minlength: [120, 'Please provide at least 120 characters']
   },
   tags: [
     {
       type: String,
       enum: ['free', 'beginner', 'paid', 'video', 'book'],
-      required: [true, 'Please provide a tag'],
-      default: ['free']
+      required: [true, 'Please provide a tag']
     }
   ],
   category: {

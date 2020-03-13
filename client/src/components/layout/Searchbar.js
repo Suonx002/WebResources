@@ -13,7 +13,12 @@ const useStyles = makeStyles(theme => ({
     width: '96%',
     margin: 'auto',
     marginBottom: '2rem',
-    boxShadow: '0px 0.2rem 0.5rem rgba(0,0,0,0.2)'
+    boxShadow: '0px 0.2rem 0.5rem rgba(0,0,0,0.2)',
+    transition: 'all 0.3s',
+    '&:active, &:hover': {
+      transform: 'translateY(-3px)',
+      boxShadow: '0px 0.2rem 0.5rem rgba(0,0,0,0.3)'
+    }
   },
   searchIcon: {
     fontSize: '2rem',

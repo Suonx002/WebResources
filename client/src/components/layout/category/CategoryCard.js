@@ -13,10 +13,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     padding: '1rem',
-    transition: 'all 0.2s ease-in-out',
+    transition: 'all 0.3s ease-in-out',
     '&:hover': {
       backgroundColor: '#eee',
-      transform: 'translateY(-3px)'
+      transform: 'translateY(-4px)'
     },
     [theme.breakpoints.down('md')]: {
       minWidth: 300
