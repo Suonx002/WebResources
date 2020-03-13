@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Register = props => {
-  console.log(props);
+  // console.log(props);
   const {
     auth: { error, isAuthenticated },
     registerUser,

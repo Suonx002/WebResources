@@ -22,7 +22,9 @@ const LandingPage = props => {
   } = props;
 
   useEffect(() => {
+    // console.log('landing page');
     clearFilterCategory();
+    // reload after login/register
   }, []);
 
   return (
