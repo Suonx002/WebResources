@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
@@ -118,6 +119,28 @@ const Login = props => {
             >
               Login
             </Button>
+          </Grid>
+          <Grid
+            item
+            container
+            direction="column"
+            style={{ marginTop: '1rem' }}
+            // justify="center"
+            alignItems="flex-end"
+          >
+            <Grid item>
+              <Typography>Don't have an account ?</Typography>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="primary"
+                to="/register"
+                component={Link}
+              >
+                Sign up
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </form>

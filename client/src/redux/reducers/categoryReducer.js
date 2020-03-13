@@ -102,6 +102,26 @@ const initialState = {
       name: 'Git',
       icon: 'git',
       link: 'git'
+    },
+    {
+      name: 'C++',
+      icon: 'c-plus-plus-logo',
+      link: 'c++'
+    },
+    {
+      name: 'Flutter',
+      icon: 'flutter',
+      link: 'flutter'
+    },
+    {
+      name: 'Python',
+      icon: 'python',
+      link: 'python'
+    },
+    {
+      name: 'Ruby',
+      icon: 'ruby-programming-language',
+      link: 'ruby'
     }
   ],
   filtered: null

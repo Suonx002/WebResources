@@ -39,12 +39,28 @@ const useStyles = makeStyles(theme => ({
 const categoryOptions = [
   'html',
   'css',
+  'sass',
+  'bootstrap',
+  'materialui',
   'javascript',
   'react',
   'angular',
   'vue',
-  'node',
-  'mongo'
+  'graphql',
+  'typescript',
+  'redux',
+  'nodejs',
+  'mongodb',
+  'postgreesql',
+  'php',
+  'swift',
+  'android',
+  'java',
+  'git',
+  'c++',
+  'flutter',
+  'python',
+  'ruby'
 ];
 
 const tagsOptions = ['free', 'paid', 'beginner', 'book', 'video'];

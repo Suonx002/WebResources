@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -146,6 +147,28 @@ const Register = props => {
             >
               Register
             </Button>
+          </Grid>
+          <Grid
+            item
+            container
+            direction="column"
+            style={{ marginTop: '1rem' }}
+            // justify="center"
+            alignItems="flex-end"
+          >
+            <Grid item>
+              <Typography>Already have an account ?</Typography>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="primary"
+                to="/login"
+                component={Link}
+              >
+                Login
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </form>
