@@ -9,6 +9,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
+import Slide from '@material-ui/core/Slide';
+import Fade from '@material-ui/core/Fade';
 
 import { getPostsByCategory } from '../../../redux/actions/postActions';
 
@@ -44,12 +47,29 @@ const CategoryList = props => {
   const classes = useStyles();
 
   const [openDialog, setOpenDialog] = useState(false);
+  const [snack, setSnack] = useState({
+    open: false,
+    Transition: Fade
+  });
+  const [openSnack, setOpenSnack] = useState(false);
 
-  const handleClickOpen = () => {
+  const handleSnackClick = () => {
+    setOpenSnack(true);
+  };
+
+  const handleSnackClose = (e, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnack(false);
+  };
+
+  const handleDialogClick = () => {
     setOpenDialog(true);
   };
 
-  const handleClose = () => {
+  const handleDialogClose = () => {
     setOpenDialog(false);
   };
 
@@ -64,6 +84,10 @@ const CategoryList = props => {
 
   return (
     <Container maxWidth="md" style={{ marginTop: '5rem' }}>
+      <Snackbar
+        TransitionComponent={snack.Transition}
+        message="Testing Snackbar"
+      />
       {/* Error handling */}
       {error && error.message === 'Post already liked' && (
         <Alert severity="error" style={{ marginBottom: '1rem' }}>
@@ -90,13 +114,16 @@ const CategoryList = props => {
             variant="outlined"
             color="primary"
             size="large"
-            onClick={handleClickOpen}
+            onClick={handleDialogClick}
           >
             Create A Post
           </Button>
         )}
 
-        <CategoryDialog open={openDialog} handleClose={handleClose} />
+        <CategoryDialog
+          open={openDialog}
+          handleDialogClose={handleDialogClose}
+        />
       </div>
       {posts === null ? (
         <div className={classes.progress}>

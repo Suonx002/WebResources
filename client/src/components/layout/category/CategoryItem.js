@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -9,7 +9,10 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import { IconButton } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { likePost, dislikePost } from '../../../redux/actions/postActions';
 
@@ -64,25 +67,36 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryItem = props => {
   const classes = useStyles();
-  const { match, post, likePost, dislikePost } = props;
+  const {
+    match,
+    post,
+    likePost,
+    dislikePost,
+    auth: { user }
+  } = props;
 
   return (
     post !== null && (
       <ListItem className={classes.listItemContainer}>
         <div className={classes.listItemIcon}>
-          <IconButton
-            style={{ padding: '2px' }}
-            onClick={() => likePost(post._id)}
-          >
-            <ExpandLessIcon className={classes.arrowUpIcon} />
-          </IconButton>
+          {user !== null && post !== null && user._id !== post.user && (
+            <IconButton
+              style={{ padding: '2px' }}
+              onClick={() => likePost(post._id)}
+            >
+              <ExpandLessIcon className={classes.arrowUpIcon} />
+            </IconButton>
+          )}
+
           <span className={classes.upvotes}>{post.likes.length}</span>
-          <IconButton
-            style={{ padding: '2px' }}
-            onClick={() => dislikePost(post._id)}
-          >
-            <ExpandMoreIcon className={classes.arrowDownIcon} />
-          </IconButton>
+          {user !== null && post !== null && user._id !== post.user && (
+            <IconButton
+              style={{ padding: '2px' }}
+              onClick={() => dislikePost(post._id)}
+            >
+              <ExpandMoreIcon className={classes.arrowDownIcon} />
+            </IconButton>
+          )}
         </div>
         {/* <Link to={`/category/${match.params.category}/${1}`} >
       </Link> */}
@@ -111,18 +125,34 @@ const CategoryItem = props => {
           }
         />
         <ListItemSecondaryAction>
-          <a
-            href={
-              post.link.startsWith('http') ? post.link : `http://${post.link}`
-            }
-            target="_blank"
-            rel="noopener noreferrer"
-            className={classes.link}
-          >
-            <IconButton>
-              <OpenInNewIcon color="primary" />
-            </IconButton>
-          </a>
+          {user !== null && post !== null && user._id === post.user && (
+            <Fragment>
+              <Tooltip title="Edit">
+                <IconButton>
+                  <EditIcon color="secondary" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete">
+                <IconButton>
+                  <DeleteIcon color="error" />
+                </IconButton>
+              </Tooltip>
+            </Fragment>
+          )}
+          <Tooltip title="Website Link">
+            <a
+              href={
+                post.link.startsWith('http') ? post.link : `http://${post.link}`
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              className={classes.link}
+            >
+              <IconButton>
+                <OpenInNewIcon color="primary" />
+              </IconButton>
+            </a>
+          </Tooltip>
         </ListItemSecondaryAction>
       </ListItem>
     )
