@@ -12,7 +12,8 @@
     "start": "node server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client-prod": "concurrently \"NODE_ENV=production npm run server\" \"npm run client\"",
-    "prod": "NODE_ENV=production nodemon server.js"
+    "prod": "NODE_ENV=production nodemon server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
