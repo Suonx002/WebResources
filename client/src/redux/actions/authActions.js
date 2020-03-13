@@ -18,7 +18,8 @@ export const loadUser = () => async dispatch => {
   setAuthorizationToken(localStorage.jwtToken);
 
   try {
-    const res = await axios.get(`${baseURL}/api/v1/users/me`);
+    // const res = await axios.get(`${baseURL}/api/v1/users/me`);
+    const res = await axios.get(`/api/v1/users/me`);
     // console.log(res.data);
 
     dispatch({
@@ -36,7 +37,8 @@ export const loadUser = () => async dispatch => {
 
 export const registerUser = data => async dispatch => {
   try {
-    const res = await axios.post(`${baseURL}/api/v1/users/register`, data);
+    // const res = await axios.post(`${baseURL}/api/v1/users/register`, data);
+    const res = await axios.post(`/api/v1/users/register`, data);
 
     dispatch({
       type: REGISTER_SUCCESS,
@@ -54,7 +56,8 @@ export const registerUser = data => async dispatch => {
 
 export const loginUser = data => async dispatch => {
   try {
-    const res = await axios.post(`${baseURL}/api/v1/users/login`, data);
+    // const res = await axios.post(`${baseURL}/api/v1/users/login`, data);
+    const res = await axios.post(`/api/v1/users/login`, data);
     // console.log(res);
 
     dispatch({

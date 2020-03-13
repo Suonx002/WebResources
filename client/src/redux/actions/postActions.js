@@ -15,7 +15,8 @@ const baseURL = 'http://localhost:5000';
 
 export const getPostsByCategory = category => async dispatch => {
   try {
-    const res = await axios.get(`${baseURL}/api/v1/posts/category/${category}`);
+    // const res = await axios.get(`${baseURL}/api/v1/posts/category/${category}`);
+    const res = await axios.get(`/api/v1/posts/category/${category}`);
 
     dispatch({
       type: GET_POSTS_BY_CATEGORY,
@@ -37,7 +38,8 @@ export const getPostById = id => async dispatch => {
   // }
 
   try {
-    const res = await axios.get(`${baseURL}/api/v1/posts/${id}`);
+    // const res = await axios.get(`${baseURL}/api/v1/posts/${id}`);
+    const res = await axios.get(`/api/v1/posts/${id}`);
 
     dispatch({
       type: GET_POST_BY_ID,
@@ -57,7 +59,8 @@ export const createPost = dataForm => async dispatch => {
   // }
 
   try {
-    const res = await axios.post(`${baseURL}/api/v1/posts/`, dataForm);
+    // const res = await axios.post(`${baseURL}/api/v1/posts/`, dataForm);
+    const res = await axios.post(`/api/v1/posts/`, dataForm);
 
     console.log(res);
 
@@ -91,7 +94,8 @@ export const clearPostError = () => dispatch => {
 
 export const likePost = id => async dispatch => {
   try {
-    await axios.patch(`${baseURL}/api/v1/posts/like/${id}`);
+    // await axios.patch(`${baseURL}/api/v1/posts/like/${id}`);
+    await axios.patch(`/api/v1/posts/like/${id}`);
 
     // console.log(res);
     dispatch({
@@ -108,7 +112,8 @@ export const likePost = id => async dispatch => {
 
 export const dislikePost = id => async dispatch => {
   try {
-    await axios.patch(`${baseURL}/api/v1/posts/dislike/${id}`);
+    // await axios.patch(`${baseURL}/api/v1/posts/dislike/${id}`);
+    await axios.patch(`/api/v1/posts/dislike/${id}`);
 
     // console.log(res);
     dispatch({
