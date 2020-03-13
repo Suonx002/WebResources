@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import CategoryCard from './layout/category/CategoryCard';
@@ -20,6 +20,10 @@ const LandingPage = props => {
     filterCategory,
     clearFilterCategory
   } = props;
+
+  useEffect(() => {
+    clearFilterCategory();
+  }, []);
 
   return (
     <Grid

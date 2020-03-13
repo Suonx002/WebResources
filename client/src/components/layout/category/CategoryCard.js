@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
       minWidth: 450
     },
     [theme.breakpoints.down('xs')]: {
-      minWidth: 350
+      minWidth: 300
     }
   },
   svgIcon: {

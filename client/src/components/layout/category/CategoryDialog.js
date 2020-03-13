@@ -36,37 +36,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// const categoryOptions = [
-//   {
-//     name: 'HTML',
-
-//   }
-//   'html',
-//   'css',
-//   'sass',
-//   'bootstrap',
-//   'materialui',
-//   'javascript',
-//   'react',
-//   'angular',
-//   'vue',
-//   'graphql',
-//   'typescript',
-//   'redux',
-//   'nodejs',
-//   'mongodb',
-//   'postgreesql',
-//   'php',
-//   'swift',
-//   'android',
-//   'java',
-//   'git',
-//   'c++',
-//   'flutter',
-//   'python',
-//   'ruby'
-// ];
-
 const tagsOptions = ['free', 'paid', 'beginner', 'book', 'video'];
 
 const CategoryDialog = props => {

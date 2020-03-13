@@ -146,7 +146,7 @@ const Header = props => {
     }
   ];
 
-  console.log('testing app');
+  // console.log('testing app');
 
   useEffect(() => {
     switch (window.location.pathname) {
@@ -293,8 +293,9 @@ const Header = props => {
           <Toolbar>
             <Button
               className={classes.logoContainer}
-              component={Link}
-              to="/"
+              // component={Link}
+              // to="/"
+              href="/"
               disableRipple
               onClick={() => setValue(0)}
             >

@@ -15,7 +15,7 @@ const postSchema = new mongoose.Schema({
       type: String,
       enum: ['free', 'beginner', 'paid', 'video', 'book'],
       required: [true, 'Please provide a tag'],
-      default: 'free'
+      default: ['free']
     }
   ],
   category: {
