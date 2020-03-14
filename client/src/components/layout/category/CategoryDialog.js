@@ -137,6 +137,8 @@ const CategoryDialog = props => {
       category,
       id: current._id
     });
+
+    handleDialogClose();
   };
 
   return (

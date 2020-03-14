@@ -27,6 +27,11 @@ export default (state = initialState, action) => {
     case GET_POSTS_BY_CATEGORY:
       return { ...state, posts: [...action.payload], loading: false };
     case GET_POST_BY_ID:
+      return {
+        ...state,
+        post: action.payload.post,
+        loading: false
+      };
     case CREATE_POST:
       return {
         ...state,
@@ -36,8 +41,9 @@ export default (state = initialState, action) => {
     case UPDATE_POST:
       return {
         ...state,
-        post: action.payload.post,
-        status: action.payload.status,
+        posts: state.posts.map(post =>
+          post._id === action.payload.post._id ? action.payload.post : post
+        ),
         loading: false
       };
     case DELETE_POST:
