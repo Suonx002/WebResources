@@ -50,7 +50,14 @@ export default (state = initialState, action) => {
         loading: false
       };
     case DELETE_POST:
-      return { ...state, loading: false, status: action.payload.status };
+      return {
+        ...state,
+        posts: state.posts.filter(post => post._id !== action.payload.id),
+        status: action.payload.status,
+        loading: false
+      };
+
+    // posts: state.posts.filter(post => post._id !== action.payload.)
     // posts: state.posts.map(post => post._id === action.payload)
     case CURRENT_POST:
       return { ...state, current: action.payload, loading: false };

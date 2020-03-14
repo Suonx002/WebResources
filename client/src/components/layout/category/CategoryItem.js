@@ -177,7 +177,10 @@ const CategoryItem = props => {
                     type="submit"
                     color="primary"
                     variant="contained"
-                    onClick={() => deletePost(post._id)}
+                    onClick={() => {
+                      deletePost(post._id);
+                      setDeleteDialog(false);
+                    }}
                   >
                     Delete
                   </Button>

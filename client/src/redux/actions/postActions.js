@@ -98,7 +98,7 @@ export const updatePost = dataForm => async dispatch => {
   } catch (err) {
     dispatch({
       type: POST_ERROR,
-      payload: err.response
+      payload: err.response.data || err.response
     });
   }
 };
@@ -109,12 +109,12 @@ export const deletePost = id => async dispatch => {
 
     dispatch({
       type: DELETE_POST,
-      payload: res.data
+      payload: { ...res.data, id }
     });
   } catch (err) {
     dispatch({
       type: POST_ERROR,
-      payload: err.response
+      payload: err.response.data || err.response
     });
   }
 };
@@ -150,7 +150,7 @@ export const likePost = id => async dispatch => {
   } catch (err) {
     dispatch({
       type: POST_ERROR,
-      payload: err.response.data
+      payload: err.response.data || err.response
     });
   }
 };
@@ -168,7 +168,7 @@ export const dislikePost = id => async dispatch => {
   } catch (err) {
     dispatch({
       type: POST_ERROR,
-      payload: err.response.data
+      payload: err.response.data || err.response
     });
   }
 };
