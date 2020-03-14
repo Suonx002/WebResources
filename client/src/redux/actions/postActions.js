@@ -27,7 +27,7 @@ export const getPostsByCategory = category => async dispatch => {
       payload: res.data.posts
     });
   } catch (err) {
-    console.log(err.response);
+    // console.log(err.response);
 
     dispatch({
       type: POST_ERROR,
@@ -47,7 +47,7 @@ export const getPostById = id => async dispatch => {
 
     dispatch({
       type: GET_POST_BY_ID,
-      payload: res.data.post
+      payload: res.data
     });
   } catch (err) {
     dispatch({

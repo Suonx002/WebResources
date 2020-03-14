@@ -83,9 +83,7 @@ const CategoryList = props => {
   const handleCreatePost = () => {
     clearCurrentPost();
 
-    setTimeout(() => {
-      handleDialogClick();
-    }, 0);
+    handleDialogClick();
   };
 
   useEffect(() => {
@@ -97,7 +95,7 @@ const CategoryList = props => {
     // }
 
     // eslint-disable-next-line
-  }, [current, getPostsByCategory, match.params.category]);
+  }, [getPostsByCategory, match.params.category]);
 
   return (
     <Container maxWidth="md" style={{ marginTop: '5rem' }}>
@@ -207,6 +205,7 @@ const CategoryList = props => {
         )
       )}
       <List>
+        {/* List of items */}
         {posts !== null &&
           posts.length > 0 &&
           posts.map(post => (

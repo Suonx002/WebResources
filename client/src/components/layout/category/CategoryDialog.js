@@ -70,20 +70,20 @@ const CategoryDialog = props => {
   // console.log(categoriesSortedByName);
 
   useEffect(() => {
-    if (status === 'success') {
-      // setTitle('');
-      // setTags([]);
-      // setSummary('');
-      // setLink('');
-      // setCategory('');
-      // handleDialogClose();
+    // if (status === 'success') {
+    //   // setTitle('');
+    //   // setTags([]);
+    //   // setSummary('');
+    //   // setLink('');
+    //   // setCategory('');
+    //   // handleDialogClose();
 
-      window.location.reload();
+    //   window.location.reload();
 
-      // setTimeout(() => {
-      //   clearPost();
-      // }, 1000);
-    }
+    //   // setTimeout(() => {
+    //   //   clearPost();
+    //   // }, 1000);
+    // }
 
     if (current) {
       setTitle(current.title);
@@ -105,6 +105,8 @@ const CategoryDialog = props => {
       }, 3000);
     }
 
+    console.log('running in category dialog');
+
     // eslint-disable-next-line
   }, [current, status, error]);
 
@@ -119,8 +121,10 @@ const CategoryDialog = props => {
       category,
       user: user._id
     });
+
+    handleDialogClose();
   };
-  console.log(post);
+  // console.log(post);
 
   const handleUpdateSumbit = e => {
     e.preventDefault();

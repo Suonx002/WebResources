@@ -30,9 +30,8 @@ export default (state = initialState, action) => {
     case CREATE_POST:
       return {
         ...state,
-        post: action.payload.post,
-        loading: false,
-        status: action.payload.status
+        posts: [...state.posts, action.payload.post],
+        loading: false
       };
     case UPDATE_POST:
       return {

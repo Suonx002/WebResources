@@ -46,6 +46,8 @@ const CategoryDetail = props => {
   // console.log(props);
   // console.log(post);
 
+  console.log(post);
+
   const classes = useStyles();
   const theme = useTheme();
 
@@ -60,7 +62,7 @@ const CategoryDetail = props => {
   return (
     <Container maxWidth="md" className={classes.container}>
       <Card style={{ padding: '2rem' }}>
-        {post !== null && (
+        {post !== null && post !== undefined && (
           <Grid container direction="column" spacing={3} alignItems="center">
             <Grid item>
               <Typography variant="h3">{post.title}</Typography>
