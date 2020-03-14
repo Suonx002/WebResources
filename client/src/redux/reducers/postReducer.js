@@ -13,7 +13,8 @@ const initialState = {
   post: null,
   posts: null,
   loading: true,
-  error: null
+  error: null,
+  status: null
 };
 
 export default (state = initialState, action) => {
@@ -22,7 +23,12 @@ export default (state = initialState, action) => {
       return { ...state, posts: [...action.payload], loading: false };
     case GET_POST_BY_ID:
     case CREATE_POST:
-      return { ...state, post: action.payload, loading: false };
+      return {
+        ...state,
+        post: action.payload.post,
+        loading: false,
+        status: action.payload.status
+      };
     case LIKE_POST:
       return {
         ...state,

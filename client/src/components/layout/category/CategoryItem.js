@@ -68,6 +68,7 @@ const useStyles = makeStyles(theme => ({
 const CategoryItem = props => {
   const classes = useStyles();
   const {
+    handleDialogClick,
     match,
     post,
     likePost,
@@ -128,7 +129,7 @@ const CategoryItem = props => {
           {user !== null && post !== null && user._id === post.user && (
             <Fragment>
               <Tooltip title="Edit">
-                <IconButton>
+                <IconButton onClick={handleDialogClick}>
                   <EditIcon color="secondary" />
                 </IconButton>
               </Tooltip>

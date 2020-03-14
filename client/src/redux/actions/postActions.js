@@ -66,7 +66,7 @@ export const createPost = dataForm => async dispatch => {
 
     dispatch({
       type: CREATE_POST,
-      payload: res.data.post
+      payload: res.data
     });
   } catch (err) {
     console.log(err.response);

@@ -39,15 +39,13 @@ const useStyles = makeStyles(theme => ({
 const tagsOptions = ['free', 'paid', 'beginner', 'book', 'video'];
 
 const CategoryDialog = props => {
-  // console.log(props);
-  // console.log('run dialog');
   const {
     open,
-    handleClose,
+    handleDialogClose,
     createPost,
     clearPostError,
     clearPost,
-    post: { error, post },
+    post: { error, post, status },
     auth: { user },
     categories
   } = props;
@@ -60,14 +58,23 @@ const CategoryDialog = props => {
   const [summary, setSummary] = useState('');
   const [link, setLink] = useState('');
 
+  // copy the array and not make reference via stackoverflow
+  // https://stackoverflow.com/questions/1069666/sorting-object-property-by-values
+  const categoriesCopy = categories.category.slice(0);
+  const categoriesSortedByName = categoriesCopy.sort((a, b) =>
+    a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+  );
+
+  // console.log(categoriesSortedByName);
+
   useEffect(() => {
-    if (post) {
+    if (status === 'success') {
       setTitle('');
       setTags([]);
       setSummary('');
       setLink('');
       setCategory('');
-      handleClose();
+      handleDialogClose();
 
       window.location.reload();
 
@@ -83,7 +90,7 @@ const CategoryDialog = props => {
     }
 
     // eslint-disable-next-line
-  }, [post, error]);
+  }, [status, error]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -102,7 +109,7 @@ const CategoryDialog = props => {
     <Dialog
       fullWidth
       open={open}
-      onClose={handleClose}
+      onClose={handleDialogClose}
       aria-labelledby="form-dialog-title"
     >
       <form onSubmit={handleSubmit}>
@@ -161,8 +168,8 @@ const CategoryDialog = props => {
                     value={category}
                     onChange={e => setCategory(e.target.value)}
                   >
-                    {categories.category.map(item => (
-                      <MenuItem key={item} value={item.link}>
+                    {categoriesSortedByName.map((item, i) => (
+                      <MenuItem key={`${item}-${i}`} value={item.link}>
                         {item.name}
                       </MenuItem>
                     ))}
@@ -204,7 +211,7 @@ const CategoryDialog = props => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleDialogClose} color="primary">
             Cancel
           </Button>
           <Button type="submit" color="primary">

@@ -11,7 +11,10 @@ router
   .get(postController.getAllPosts)
   .post(authController.protect, postController.createPost);
 
-router.route('/:postId').get(postController.getPost);
+router
+  .route('/:postId')
+  .get(postController.getPost)
+  .patch(authController.protect, postController.editPost);
 
 router.patch('/like/:postId', authController.protect, postController.like);
 

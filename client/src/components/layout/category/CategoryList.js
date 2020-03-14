@@ -49,19 +49,22 @@ const CategoryList = props => {
   const [openDialog, setOpenDialog] = useState(false);
   const [snack, setSnack] = useState({
     open: false,
-    Transition: Fade
+    Transition: Fade,
+    vertical: 'top',
+    horizontal: 'center'
   });
   const [openSnack, setOpenSnack] = useState(false);
 
-  const handleSnackClick = () => {
-    setOpenSnack(true);
-  };
+  const { Transition, vertical, horizontal } = snack;
+
+  // const handleSnackClick = () => {
+  //   setOpenSnack(true);
+  // };
 
   const handleSnackClose = (e, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpenSnack(false);
   };
 
@@ -76,36 +79,57 @@ const CategoryList = props => {
   // console.log('running category list');
 
   useEffect(() => {
+    console.log('category list');
     getPostsByCategory(match.params.category);
     // console.log('running in effect of category list');
 
     // eslint-disable-next-line
-  }, [match.params.category]);
+  }, [getPostsByCategory, match.params.category]);
 
   return (
     <Container maxWidth="md" style={{ marginTop: '5rem' }}>
-      <Snackbar
-        TransitionComponent={snack.Transition}
-        message="Testing Snackbar"
-      />
       {/* Error handling */}
       {error && error.message === 'Post already liked' && (
-        <Alert severity="error" style={{ marginBottom: '1rem' }}>
-          {error.message}
-        </Alert>
+        <Snackbar
+          TransitionComponent={Transition}
+          open
+          onClose={handleSnackClose}
+          autoHideDuration={4000}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert severity="error" style={{ marginBottom: '1rem' }}>
+            {error.message}
+          </Alert>
+        </Snackbar>
       )}
       {error && error.message === 'Post has not yet been liked' && (
-        <Alert severity="warning" style={{ marginBottom: '1rem' }}>
-          {error.message}
-        </Alert>
+        <Snackbar
+          TransitionComponent={Transition}
+          open
+          onClose={handleSnackClose}
+          autoHideDuration={4000}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert severity="warning" style={{ marginBottom: '1rem' }}>
+            {error.message}
+          </Alert>
+        </Snackbar>
       )}
 
       {error &&
         error.message ===
           'You are not logged in to access this. Please log in to get access!' && (
-          <Alert severity="error" style={{ marginBottom: '1rem' }}>
-            {error.message}
-          </Alert>
+          <Snackbar
+            TransitionComponent={Transition}
+            open
+            onClose={handleSnackClose}
+            autoHideDuration={4000}
+            anchorOrigin={{ vertical, horizontal }}
+          >
+            <Alert severity="error" style={{ marginBottom: '1rem' }}>
+              {error.message}
+            </Alert>
+          </Snackbar>
         )}
 
       <div className={classes.containerButton}>
@@ -173,7 +197,12 @@ const CategoryList = props => {
         {posts !== null &&
           posts.length > 0 &&
           posts.map(post => (
-            <CategoryItem key={post._id} post={post} error={error} />
+            <CategoryItem
+              key={post._id}
+              post={post}
+              error={error}
+              handleDialogClick={handleDialogClick}
+            />
           ))}
       </List>
     </Container>

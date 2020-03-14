@@ -25,6 +25,19 @@ exports.getPostsByCategory = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getAllPosts = catchAsync(async (req, res, next) => {
+  const posts = await Post.find();
+
+  if (!posts) {
+    return next(new AppError('There are no posts created...', 400));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    posts
+  });
+});
+
 exports.getPost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.postId).populate({
     path: 'user',
@@ -41,16 +54,43 @@ exports.getPost = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getAllPosts = catchAsync(async (req, res, next) => {
-  const posts = await Post.find();
+exports.editPost = catchAsync(async (req, res, next) => {
+  const { title, summary, tags, category, link } = req.body;
 
-  if (!posts) {
-    return next(new AppError('There are no posts created...', 400));
+  let post = await Post.findById(req.params.postId);
+
+  // const post = await Post.findByIdAndUpdate(req.params.postId, req.body);
+
+  if (!post) {
+    return next(new AppError('No post found with this ID.', 404));
   }
+
+  // console.log(req.user);
+  // console.log(post);
+
+  // console.log(post.user !== req.user._id);
+
+  if (post.user.toString() !== req.user._id.toString()) {
+    return next(new AppError('You are not allow to edit this post', 401));
+  }
+
+  const postFields = {};
+
+  if (title) postFields.title = title;
+  if (summary) postFields.summary = summary;
+  if (tags) postFields.tags = tags;
+  if (category) postFields.category = category;
+  if (link) postFields.link = link;
+
+  post = await Post.findByIdAndUpdate(
+    req.params.postId,
+    { $set: postFields },
+    { new: true }
+  );
 
   res.status(200).json({
     status: 'success',
-    posts
+    post
   });
 });
 

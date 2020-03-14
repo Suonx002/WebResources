@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: [true, 'Please provide a title']
+    required: [true, 'Please provide a title'],
+    trim: true
   },
   summary: {
     type: String,
     required: [true, 'Please provide a summary'],
-    minlength: [120, 'Please provide at least 120 characters']
+    minlength: [120, 'Please provide at least 120 characters'],
+    trim: true
   },
   tags: [
     {
@@ -50,7 +52,8 @@ const postSchema = new mongoose.Schema({
   },
   link: {
     type: String,
-    required: [true, 'Please provide a tutorial link']
+    required: [true, 'Please provide a tutorial link'],
+    trim: true
   },
   likes: [
     {
