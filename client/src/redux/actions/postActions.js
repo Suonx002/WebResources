@@ -7,7 +7,11 @@ import {
   CLEAR_POST_ERROR,
   CLEAR_POST,
   LIKE_POST,
-  DISLIKE_POST
+  DISLIKE_POST,
+  CURRENT_POST,
+  CLEAR_CURRENT_POST,
+  UPDATE_POST,
+  DELETE_POST
 } from './types';
 // import setAuthorizationToken from '../../utils/setAuthorizationToken';
 
@@ -80,6 +84,40 @@ export const createPost = dataForm => async dispatch => {
   }
 };
 
+export const updatePost = dataForm => async dispatch => {
+  try {
+    const res = await axios.patch(`/api/v1/posts/${dataForm.id}`, dataForm);
+
+    console.log(res.data);
+
+    dispatch({
+      type: UPDATE_POST,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: err.response
+    });
+  }
+};
+
+export const deletePost = id => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/v1/posts/${id}`);
+
+    dispatch({
+      type: DELETE_POST,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: err.response
+    });
+  }
+};
+
 export const clearPost = () => dispatch => {
   return dispatch({
     type: CLEAR_POST
@@ -126,4 +164,17 @@ export const dislikePost = id => async dispatch => {
       payload: err.response.data
     });
   }
+};
+
+export const currentPost = post => dispatch => {
+  dispatch({
+    type: CURRENT_POST,
+    payload: post
+  });
+};
+
+export const clearCurrentPost = () => dispatch => {
+  dispatch({
+    type: CLEAR_CURRENT_POST
+  });
 };

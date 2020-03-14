@@ -94,6 +94,25 @@ exports.editPost = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.deletePost = catchAsync(async (req, res, next) => {
+  let post = await Post.findById(req.params.postId);
+
+  if (!post) {
+    return next(new AppError('No post found with this ID.', 404));
+  }
+
+  if (post.user.toString() !== req.user._id.toString()) {
+    return next(new AppError('You are not allow to delete this post', 401));
+  }
+
+  await Post.findByIdAndDelete(req.params.postId);
+
+  res.status(200).json({
+    status: 'success',
+    post: 'Post successfully deleted'
+  });
+});
+
 exports.like = catchAsync(async (req, res, next) => {
   const post = await Post.findOne({ _id: req.params.postId });
 
@@ -121,7 +140,7 @@ exports.dislike = catchAsync(async (req, res, next) => {
 
   // get remove index
   const removeIndex = post.likes.indexOf(req.user.id);
-  console.log(removeIndex);
+  // console.log(removeIndex);
 
   post.likes.splice(removeIndex, 1);
 

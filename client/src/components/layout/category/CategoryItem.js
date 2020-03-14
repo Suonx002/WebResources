@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -9,12 +9,22 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { likePost, dislikePost } from '../../../redux/actions/postActions';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+
+import {
+  likePost,
+  dislikePost,
+  currentPost,
+  deletePost
+} from '../../../redux/actions/postActions';
 
 const useStyles = makeStyles(theme => ({
   listItemContainer: {
@@ -68,6 +78,8 @@ const useStyles = makeStyles(theme => ({
 const CategoryItem = props => {
   const classes = useStyles();
   const {
+    currentPost,
+    deletePost,
     handleDialogClick,
     match,
     post,
@@ -75,6 +87,13 @@ const CategoryItem = props => {
     dislikePost,
     auth: { user }
   } = props;
+
+  const [deleteDialog, setDeleteDialog] = useState(false);
+
+  const handleEditClick = () => {
+    currentPost(post);
+    handleDialogClick();
+  };
 
   return (
     post !== null && (
@@ -129,15 +148,41 @@ const CategoryItem = props => {
           {user !== null && post !== null && user._id === post.user && (
             <Fragment>
               <Tooltip title="Edit">
-                <IconButton onClick={handleDialogClick}>
+                <IconButton onClick={handleEditClick}>
                   <EditIcon color="secondary" />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Delete">
-                <IconButton>
+                <IconButton onClick={() => setDeleteDialog(true)}>
                   <DeleteIcon color="error" />
                 </IconButton>
               </Tooltip>
+              <Dialog
+                fullWidth
+                open={deleteDialog}
+                onClose={() => setDeleteDialog(false)}
+                aria-labelledby="form-dialog-delete"
+              >
+                <DialogTitle style={{ textAlign: 'center' }}>
+                  Do You Want To Delete This Post ?
+                </DialogTitle>
+                <DialogActions>
+                  <Button
+                    onClick={() => setDeleteDialog(false)}
+                    variant="outlined"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    onClick={() => deletePost(post._id)}
+                  >
+                    Delete
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Fragment>
           )}
           <Tooltip title="Website Link">
@@ -166,7 +211,9 @@ const mapStateToProps = state => ({
 
 const actions = {
   likePost,
-  dislikePost
+  dislikePost,
+  currentPost,
+  deletePost
 };
 
 export default connect(mapStateToProps, actions)(withRouter(CategoryItem));

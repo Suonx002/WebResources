@@ -14,7 +14,8 @@ router
 router
   .route('/:postId')
   .get(postController.getPost)
-  .patch(authController.protect, postController.editPost);
+  .patch(authController.protect, postController.editPost)
+  .delete(authController.protect, postController.deletePost);
 
 router.patch('/like/:postId', authController.protect, postController.like);
 

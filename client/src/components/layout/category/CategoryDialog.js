@@ -19,6 +19,7 @@ import Alert from '@material-ui/lab/Alert';
 
 import {
   createPost,
+  updatePost,
   clearPostError,
   clearPost
 } from '../../../redux/actions/postActions';
@@ -43,9 +44,10 @@ const CategoryDialog = props => {
     open,
     handleDialogClose,
     createPost,
+    updatePost,
     clearPostError,
     clearPost,
-    post: { error, post, status },
+    post: { error, post, status, current },
     auth: { user },
     categories
   } = props;
@@ -69,18 +71,32 @@ const CategoryDialog = props => {
 
   useEffect(() => {
     if (status === 'success') {
+      // setTitle('');
+      // setTags([]);
+      // setSummary('');
+      // setLink('');
+      // setCategory('');
+      // handleDialogClose();
+
+      window.location.reload();
+
+      // setTimeout(() => {
+      //   clearPost();
+      // }, 1000);
+    }
+
+    if (current) {
+      setTitle(current.title);
+      setTags(current.tags);
+      setSummary(current.summary);
+      setLink(current.link);
+      setCategory(current.category);
+    } else {
       setTitle('');
       setTags([]);
       setSummary('');
       setLink('');
       setCategory('');
-      handleDialogClose();
-
-      window.location.reload();
-
-      setTimeout(() => {
-        clearPost();
-      }, 1000);
     }
 
     if (error) {
@@ -90,7 +106,7 @@ const CategoryDialog = props => {
     }
 
     // eslint-disable-next-line
-  }, [status, error]);
+  }, [current, status, error]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -104,6 +120,20 @@ const CategoryDialog = props => {
       user: user._id
     });
   };
+  console.log(post);
+
+  const handleUpdateSumbit = e => {
+    e.preventDefault();
+
+    updatePost({
+      title,
+      tags,
+      summary,
+      link,
+      category,
+      id: current._id
+    });
+  };
 
   return (
     <Dialog
@@ -112,10 +142,12 @@ const CategoryDialog = props => {
       onClose={handleDialogClose}
       aria-labelledby="form-dialog-title"
     >
-      <form onSubmit={handleSubmit}>
-        <DialogTitle id="form-dialog-title">Create New Post</DialogTitle>
+      <form onSubmit={current ? handleUpdateSumbit : handleSubmit}>
+        <DialogTitle id="form-dialog-title" style={{ textAlign: 'center' }}>
+          {current !== null ? 'Edit Post' : 'Create New Post'}
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText>Please fill out all fields</DialogContentText>
+          {/* <DialogContentText>Please fill out all fields</DialogContentText> */}
           <Grid container direction="column">
             <Grid item container direction="column">
               {error !== null &&
@@ -198,7 +230,6 @@ const CategoryDialog = props => {
             </Grid>
             <Grid item className={classes.textField}>
               <TextField
-                autoFocus
                 id="link"
                 label="Tutorial URL"
                 type="text"
@@ -211,11 +242,11 @@ const CategoryDialog = props => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose} color="primary">
+          <Button onClick={handleDialogClose} variant="outlined">
             Cancel
           </Button>
-          <Button type="submit" color="primary">
-            Submit
+          <Button type="submit" color="primary" variant="contained">
+            {current !== null ? 'Update' : 'Add Post'}
           </Button>
         </DialogActions>
       </form>
@@ -231,6 +262,7 @@ const mapStateToProps = state => ({
 
 const actions = {
   createPost,
+  updatePost,
   clearPostError,
   clearPost
 };

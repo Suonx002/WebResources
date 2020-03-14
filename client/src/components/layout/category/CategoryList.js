@@ -13,7 +13,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
 import Fade from '@material-ui/core/Fade';
 
-import { getPostsByCategory } from '../../../redux/actions/postActions';
+import {
+  getPostsByCategory,
+  clearCurrentPost
+} from '../../../redux/actions/postActions';
 
 import CategoryItem from './CategoryItem';
 import CategoryDialog from './CategoryDialog';
@@ -38,10 +41,11 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryList = props => {
   const {
-    posts: { posts, error },
+    posts: { posts, error, current },
     auth: { isAuthenticated },
     getPostsByCategory,
-    match
+    match,
+    clearCurrentPost
   } = props;
   // console.log(props);
   const classes = useStyles();
@@ -76,15 +80,24 @@ const CategoryList = props => {
     setOpenDialog(false);
   };
 
-  // console.log('running category list');
+  const handleCreatePost = () => {
+    clearCurrentPost();
+
+    setTimeout(() => {
+      handleDialogClick();
+    }, 0);
+  };
 
   useEffect(() => {
-    console.log('category list');
+    // console.log('category list');
     getPostsByCategory(match.params.category);
     // console.log('running in effect of category list');
+    // if (current) {
+    //   clearCurrentPost();
+    // }
 
     // eslint-disable-next-line
-  }, [getPostsByCategory, match.params.category]);
+  }, [current, getPostsByCategory, match.params.category]);
 
   return (
     <Container maxWidth="md" style={{ marginTop: '5rem' }}>
@@ -138,7 +151,7 @@ const CategoryList = props => {
             variant="outlined"
             color="primary"
             size="large"
-            onClick={handleDialogClick}
+            onClick={handleCreatePost}
           >
             Create A Post
           </Button>
@@ -215,7 +228,8 @@ const mapStateToProps = state => ({
 });
 
 const actions = {
-  getPostsByCategory
+  getPostsByCategory,
+  clearCurrentPost
 };
 
 export default connect(mapStateToProps, actions)(CategoryList);
