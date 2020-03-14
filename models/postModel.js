@@ -15,10 +15,10 @@ const postSchema = new mongoose.Schema({
   tags: [
     {
       type: String,
-      enum: ['free', 'beginner', 'paid', 'video', 'book'],
-      required: [true, 'Please provide a tag']
+      enum: ['free', 'beginner', 'paid', 'video', 'book']
     }
   ],
+
   category: {
     type: String,
     required: [true, 'Please select a category'],
@@ -71,6 +71,11 @@ const postSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
+//validate tags
+postSchema.path('tags').validate(function(value) {
+  return value.length;
+}, 'Please provide at least one tag');
 
 const Post = mongoose.model('Post', postSchema);
 module.exports = Post;

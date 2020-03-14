@@ -70,21 +70,6 @@ const CategoryDialog = props => {
   // console.log(categoriesSortedByName);
 
   useEffect(() => {
-    // if (status === 'success') {
-    //   // setTitle('');
-    //   // setTags([]);
-    //   // setSummary('');
-    //   // setLink('');
-    //   // setCategory('');
-    //   // handleDialogClose();
-
-    //   window.location.reload();
-
-    //   // setTimeout(() => {
-    //   //   clearPost();
-    //   // }, 1000);
-    // }
-
     if (current) {
       setTitle(current.title);
       setTags(current.tags);
@@ -105,7 +90,7 @@ const CategoryDialog = props => {
       }, 3000);
     }
 
-    console.log('running in category dialog');
+    // console.log('running in category dialog');
 
     // eslint-disable-next-line
   }, [current, status, error]);
@@ -113,33 +98,44 @@ const CategoryDialog = props => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    createPost({
-      title,
-      tags,
-      summary,
-      link,
-      category,
-      user: user._id
-    });
+    if (current) {
+      updatePost({
+        title,
+        tags,
+        summary,
+        link,
+        category,
+        id: current._id
+      });
+    } else {
+      createPost({
+        title,
+        tags,
+        summary,
+        link,
+        category,
+        user: user._id
+      });
+    }
 
     handleDialogClose();
   };
   // console.log(post);
 
-  const handleUpdateSumbit = e => {
-    e.preventDefault();
+  // const handleUpdateSumbit = e => {
+  //   e.preventDefault();
 
-    updatePost({
-      title,
-      tags,
-      summary,
-      link,
-      category,
-      id: current._id
-    });
+  //   updatePost({
+  //     title,
+  //     tags,
+  //     summary,
+  //     link,
+  //     category,
+  //     id: current._id
+  //   });
 
-    handleDialogClose();
-  };
+  //   handleDialogClose();
+  // };
 
   return (
     <Dialog
@@ -148,7 +144,7 @@ const CategoryDialog = props => {
       onClose={handleDialogClose}
       aria-labelledby="form-dialog-title"
     >
-      <form onSubmit={current ? handleUpdateSumbit : handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <DialogTitle id="form-dialog-title" style={{ textAlign: 'center' }}>
           {current !== null ? 'Edit Post' : 'Create New Post'}
         </DialogTitle>
