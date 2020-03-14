@@ -15,9 +15,11 @@ const handleDuplicateFieldsDB = err => {
 
 const handleValidationErrorDB = err => {
   const errors = Object.values(err.errors).map(el => el.message);
+  // console.log(errors);
 
   // const message = `${errors.join('. ')}`;
   const message = `${errors}`;
+  // console.log(message);
   return new AppError(message, 400);
 };
 

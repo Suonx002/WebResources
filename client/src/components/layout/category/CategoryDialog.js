@@ -21,7 +21,8 @@ import {
   createPost,
   updatePost,
   clearPostError,
-  clearPost
+  clearPost,
+  clearStatus
 } from '../../../redux/actions/postActions';
 
 const useStyles = makeStyles(theme => ({
@@ -47,6 +48,7 @@ const CategoryDialog = props => {
     updatePost,
     clearPostError,
     clearPost,
+    clearStatus,
     post: { error, post, status, current },
     auth: { user },
     categories
@@ -84,6 +86,14 @@ const CategoryDialog = props => {
       setCategory('');
     }
 
+    if (status === 'success') {
+      handleDialogClose();
+
+      setTimeout(() => {
+        clearStatus();
+      }, 1000);
+    }
+
     if (error) {
       setTimeout(() => {
         clearPostError();
@@ -117,8 +127,6 @@ const CategoryDialog = props => {
         user: user._id
       });
     }
-
-    handleDialogClose();
   };
   // console.log(post);
 
@@ -152,12 +160,19 @@ const CategoryDialog = props => {
           {/* <DialogContentText>Please fill out all fields</DialogContentText> */}
           <Grid container direction="column">
             <Grid item container direction="column">
-              {error !== null &&
+              {(error !== null &&
                 error.message.split(',').map(alert => (
-                  <Grid item key={uuid()} style={{ marginBottom: '0.5rem' }}>
+                  <Grid item key={uuid()} style={{ marginBottom: '1rem' }}>
                     <Alert variant="filled" severity="error">
                       {alert}
-                    </Alert>{' '}
+                    </Alert>
+                  </Grid>
+                ))) ||
+                (error !== null && (
+                  <Grid item style={{ marginBottom: '1rem' }}>
+                    <Alert variant="filled" severity="error">
+                      {error.message}
+                    </Alert>
                   </Grid>
                 ))}
             </Grid>
@@ -266,7 +281,8 @@ const actions = {
   createPost,
   updatePost,
   clearPostError,
-  clearPost
+  clearPost,
+  clearStatus
 };
 
 export default connect(mapStateToProps, actions)(CategoryDialog);

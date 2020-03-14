@@ -18,7 +18,9 @@ export const POST_ERROR = 'POST_ERROR';
 export const CLEAR_POST_ERROR = 'CLEAR_POST_ERROR';
 export const CLEAR_POST = 'CLEAR_POST';
 export const CURRENT_POST = 'CURRENT_POST';
+
 export const CLEAR_CURRENT_POST = 'CLEAR_CURRENT_POST';
+export const CLEAR_STATUS = 'CLEAR_STATUS';
 
 export const LIKE_POST = 'LIKE_POST';
 export const DISLIKE_POST = 'DISLIKE_POST';

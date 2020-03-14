@@ -11,7 +11,8 @@ import {
   CURRENT_POST,
   CLEAR_CURRENT_POST,
   UPDATE_POST,
-  DELETE_POST
+  DELETE_POST,
+  CLEAR_STATUS
 } from './types';
 // import setAuthorizationToken from '../../utils/setAuthorizationToken';
 
@@ -31,7 +32,7 @@ export const getPostsByCategory = category => async dispatch => {
 
     dispatch({
       type: POST_ERROR,
-      payload: err.response.data
+      payload: err.response.data || err.response
     });
   }
 };
@@ -79,7 +80,7 @@ export const createPost = dataForm => async dispatch => {
 
     dispatch({
       type: POST_ERROR,
-      payload: err.response.data
+      payload: err.response.data || err.response
     });
   }
 };
@@ -127,6 +128,12 @@ export const clearPost = () => dispatch => {
 export const clearPostError = () => dispatch => {
   return dispatch({
     type: CLEAR_POST_ERROR
+  });
+};
+
+export const clearStatus = () => dispatch => {
+  dispatch({
+    type: CLEAR_STATUS
   });
 };
 

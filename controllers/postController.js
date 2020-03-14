@@ -74,19 +74,18 @@ exports.editPost = catchAsync(async (req, res, next) => {
     return next(new AppError('You are not allow to edit this post', 401));
   }
 
-  const postFields = {};
+  // const postFields = {};
 
-  if (title) postFields.title = title;
-  if (summary) postFields.summary = summary;
-  if (tags) postFields.tags = tags;
-  if (category) postFields.category = category;
-  if (link) postFields.link = link;
+  // if (title) postFields.title = title;
+  // if (summary) postFields.summary = summary;
+  // if (tags) postFields.tags = tags;
+  // if (category) postFields.category = category;
+  // if (link) postFields.link = link;
 
-  post = await Post.findByIdAndUpdate(
-    req.params.postId,
-    { $set: postFields },
-    { new: true }
-  );
+  post = await Post.findByIdAndUpdate(req.params.postId, req.body, {
+    new: true,
+    runValidators: true
+  });
 
   res.status(200).json({
     status: 'success',
