@@ -91,7 +91,7 @@ export default (state = initialState, action) => {
     case CLEAR_POST:
       return { ...state, post: null, loading: false };
     case POST_ERROR:
-      return { ...state, error: action.payload.data, loading: false };
+      return { ...state, error: action.payload, loading: false };
     case CLEAR_POST_ERROR:
       return { ...state, error: null };
     default:

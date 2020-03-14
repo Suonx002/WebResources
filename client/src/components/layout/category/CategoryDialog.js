@@ -78,7 +78,7 @@ const CategoryDialog = props => {
       setSummary(current.summary);
       setLink(current.link);
       setCategory(current.category);
-    } else {
+    } else if (current === null) {
       setTitle('');
       setTags([]);
       setSummary('');
@@ -128,22 +128,6 @@ const CategoryDialog = props => {
       });
     }
   };
-  // console.log(post);
-
-  // const handleUpdateSumbit = e => {
-  //   e.preventDefault();
-
-  //   updatePost({
-  //     title,
-  //     tags,
-  //     summary,
-  //     link,
-  //     category,
-  //     id: current._id
-  //   });
-
-  //   handleDialogClose();
-  // };
 
   return (
     <Dialog

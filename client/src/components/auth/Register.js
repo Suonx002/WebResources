@@ -101,7 +101,7 @@ const Register = props => {
           <Grid item>
             <TextField
               id="name"
-              label="Full Name"
+              label="Name"
               fullWidth
               value={name}
               onChange={handleChange}

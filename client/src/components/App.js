@@ -19,6 +19,7 @@ import Register from './auth/Register';
 import Login from './auth/Login';
 import CategoryList from './layout/category/CategoryList';
 import CategoryDetail from './layout/category/CategoryDetail';
+import NotFoundPage from './NotFoundPage';
 import Me from './Me';
 
 const App = () => {
@@ -40,6 +41,7 @@ const App = () => {
               <Route exact path="/" component={LandingPage} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/error-404" component={NotFoundPage} />
               <PrivateRoute exact path="/me" component={Me} />
               <Route
                 exact
