@@ -9,8 +9,12 @@ exports.createComment = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   const post = await Post.findById(req.params.postId);
 
-  if (!user || !post) {
-    return next(new AppError('You are not allow to post comment', 401));
+  if (!post) {
+    return next(new AppError('There is no post with this ID', 400));
+  }
+
+  if (!user) {
+    return next(new AppError('Please log in to post this comment', 400));
   }
 
   const comment = await Comment.create({
@@ -18,6 +22,9 @@ exports.createComment = catchAsync(async (req, res, next) => {
     user: user.id,
     post: post.id
   });
+
+  post.comments.push(comment.id);
+  await post.save();
 
   res.status(201).json({
     status: 'success',
