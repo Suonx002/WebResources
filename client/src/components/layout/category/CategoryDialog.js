@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import uuid from 'uuid/v4';
+// import uuid from 'uuid/v4';
 import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
@@ -9,19 +9,20 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import Alert from '@material-ui/lab/Alert';
+// import Alert from '@material-ui/lab/Alert';
 
 import {
   createPost,
-  updatePost,
+  updatePost
   // clearPostError,
-  clearStatus
+  // clearStatus
 } from '../../../redux/actions/postActions';
 
 const useStyles = makeStyles(theme => ({
@@ -47,7 +48,7 @@ const CategoryDialog = props => {
     updatePost,
     // clearPostError,
 
-    clearStatus,
+    // clearStatus,
     post: {
       // error,
       status,
@@ -58,6 +59,10 @@ const CategoryDialog = props => {
   } = props;
 
   const classes = useStyles();
+  const theme = useTheme();
+
+  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
   const [category, setCategory] = useState('');
   const [tags, setTags] = useState([]);
@@ -93,7 +98,7 @@ const CategoryDialog = props => {
     //   handleDialogClose();
 
     //   setTimeout(() => {
-    //     clearStatus();
+    // clearStatus();
     //   }, 1000);
     // }
 
@@ -209,7 +214,10 @@ const CategoryDialog = props => {
                 <FormControl variant="outlined">
                   <InputLabel id="category">Category</InputLabel>
                   <Select
-                    style={{ width: 250 }}
+                    style={{
+                      width: matchesXS ? 264 : matchesSM ? 385 : 250,
+                      marginBottom: matchesSM ? '1rem' : undefined
+                    }}
                     labelId="category"
                     id="category"
                     value={category}
@@ -227,7 +235,7 @@ const CategoryDialog = props => {
                 <FormControl variant="outlined">
                   <InputLabel id="tags">Tags</InputLabel>
                   <Select
-                    style={{ width: 250 }}
+                    style={{ width: matchesXS ? 264 : matchesSM ? 385 : 250 }}
                     labelId="tags"
                     id="tags"
                     multiple
@@ -290,10 +298,10 @@ const mapStateToProps = state => ({
 
 const actions = {
   createPost,
-  updatePost,
+  updatePost
   // clearPostError,
 
-  clearStatus
+  // clearStatus
 };
 
 export default connect(mapStateToProps, actions)(CategoryDialog);

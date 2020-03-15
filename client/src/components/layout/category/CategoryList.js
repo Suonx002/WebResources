@@ -45,10 +45,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SlideTransition(props) {
-  return <Slide {...props} direction="up" />;
-}
-
 const CategoryList = props => {
   const {
     posts: { posts, error },
@@ -70,10 +66,6 @@ const CategoryList = props => {
   const [openSnack, setOpenSnack] = useState(false);
 
   const { Transition, vertical, horizontal } = snack;
-
-  // const handleSnackClick = () => {
-  //   setOpenSnack(true);
-  // };
 
   const handleSnackClose = (e, reason) => {
     if (reason === 'clickaway') {
@@ -97,7 +89,6 @@ const CategoryList = props => {
   };
 
   useEffect(() => {
-    // console.log('category list');
     getPostsByCategory(match.params.category);
     // console.log('running in effect of category list');
     // if (current) {

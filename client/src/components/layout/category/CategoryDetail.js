@@ -23,9 +23,9 @@ import {
   getCommentsByPostId
 } from '../../../redux/actions/commentActions';
 
-function SlideTransition(props) {
-  return <Slide {...props} direction="up" />;
-}
+// function SlideTransition(props) {
+//   return <Slide {...props} direction="up" />;
+// }
 
 const useStyles = makeStyles(theme => ({
   container: {
