@@ -75,7 +75,7 @@ exports.editComment = catchAsync(async (req, res, next) => {
 
   // console.log(req.user.id === comment.user.toString());
 
-  if (req.user.id !== comment.user.toString()) {
+  if (req.user.id !== comment.user.id) {
     return next(new AppError('You are not allow to edit this comment', 401));
   }
 
@@ -102,9 +102,19 @@ exports.deleteComment = catchAsync(async (req, res, next) => {
     return next(new AppError('There are no post or comment with this ID', 400));
   }
 
-  if (req.user.id !== comment.user.toString()) {
+  if (req.user.id !== comment.user.id) {
     return next(new AppError('You are not allow to delete this comment', 401));
   }
+
+  const removeIndex = post.comments.findIndex(
+    commentID => commentID.toString() === req.params.commentId
+  );
+
+  console.log(removeIndex);
+
+  post.comments.splice(removeIndex, 1);
+  // console.log(post);
+  await post.save();
 
   await Comment.findByIdAndDelete(req.params.commentId);
 
