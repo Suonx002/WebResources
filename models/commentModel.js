@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema({
-  text: {
+  comment: {
     type: String,
     required: [true, 'Please provide a comment'],
     minlength: [20, 'Comment must be at least 20 characters ']

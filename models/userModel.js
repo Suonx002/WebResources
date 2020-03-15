@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema({
       message: 'Password does not match'
     }
   },
+  avatar: {
+    type: String
+  },
   role: {
     type: String,
     enum: ['user'],

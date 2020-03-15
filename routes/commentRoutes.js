@@ -9,4 +9,9 @@ router
   .post(authController.protect, commentController.createComment)
   .get(commentController.getCommentsByPostId);
 
+router
+  .route('/:postId/:commentId')
+  .patch(authController.protect, commentController.editComment)
+  .delete(authController.protect, commentController.deleteComment);
+
 module.exports = router;
