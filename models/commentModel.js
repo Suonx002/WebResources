@@ -22,4 +22,24 @@ const commentSchema = new mongoose.Schema({
   }
 });
 
+// comment middlewares
+// commentSchema.pre('save', function(next) {
+
+//   next();
+// });
+
+commentSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'user',
+    select: 'name avatar'
+  });
+
+  this.populate({
+    path: 'post',
+    select: 'title summary'
+  });
+
+  next();
+});
+
 module.exports = mongoose.model('Comment', commentSchema);

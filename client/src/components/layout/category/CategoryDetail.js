@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -10,9 +10,14 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Avatar from '@material-ui/core/Avatar';
+import Card from '@material-ui/core/Card';
 
 import { getPostById } from '../../../redux/actions/postActions';
-import { Card } from '@material-ui/core';
+import {
+  createComment,
+  clearCommentError,
+  getCommentsByPostId
+} from '../../../redux/actions/commentActions';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -39,12 +44,17 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryDetail = props => {
   const {
-    posts: { post },
+    match,
     getPostById,
-    match
+    createComment,
+    getCommentsByPostId,
+    clearCommentError,
+    auth: { user },
+    posts: { post },
+    comments: { comments }
   } = props;
 
-  console.log(post);
+  // console.log(post);
 
   const classes = useStyles();
   const theme = useTheme();
@@ -52,11 +62,27 @@ const CategoryDetail = props => {
   // const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
+  const [commentInput, setCommentInput] = useState('');
+
+  const handleCommentSubmit = e => {
+    e.preventDefault();
+
+    if (user !== null && post !== null) {
+      console.log(commentInput);
+      createComment({
+        comment: commentInput,
+        user: user._id,
+        post: post._id
+      });
+    }
+  };
+
   useEffect(() => {
+    getCommentsByPostId(match.params.categoryId);
     getPostById(match.params.categoryId);
 
     // eslint-disable-next-line
-  }, [match.params.categoryId]);
+  }, [getPostById, getCommentsByPostId, match.params.categoryId]);
 
   return (
     post !== null &&
@@ -97,6 +123,7 @@ const CategoryDetail = props => {
                   <Typography
                     variant="subtitle1"
                     // style={{ marginLeft: '0.5rem' }}
+                    style={{ marginLeft: '0.5rem' }}
                   >
                     {post.user.name[0].toUpperCase() + post.user.name.slice(1)}
                   </Typography>
@@ -118,9 +145,9 @@ const CategoryDetail = props => {
                 </Button>
               </Grid>
             </Grid>
-            {/* Message */}
+            {/* Comment */}
             <Grid item container direction="column">
-              <form>
+              <form onSubmit={handleCommentSubmit}>
                 <Grid item aligns="flex-start" style={{ marginBottom: '1rem' }}>
                   <Typography variant="h6">Write a Post</Typography>
                 </Grid>
@@ -130,7 +157,9 @@ const CategoryDetail = props => {
                     multiline
                     variant="outlined"
                     rows="4"
-                    label="Message"
+                    label="Comment"
+                    value={commentInput}
+                    onChange={e => setCommentInput(e.target.value)}
                   />
                 </Grid>
                 <Grid
@@ -158,45 +187,46 @@ const CategoryDetail = props => {
                   Comments
                 </Typography>
               </Grid>
-
-              <Grid item container className={classes.postContainer}>
-                <Grid
-                  item
-                  container
-                  direction="column"
-                  xs
-                  style={{ maxWidth: 120 }}
-                  alignItems="center"
-                  justify="center"
-                >
-                  <Grid item>
-                    {/* <img
-                    className={classes.authorImage}
-                    src="https://randomuser.me/api/portraits/women/65.jpg"
-                    alt="random user 2"
-                  /> */}
-                    <Avatar src="https://randomuser.me/api/portraits/women/65.jpg" />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle2" align="center">
-                      Jessica Song
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid item xs>
-                  <Typography
-                    variant="body1"
-                    align="left"
-                    style={{ marginLeft: '0.5rem', hyphens: 'auto' }}
+              {comments !== null &&
+                comments !== undefined &&
+                comments.map(comment => (
+                  <Grid
+                    item
+                    container
+                    className={classes.postContainer}
+                    key={comment._id}
                   >
-                    Lorem ipsum dolor sit amet consec teadi isicing elit. Quas
-                    rerum incidunt eaque cumque laborum repellendus adipisci
-                    pariatur dolor, qui labore?
-                  </Typography>
-                </Grid>
-              </Grid>
-              {/* next */}
+                    <Grid
+                      item
+                      container
+                      direction="column"
+                      xs
+                      style={{ maxWidth: 120 }}
+                      alignItems="center"
+                      justify="center"
+                    >
+                      <Grid item>
+                        <Avatar src="https://randomuser.me/api/portraits/women/65.jpg" />
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="subtitle2" align="center">
+                          {comment.user.name}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs>
+                      <Typography
+                        variant="body1"
+                        align="left"
+                        style={{ marginLeft: '0.5rem', hyphens: 'auto' }}
+                      >
+                        {comment.comment}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                ))}
             </Grid>
+            {/* next */}
           </Grid>
         </Card>
       </Container>
@@ -205,11 +235,16 @@ const CategoryDetail = props => {
 };
 
 const mapStateToProps = state => ({
-  posts: state.post
+  posts: state.post,
+  comments: state.comment,
+  auth: state.auth
 });
 
 const actions = {
-  getPostById
+  getPostById,
+  createComment,
+  getCommentsByPostId,
+  clearCommentError
 };
 
 export default connect(mapStateToProps, actions)(CategoryDetail);

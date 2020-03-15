@@ -17,12 +17,24 @@ exports.createComment = catchAsync(async (req, res, next) => {
     return next(new AppError('Please log in to post this comment', 400));
   }
 
-  const comment = await Comment.create({
+  let comment = await Comment.create({
     comment: req.body.comment,
     user: user.id,
     post: post.id
   });
 
+  comment = await comment
+    .populate({
+      path: 'user',
+      select: 'name avatar'
+    })
+    .populate({
+      path: 'post',
+      select: 'title summary'
+    })
+    .execPopulate();
+
+  // add comment id to post
   post.comments.push(comment.id);
   await post.save();
 
@@ -33,15 +45,15 @@ exports.createComment = catchAsync(async (req, res, next) => {
 });
 
 exports.getCommentsByPostId = catchAsync(async (req, res, next) => {
-  const comments = await Comment.find({ post: req.params.postId })
-    .populate({
-      path: 'user',
-      select: 'name avatar'
-    })
-    .populate({
-      path: 'post',
-      select: 'title summary'
-    });
+  const comments = await Comment.find({ post: req.params.postId });
+  // .populate({
+  //   path: 'user',
+  //   select: 'name avatar'
+  // })
+  // .populate({
+  //   path: 'post',
+  //   select: 'title summary'
+  // });
 
   if (!comments) {
     return next(new AppError('No comments for this post ID', 400));
