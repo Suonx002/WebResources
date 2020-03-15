@@ -19,6 +19,7 @@ const AppError = require('./utils/appError');
 
 const userRouter = require('./routes/userRoutes');
 const postRouter = require('./routes/postRoutes');
+const commentRouter = require('./routes/commentRoutes');
 
 // database
 connectDB();
@@ -41,6 +42,7 @@ app.use(cors());
 // routes
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
+app.use('/api/v1/comments', commentRouter);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

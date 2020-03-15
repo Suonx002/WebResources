@@ -18,7 +18,6 @@ const postSchema = new mongoose.Schema({
       enum: ['free', 'beginner', 'paid', 'video', 'book']
     }
   ],
-
   category: {
     type: String,
     required: [true, 'Please select a category'],
