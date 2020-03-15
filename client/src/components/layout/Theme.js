@@ -29,7 +29,8 @@ export default createMuiTheme({
       fontFamily: 'Raleway',
       fontWeight: 700,
       fontSize: '2.5rem',
-      color: arcBlue
+      color: arcBlue,
+      letterSpacing: 1
     },
     h3: {
       fontFamily: 'Raleway',
@@ -41,7 +42,8 @@ export default createMuiTheme({
       fontFamily: 'Raleway',
       fontSize: '1.25rem',
       color: arcBlue,
-      fontWeight: 700
+      fontWeight: 700,
+      letterSpacing: 1
     },
     h6: {
       fontWeight: 500,

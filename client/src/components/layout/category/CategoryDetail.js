@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Avatar from '@material-ui/core/Avatar';
+import Card from '@material-ui/core/Card';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
@@ -30,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     marginTop: '5rem'
   },
-  description: {
+  summary: {
     border: '2px solid #eee',
     marginBottom: '2rem',
     padding: '1rem',
@@ -150,22 +151,28 @@ const CategoryDetail = props => {
           {/* {post !== null && post !== undefined && ( */}
           <Grid container direction="column" spacing={3} alignItems="center">
             <Grid item>
-              <Typography variant="h3">{post.title}</Typography>
+              <Typography variant="h2">{post.title}</Typography>
             </Grid>
             <Grid item container direction="column">
-              <Grid item>
-                <Typography variant="h4">Summary</Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant="body1" className={classes.description}>
-                  {post.summary}
-                </Typography>
-              </Grid>
+              <Card style={{ padding: '1rem' }}>
+                <Grid item>
+                  <Typography variant="h4">Summary</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant="body1"
+
+                    // className={classes.summary}
+                  >
+                    {post.summary}
+                  </Typography>
+                </Grid>
+              </Card>
             </Grid>
             <Grid item container direction="row" alignItems="center">
               <Grid item container direction="column" justify="flex-start" xs>
                 <Grid item>
-                  <Typography variant="h6" style={{ marginBottom: '1rem' }}>
+                  <Typography variant="h4" style={{ marginBottom: '1rem' }}>
                     Author
                   </Typography>
                 </Grid>
@@ -187,7 +194,7 @@ const CategoryDetail = props => {
                   color="primary"
                   variant="outlined"
                   target="_blank"
-                  size={matchesXS ? 'small' : 'large'}
+                  size={matchesXS ? 'medium' : 'large'}
                   href={
                     post.link.startsWith('http')
                       ? post.link
@@ -202,7 +209,7 @@ const CategoryDetail = props => {
             <Grid item container direction="column">
               <form onSubmit={handleCommentSubmit}>
                 <Grid item aligns="flex-start" style={{ marginBottom: '1rem' }}>
-                  <Typography variant="h6">Write a Post</Typography>
+                  <Typography variant="h4">Write a Post</Typography>
                 </Grid>
                 <Grid item>
                   <TextField
@@ -213,6 +220,16 @@ const CategoryDetail = props => {
                     label="Comment"
                     value={commentInput}
                     onChange={e => setCommentInput(e.target.value)}
+                    helperText={
+                      commentInput && commentInput.length < 20
+                        ? 'Please provide at least 20 characters'
+                        : false
+                    }
+                    error={
+                      commentInput && commentInput.length < 20
+                        ? 'Please provide at least 20 characters'
+                        : false
+                    }
                   />
                 </Grid>
                 <Grid
@@ -227,21 +244,28 @@ const CategoryDetail = props => {
                     variant="contained"
                     fullWidth={matchesXS ? true : false}
                     size="large"
+                    disabled={commentInput.length < 20 ? true : false}
+                    helper
                   >
-                    Submit
+                    Add Comment
                   </Button>
                 </Grid>
               </form>
             </Grid>
             {/* Comments */}
             <Grid item container direction="column">
-              <Grid item>
-                <Typography variant="h6" style={{ marginBottom: '1rem' }}>
-                  Comments
-                </Typography>
-              </Grid>
               {comments !== null &&
                 comments !== undefined &&
+                comments.length > 0 && (
+                  <Grid item>
+                    <Typography variant="h4" style={{ marginBottom: '1rem' }}>
+                      Comments
+                    </Typography>
+                  </Grid>
+                )}
+              {comments !== null &&
+                comments !== undefined &&
+                comments.length > 0 &&
                 comments.map(comment => {
                   // const date = new Date(comment.createdAt).toDateString();
                   const date = new Date(comment.createdAt).toLocaleString(
@@ -249,43 +273,52 @@ const CategoryDetail = props => {
                   );
 
                   return (
-                    <Grid
-                      item
-                      container
-                      className={classes.postContainer}
-                      key={comment._id}
-                    >
-                      <Grid
-                        item
-                        container
-                        direction="column"
-                        style={{ minWidth: 70, maxWidth: 120 }}
+                    <Grid item container key={comment._id}>
+                      <Card
+                        style={{
+                          padding: '1rem',
+                          marginTop: '1rem',
+                          minWidth: matchesXS ? '89%' : '96%'
+                        }}
                       >
-                        <Grid item align="center">
-                          <Avatar src="https://randomuser.me/api/portraits/women/65.jpg" />
+                        <Grid item container>
+                          <Grid
+                            item
+                            container
+                            direction="column"
+                            style={{ minWidth: 70, maxWidth: 120 }}
+                          >
+                            <Grid item align="center">
+                              <Avatar src="https://randomuser.me/api/portraits/women/65.jpg" />
+                            </Grid>
+                            <Grid item>
+                              <Typography variant="subtitle2" align="center">
+                                {comment.user.name}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                          <Grid item xs>
+                            <Typography
+                              variant="body1"
+                              align="left"
+                              style={{ marginLeft: '0.5rem' }}
+                            >
+                              {comment.comment}
+                            </Typography>
+                          </Grid>
+                          <Grid item container justify="flex-end">
+                            <Grid item>
+                              <Typography
+                                style={{
+                                  fontSize: matchesXS ? '0.8rem' : '0.9rem'
+                                }}
+                              >
+                                {date}
+                              </Typography>
+                            </Grid>
+                          </Grid>
                         </Grid>
-                        <Grid item>
-                          <Typography variant="subtitle2" align="center">
-                            {comment.user.name}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Grid item xs>
-                        <Typography
-                          variant="body1"
-                          align="left"
-                          style={{ marginLeft: '0.5rem' }}
-                        >
-                          {comment.comment}
-                        </Typography>
-                      </Grid>
-                      <Grid item container justify="flex-end">
-                        <Grid item>
-                          <Typography style={{ fontSize: '0.9rem' }}>
-                            {date}
-                          </Typography>
-                        </Grid>
-                      </Grid>
+                      </Card>
                     </Grid>
                   );
                 })}

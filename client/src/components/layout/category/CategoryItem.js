@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -72,11 +73,22 @@ const useStyles = makeStyles(theme => ({
     border: `1px solid ${theme.palette.common.blue}`,
     padding: '0.25rem',
     color: theme.palette.common.blue
+  },
+  secondaryAction: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  secondaryActionIcon: {
+    padding: 6
   }
 }));
 
 const CategoryItem = props => {
   const classes = useStyles();
+  const theme = useTheme();
+
+  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+
   const {
     currentPost,
     deletePost,
@@ -144,16 +156,24 @@ const CategoryItem = props => {
               : null
           }
         />
-        <ListItemSecondaryAction>
+        <ListItemSecondaryAction
+          className={matchesSM ? classes.secondaryAction : null}
+        >
           {user !== null && post !== null && user._id === post.user && (
             <Fragment>
               <Tooltip title="Edit">
-                <IconButton onClick={handleEditClick}>
+                <IconButton
+                  onClick={handleEditClick}
+                  className={matchesSM ? classes.secondaryActionIcon : null}
+                >
                   <EditIcon color="secondary" />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Delete">
-                <IconButton onClick={() => setDeleteDialog(true)}>
+                <IconButton
+                  onClick={() => setDeleteDialog(true)}
+                  className={matchesSM ? classes.secondaryActionIcon : null}
+                >
                   <DeleteIcon color="error" />
                 </IconButton>
               </Tooltip>
@@ -197,7 +217,9 @@ const CategoryItem = props => {
               rel="noopener noreferrer"
               className={classes.link}
             >
-              <IconButton>
+              <IconButton
+                className={matchesSM ? classes.secondaryActionIcon : null}
+              >
                 <OpenInNewIcon color="primary" />
               </IconButton>
             </a>

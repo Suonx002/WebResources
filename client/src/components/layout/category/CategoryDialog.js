@@ -20,7 +20,7 @@ import Alert from '@material-ui/lab/Alert';
 import {
   createPost,
   updatePost,
-  clearPostError,
+  // clearPostError,
   clearStatus
 } from '../../../redux/actions/postActions';
 
@@ -45,10 +45,14 @@ const CategoryDialog = props => {
     handleDialogClose,
     createPost,
     updatePost,
-    clearPostError,
+    // clearPostError,
 
     clearStatus,
-    post: { error, status, current },
+    post: {
+      // error,
+      status,
+      current
+    },
     auth: { user },
     categories
   } = props;
@@ -85,24 +89,24 @@ const CategoryDialog = props => {
       setCategory('');
     }
 
-    if (status === 'success') {
-      handleDialogClose();
+    // if (status === 'success') {
+    //   handleDialogClose();
 
-      setTimeout(() => {
-        clearStatus();
-      }, 1000);
-    }
+    //   setTimeout(() => {
+    //     clearStatus();
+    //   }, 1000);
+    // }
 
-    if (error) {
-      setTimeout(() => {
-        clearPostError();
-      }, 3000);
-    }
+    // if (error) {
+    //   setTimeout(() => {
+    //     clearPostError();
+    //   }, 3000);
+    // }
 
     // console.log('running in category dialog');
 
     // eslint-disable-next-line
-  }, [current, status, error]);
+  }, [current]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -126,6 +130,8 @@ const CategoryDialog = props => {
         user: user._id
       });
     }
+
+    handleDialogClose();
   };
 
   return (
@@ -141,7 +147,7 @@ const CategoryDialog = props => {
         </DialogTitle>
         <DialogContent>
           <Grid container direction="column">
-            <Grid item container direction="column">
+            {/* <Grid item container direction="column">
               {(error !== null &&
                 error.message.split(',').map(alert => (
                   <Grid item key={uuid()} style={{ marginBottom: '1rem' }}>
@@ -157,7 +163,7 @@ const CategoryDialog = props => {
                     </Alert>
                   </Grid>
                 ))}
-            </Grid>
+            </Grid> */}
 
             <Grid item className={classes.textField}>
               <TextField
@@ -285,7 +291,7 @@ const mapStateToProps = state => ({
 const actions = {
   createPost,
   updatePost,
-  clearPostError,
+  // clearPostError,
 
   clearStatus
 };

@@ -10,8 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
-// import Slide from '@material-ui/core/Slide';
-import Fade from '@material-ui/core/Fade';
+import Slide from '@material-ui/core/Slide';
+// import Fade from '@material-ui/core/Fade';
 
 import {
   getPostsByCategory,
@@ -36,8 +36,18 @@ const useStyles = makeStyles(theme => ({
   progress: {
     display: 'flex',
     justifyContent: 'center'
+  },
+  subtitle1: {
+    ...theme.typography.subtitle1,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '1.1rem'
+    }
   }
 }));
+
+function SlideTransition(props) {
+  return <Slide {...props} direction="up" />;
+}
 
 const CategoryList = props => {
   const {
@@ -53,7 +63,7 @@ const CategoryList = props => {
   const [openDialog, setOpenDialog] = useState(false);
   const [snack] = useState({
     open: false,
-    Transition: Fade,
+    Transition: Slide,
     vertical: 'top',
     horizontal: 'center'
   });
@@ -107,6 +117,7 @@ const CategoryList = props => {
           onClose={handleSnackClose}
           autoHideDuration={4000}
           anchorOrigin={{ vertical, horizontal }}
+          TransitionComponent={Transition}
         >
           <Alert severity="error" style={{ marginBottom: '1rem' }}>
             {error.message}
@@ -175,14 +186,14 @@ const CategoryList = props => {
           >
             {isAuthenticated ? (
               <Grid item>
-                <Typography align="center" variant="subtitle1">
+                <Typography align="center" className={classes.subtitle1}>
                   Sorry, there are no results. Please create a new post! :)
                 </Typography>
               </Grid>
             ) : (
               <Fragment>
                 <Grid item>
-                  <Typography align="center" variant="subtitle1">
+                  <Typography align="center" className={classes.subtitle1}>
                     Sorry, there are no results. Please login and create a new
                     post! :)
                   </Typography>
