@@ -181,6 +181,16 @@ const CategoryDialog = props => {
                 label="Summary"
                 value={summary}
                 onChange={e => setSummary(e.target.value)}
+                helperText={
+                  summary && summary.length < 120
+                    ? 'Please provide at least 120 characters'
+                    : null
+                }
+                error={
+                  summary && summary.length < 120
+                    ? 'Please provide at least 120 characters'
+                    : null
+                }
               />
             </Grid>
             <Grid
@@ -244,7 +254,20 @@ const CategoryDialog = props => {
           <Button onClick={handleDialogClose} variant="outlined">
             Cancel
           </Button>
-          <Button type="submit" color="primary" variant="contained">
+          <Button
+            type="submit"
+            color="primary"
+            variant="contained"
+            disabled={
+              title !== '' &&
+              summary.length >= 120 &&
+              tags.length > 0 &&
+              link !== '' &&
+              category !== ''
+                ? false
+                : true
+            }
+          >
             {current !== null ? 'Update' : 'Add Post'}
           </Button>
         </DialogActions>
