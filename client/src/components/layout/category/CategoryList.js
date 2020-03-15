@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
-import Slide from '@material-ui/core/Slide';
+// import Slide from '@material-ui/core/Slide';
 import Fade from '@material-ui/core/Fade';
 
 import {
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryList = props => {
   const {
-    posts: { posts, error, current },
+    posts: { posts, error },
     auth: { isAuthenticated },
     getPostsByCategory,
     match,
@@ -51,7 +51,7 @@ const CategoryList = props => {
   const classes = useStyles();
 
   const [openDialog, setOpenDialog] = useState(false);
-  const [snack, setSnack] = useState({
+  const [snack] = useState({
     open: false,
     Transition: Fade,
     vertical: 'top',

@@ -25,6 +25,8 @@ const LandingPage = props => {
     // console.log('landing page');
     clearFilterCategory();
     // reload after login/register
+
+    //eslint-disable-next-line
   }, []);
 
   return (

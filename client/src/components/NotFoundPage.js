@@ -44,7 +44,10 @@ const NotFoundPage = () => {
       </Grid>
       <Grid item>
         <Typography className={classes.subtitle} variant="subtitle1">
-          PAGE NOT FOUND &#128557;
+          PAGE NOT FOUND{' '}
+          <span role="img" aria-label="Sad Face">
+            &#128557;
+          </span>
         </Typography>
       </Grid>
       <Grid item>

@@ -16,7 +16,7 @@ import {
 } from './types';
 // import setAuthorizationToken from '../../utils/setAuthorizationToken';
 
-const baseURL = 'http://localhost:5000';
+// const baseURL = 'http://localhost:5000';
 
 export const getPostsByCategory = category => async dispatch => {
   try {

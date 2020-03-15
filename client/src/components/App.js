@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -41,7 +41,6 @@ const App = () => {
               <Route exact path="/" component={LandingPage} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/error-404" component={NotFoundPage} />
               <PrivateRoute exact path="/me" component={Me} />
               <Route
                 exact
@@ -53,6 +52,8 @@ const App = () => {
                 path="/category/:category/:categoryId"
                 component={CategoryDetail}
               />
+              <Route path="/error-404" component={NotFoundPage} />
+              <Redirect to="/error-404" />
             </Switch>
           </Container>
         </BrowserRouter>

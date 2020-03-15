@@ -13,7 +13,6 @@ import Avatar from '@material-ui/core/Avatar';
 
 import { getPostById } from '../../../redux/actions/postActions';
 import { Card } from '@material-ui/core';
-import NotFoundPage from '../../NotFoundPage';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -55,13 +54,16 @@ const CategoryDetail = props => {
 
   useEffect(() => {
     getPostById(match.params.categoryId);
+
     // eslint-disable-next-line
   }, [match.params.categoryId]);
 
-  return post !== null && post ? (
-    <Container maxWidth="md" className={classes.container}>
-      <Card style={{ padding: '2rem' }}>
-        {post !== null && post !== undefined && (
+  return (
+    post !== null &&
+    post !== undefined && (
+      <Container maxWidth="md" className={classes.container}>
+        <Card style={{ padding: '2rem' }}>
+          {/* {post !== null && post !== undefined && ( */}
           <Grid container direction="column" spacing={3} alignItems="center">
             <Grid item>
               <Typography variant="h3">{post.title}</Typography>
@@ -196,11 +198,9 @@ const CategoryDetail = props => {
               {/* next */}
             </Grid>
           </Grid>
-        )}
-      </Card>
-    </Container>
-  ) : (
-    <NotFoundPage />
+        </Card>
+      </Container>
+    )
   );
 };
 
