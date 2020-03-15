@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -10,7 +10,10 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import Slide from '@material-ui/core/Slide';
+import Alert from '@material-ui/lab/Alert';
 
 import { getPostById } from '../../../redux/actions/postActions';
 import {
@@ -18,6 +21,10 @@ import {
   clearCommentError,
   getCommentsByPostId
 } from '../../../redux/actions/commentActions';
+
+function SlideTransition(props) {
+  return <Slide {...props} direction="up" />;
+}
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -51,7 +58,7 @@ const CategoryDetail = props => {
     clearCommentError,
     auth: { user },
     posts: { post },
-    comments: { comments }
+    comments: { comments, status, error }
   } = props;
 
   // console.log(post);
@@ -61,14 +68,30 @@ const CategoryDetail = props => {
 
   // const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [commentInput, setCommentInput] = useState('');
+  const [snack, setSnack] = useState({
+    open: false,
+    Transition: Slide,
+    vertical: 'top',
+    horizontal: 'center'
+  });
+
+  const handleSnackClose = (e, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnack({
+      ...snack,
+      open: false
+    });
+  };
 
   const handleCommentSubmit = e => {
     e.preventDefault();
 
     if (user !== null && post !== null) {
-      console.log(commentInput);
       createComment({
         comment: commentInput,
         user: user._id,
@@ -83,14 +106,47 @@ const CategoryDetail = props => {
 
     console.log('detail page');
 
+    if (status === 'success') {
+      setCommentInput('');
+    }
+
+    if (error) {
+      setTimeout(() => {
+        clearCommentError();
+      }, 3000);
+    }
+
     // eslint-disable-next-line
-  }, [getPostById, getCommentsByPostId, match.params.categoryId]);
+  }, [
+    getPostById,
+    getCommentsByPostId,
+    match.params.categoryId,
+    status,
+    error
+  ]);
 
   return (
-    post !== null &&
-    post !== undefined && (
-      <Container maxWidth="md" className={classes.container}>
-        <Card style={{ padding: '2rem' }}>
+    // error alerts
+    <Fragment>
+      <div className={classes.errorContainer}>
+        {error !== null && error !== undefined && (
+          <Snackbar
+            anchorOrigin={{
+              vertical: snack.vertical,
+              horizontal: snack.horizontal
+            }}
+            open
+            onClose={handleSnackClose}
+            TransitionComponent={snack.Transition}
+          >
+            <Alert severity="error" onClose={handleSnackClose}>
+              {error.message}
+            </Alert>
+          </Snackbar>
+        )}
+      </div>
+      {post !== null && post !== undefined && (
+        <Container maxWidth="md" className={classes.container}>
           {/* {post !== null && post !== undefined && ( */}
           <Grid container direction="column" spacing={3} alignItems="center">
             <Grid item>
@@ -113,12 +169,7 @@ const CategoryDetail = props => {
                     Author
                   </Typography>
                 </Grid>
-                <Grid item style={{ marginLeft: '0.5rem' }}>
-                  {/* <img
-                  className={classes.authorImage}
-                  src="https://randomuser.me/api/portraits/women/70.jpg"
-                  alt="random user"
-                /> */}
+                <Grid item style={{ marginLeft: '0.5rem', minWidth: 50 }}>
                   <Avatar src="https://randomuser.me/api/portraits/women/70.jpg"></Avatar>
                 </Grid>
                 <Grid item>
@@ -192,7 +243,10 @@ const CategoryDetail = props => {
               {comments !== null &&
                 comments !== undefined &&
                 comments.map(comment => {
-                  const date = new Date(comment.createdAt).toDateString();
+                  // const date = new Date(comment.createdAt).toDateString();
+                  const date = new Date(comment.createdAt).toLocaleString(
+                    'en-US'
+                  );
 
                   return (
                     <Grid
@@ -205,12 +259,9 @@ const CategoryDetail = props => {
                         item
                         container
                         direction="column"
-                        xs
-                        style={{ maxWidth: 120 }}
-                        alignItems="center"
-                        justify="center"
+                        style={{ minWidth: 70, maxWidth: 120 }}
                       >
-                        <Grid item>
+                        <Grid item align="center">
                           <Avatar src="https://randomuser.me/api/portraits/women/65.jpg" />
                         </Grid>
                         <Grid item>
@@ -223,13 +274,17 @@ const CategoryDetail = props => {
                         <Typography
                           variant="body1"
                           align="left"
-                          style={{ marginLeft: '0.5rem', hyphens: 'auto' }}
+                          style={{ marginLeft: '0.5rem' }}
                         >
                           {comment.comment}
                         </Typography>
                       </Grid>
-                      <Grid item>
-                        <Typography variant="body1">{date}</Typography>
+                      <Grid item container justify="flex-end">
+                        <Grid item>
+                          <Typography style={{ fontSize: '0.9rem' }}>
+                            {date}
+                          </Typography>
+                        </Grid>
                       </Grid>
                     </Grid>
                   );
@@ -237,9 +292,9 @@ const CategoryDetail = props => {
             </Grid>
             {/* next */}
           </Grid>
-        </Card>
-      </Container>
-    )
+        </Container>
+      )}
+    </Fragment>
   );
 };
 

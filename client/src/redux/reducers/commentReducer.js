@@ -11,6 +11,7 @@ const initialState = {
   comment: null,
   comments: [],
   error: null,
+  status: null,
   loading: true
 };
 
@@ -20,6 +21,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         comments: [...state.comments, action.payload.comment],
+        status: action.payload.status,
         loading: false
       };
     case GET_COMMENTS_BY_POST_ID:
@@ -29,7 +31,7 @@ export default (state = initialState, action) => {
         loading: false
       };
     case COMMENT_ERROR:
-      return { ...state, error: action.payload, loading: false };
+      return { ...state, error: action.payload.data, loading: false };
     case CLEAR_COMMENT_ERROR:
       return { ...state, error: null, loading: false };
     default:
