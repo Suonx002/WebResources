@@ -81,6 +81,8 @@ const CategoryDetail = props => {
     getCommentsByPostId(match.params.categoryId);
     getPostById(match.params.categoryId);
 
+    console.log('detail page');
+
     // eslint-disable-next-line
   }, [getPostById, getCommentsByPostId, match.params.categoryId]);
 
@@ -189,42 +191,49 @@ const CategoryDetail = props => {
               </Grid>
               {comments !== null &&
                 comments !== undefined &&
-                comments.map(comment => (
-                  <Grid
-                    item
-                    container
-                    className={classes.postContainer}
-                    key={comment._id}
-                  >
+                comments.map(comment => {
+                  const date = new Date(comment.createdAt).toDateString();
+
+                  return (
                     <Grid
                       item
                       container
-                      direction="column"
-                      xs
-                      style={{ maxWidth: 120 }}
-                      alignItems="center"
-                      justify="center"
+                      className={classes.postContainer}
+                      key={comment._id}
                     >
-                      <Grid item>
-                        <Avatar src="https://randomuser.me/api/portraits/women/65.jpg" />
+                      <Grid
+                        item
+                        container
+                        direction="column"
+                        xs
+                        style={{ maxWidth: 120 }}
+                        alignItems="center"
+                        justify="center"
+                      >
+                        <Grid item>
+                          <Avatar src="https://randomuser.me/api/portraits/women/65.jpg" />
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="subtitle2" align="center">
+                            {comment.user.name}
+                          </Typography>
+                        </Grid>
                       </Grid>
-                      <Grid item>
-                        <Typography variant="subtitle2" align="center">
-                          {comment.user.name}
+                      <Grid item xs>
+                        <Typography
+                          variant="body1"
+                          align="left"
+                          style={{ marginLeft: '0.5rem', hyphens: 'auto' }}
+                        >
+                          {comment.comment}
                         </Typography>
                       </Grid>
+                      <Grid item>
+                        <Typography variant="body1">{date}</Typography>
+                      </Grid>
                     </Grid>
-                    <Grid item xs>
-                      <Typography
-                        variant="body1"
-                        align="left"
-                        style={{ marginLeft: '0.5rem', hyphens: 'auto' }}
-                      >
-                        {comment.comment}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                ))}
+                  );
+                })}
             </Grid>
             {/* next */}
           </Grid>
