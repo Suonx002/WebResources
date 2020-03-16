@@ -11,6 +11,12 @@ import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
+import Divider from '@material-ui/core/Divider';
+
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
@@ -47,6 +53,13 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 5,
     marginTop: '1rem',
     padding: '6px'
+  },
+  // new comment section
+  cardContainer: {
+    marginBottom: '1rem',
+    [theme.breakpoints.down('xs')]: {
+      maxWidth: '100%'
+    }
   }
 }));
 
@@ -263,67 +276,91 @@ const CategoryDetail = props => {
                     </Typography>
                   </Grid>
                 )}
-              {comments !== null &&
-                comments !== undefined &&
-                comments.length > 0 &&
-                comments.map(comment => {
-                  // const date = new Date(comment.createdAt).toDateString();
-                  const date = new Date(comment.createdAt).toLocaleString(
-                    'en-US'
-                  );
 
-                  return (
-                    <Grid item container key={comment._id}>
-                      <Card
-                        style={{
-                          padding: '1rem',
-                          marginTop: '1rem',
-                          minWidth: matchesXS ? '89%' : '96%'
-                        }}
-                      >
-                        <Grid item container>
-                          <Grid
-                            item
-                            container
-                            direction="column"
-                            style={{ minWidth: 70, maxWidth: 120 }}
-                          >
-                            <Grid item align="center">
-                              <Avatar src="https://randomuser.me/api/portraits/women/65.jpg" />
-                            </Grid>
-                            <Grid item>
-                              <Typography variant="subtitle2" align="center">
-                                {comment.user.name}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                          <Grid item xs>
-                            <Typography
-                              variant="body1"
-                              align="left"
-                              style={{ marginLeft: '0.5rem' }}
+              <Grid item container direction="column">
+                {comments !== null &&
+                  comments !== undefined &&
+                  comments.length > 0 &&
+                  comments.map(comment => {
+                    // const date = new Date(comment.createdAt).toDateString();
+                    const date = new Date(comment.createdAt)
+                      .toLocaleString('en-US')
+                      .split(',');
+
+                    return (
+                      <Card key={comment._id} className={classes.cardContainer}>
+                        <Grid item container direction="column">
+                          <Grid item container>
+                            {/* User image and name */}
+                            <Grid
+                              item
+                              container
+                              direction="column"
+                              style={{
+                                maxWidth: matchesXS ? 120 : 150,
+                                padding: '0.5rem 0'
+                              }}
+                              justify="center"
+                              alignItems="center"
+                              xs
                             >
-                              {comment.comment}
-                            </Typography>
+                              <Grid item>
+                                <Avatar src="https://randomuser.me/api/portraits/women/65.jpg" />
+                              </Grid>
+                              <Grid item>
+                                <Typography variant="subtitle2">
+                                  {comment.user.name}
+                                </Typography>
+                              </Grid>
+                            </Grid>
+                            <Grid
+                              item
+                              container
+                              direction="column"
+                              alignItems="flex-end"
+                              justify="center"
+                              style={{
+                                padding: '0.5rem'
+                              }}
+                              xs
+                            >
+                              <Grid item>
+                                <Typography>{date[0]}</Typography>
+                              </Grid>
+                              <Grid item>
+                                <Typography>{date[1]}</Typography>
+                              </Grid>
+                            </Grid>
                           </Grid>
-                          <Grid item container justify="flex-end">
-                            <Grid item>
-                              <Typography
-                                style={{
-                                  fontSize: matchesXS ? '0.8rem' : '0.9rem'
-                                }}
-                              >
-                                {date}
-                              </Typography>
+                          <Divider />
+                          {/* Comments and buttons */}
+                          <Grid item container direction="column">
+                            <Grid item container justify="flex-end">
+                              <Grid item>
+                                <Tooltip title="Edit">
+                                  <IconButton>
+                                    <EditIcon color="secondary" />
+                                  </IconButton>
+                                </Tooltip>
+                              </Grid>
+                              <Grid item>
+                                <Tooltip title="Delete">
+                                  <IconButton>
+                                    <DeleteIcon color="error" />
+                                  </IconButton>
+                                </Tooltip>
+                              </Grid>
+                            </Grid>
+                            <Grid item style={{ padding: '1rem' }}>
+                              <Typography>{comment.comment}</Typography>
                             </Grid>
                           </Grid>
                         </Grid>
                       </Card>
-                    </Grid>
-                  );
-                })}
+                    );
+                  })}
+              </Grid>
             </Grid>
-            {/* next */}
           </Grid>
         </Container>
       )}
