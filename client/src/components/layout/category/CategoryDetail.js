@@ -22,16 +22,21 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
 import Alert from '@material-ui/lab/Alert';
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+
 import { getPostById } from '../../../redux/actions/postActions';
 import {
   createComment,
   clearCommentError,
-  getCommentsByPostId
+  getCommentsByPostId,
+  updateComment,
+  deleteComment,
+  setCurrentComment,
+  clearCurrentComment
 } from '../../../redux/actions/commentActions';
-
-// function SlideTransition(props) {
-//   return <Slide {...props} direction="up" />;
-// }
+import { DialogContent, DialogContentText } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -70,9 +75,14 @@ const CategoryDetail = props => {
     createComment,
     getCommentsByPostId,
     clearCommentError,
-    auth: { user },
+    setCurrentComment,
+    updateComment,
+    deleteComment,
+
+    clearCurrentComment,
+    auth: { isAuthenticated, user },
     posts: { post },
-    comments: { comments, status, error }
+    comments: { comments, current, status, error }
   } = props;
 
   // console.log(post);
@@ -114,13 +124,22 @@ const CategoryDetail = props => {
     }
   };
 
+  const [editDialog, setEditDialog] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+
   useEffect(() => {
     getCommentsByPostId(match.params.categoryId);
     getPostById(match.params.categoryId);
 
-    console.log('detail page');
+    // console.log('detail page');
 
     if (status === 'success') {
+      setCommentInput('');
+    }
+
+    if (current) {
+      setCommentInput(current.comment);
+    } else {
       setCommentInput('');
     }
 
@@ -136,6 +155,7 @@ const CategoryDetail = props => {
     getCommentsByPostId,
     match.params.categoryId,
     status,
+    current,
     error
   ]);
 
@@ -335,22 +355,38 @@ const CategoryDetail = props => {
                           <Divider />
                           {/* Comments and buttons */}
                           <Grid item container direction="column">
-                            <Grid item container justify="flex-end">
-                              <Grid item>
-                                <Tooltip title="Edit">
-                                  <IconButton>
-                                    <EditIcon color="secondary" />
-                                  </IconButton>
-                                </Tooltip>
-                              </Grid>
-                              <Grid item>
-                                <Tooltip title="Delete">
-                                  <IconButton>
-                                    <DeleteIcon color="error" />
-                                  </IconButton>
-                                </Tooltip>
-                              </Grid>
-                            </Grid>
+                            {isAuthenticated !== null &&
+                              isAuthenticated !== undefined &&
+                              user !== null &&
+                              user !== undefined &&
+                              user._id === comment.user._id && (
+                                <Grid item container justify="flex-end">
+                                  <Grid item>
+                                    <Tooltip title="Edit">
+                                      <IconButton
+                                        onClick={() => {
+                                          setCurrentComment(comment);
+                                          setEditDialog(true);
+                                        }}
+                                      >
+                                        <EditIcon color="secondary" />
+                                      </IconButton>
+                                    </Tooltip>
+                                  </Grid>
+                                  <Grid item>
+                                    <Tooltip title="Delete">
+                                      <IconButton
+                                        onClick={() => {
+                                          setCurrentComment(comment);
+                                          setDeleteDialog(true);
+                                        }}
+                                      >
+                                        <DeleteIcon color="error" />
+                                      </IconButton>
+                                    </Tooltip>
+                                  </Grid>
+                                </Grid>
+                              )}
                             <Grid item style={{ padding: '1rem' }}>
                               <Typography>{comment.comment}</Typography>
                             </Grid>
@@ -360,6 +396,83 @@ const CategoryDetail = props => {
                     );
                   })}
               </Grid>
+            </Grid>
+            {/* Edit dialog */}
+            <Grid item>
+              <Dialog
+                aria-labelledby="Edit Comment Dialog"
+                aria-describedby="Edit Comment Screen"
+                fullWidth
+                open={editDialog}
+              >
+                <DialogTitle style={{ textAlign: 'center' }}>
+                  Edit Comment
+                </DialogTitle>
+                <DialogContent>
+                  <TextField
+                    placeholder="Comment"
+                    fullWidth
+                    multiline
+                    rows="5"
+                    label="Comment"
+                    variant="outlined"
+                    value={commentInput}
+                    onChange={e => setCommentInput(e.target.value)}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button color="primary" onClick={() => setEditDialog(false)}>
+                    Cancel
+                  </Button>
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      updateComment({
+                        comment: commentInput,
+                        postId: current.post._id,
+                        commentId: current._id
+                      });
+                      setEditDialog(false);
+                    }}
+                    disabled={commentInput.length < 20 ? true : false}
+                  >
+                    Update
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Grid>
+            {/* Delete dialog */}
+            <Grid item>
+              <Dialog
+                aria-labelledby="Delete Comment Dialog"
+                aria-describedby="Delete Comment Screen"
+                fullWidth
+                open={deleteDialog}
+              >
+                <DialogTitle style={{ textAlign: 'center' }}>
+                  Do You Want To Delete This Comment ?
+                </DialogTitle>
+                <DialogActions>
+                  <Button
+                    color="primary"
+                    onClick={() => setDeleteDialog(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      deleteComment({
+                        postId: current.post._id,
+                        commentId: current._id
+                      });
+                      setDeleteDialog(false);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Grid>
           </Grid>
         </Container>
@@ -378,7 +491,11 @@ const actions = {
   getPostById,
   createComment,
   getCommentsByPostId,
-  clearCommentError
+  updateComment,
+  deleteComment,
+  clearCommentError,
+  setCurrentComment,
+  clearCurrentComment
 };
 
 export default connect(mapStateToProps, actions)(CategoryDetail);

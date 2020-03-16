@@ -4,12 +4,15 @@ import {
   DELETE_COMMENT,
   GET_COMMENTS_BY_POST_ID,
   COMMENT_ERROR,
-  CLEAR_COMMENT_ERROR
+  CLEAR_COMMENT_ERROR,
+  CURRENT_COMMENT,
+  CLEAR_CURRENT_COMMENT
 } from '../actions/types';
 
 const initialState = {
   comment: null,
   comments: [],
+  current: null,
   error: null,
   status: null,
   loading: true
@@ -28,6 +31,35 @@ export default (state = initialState, action) => {
       return {
         ...state,
         comments: action.payload.comments,
+        loading: false
+      };
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        comments: state.comments.map(comment =>
+          comment._id === action.payload.commentId ? action.payload : comment
+        ),
+        status: action.payload.status,
+        loading: false
+      };
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        comments: state.comments.filter(
+          comment => comment._id !== action.payload.commentId
+        ),
+        loading: false
+      };
+    case CURRENT_COMMENT:
+      return {
+        ...state,
+        current: action.payload,
+        loading: false
+      };
+    case CLEAR_CURRENT_COMMENT:
+      return {
+        ...state,
+        current: null,
         loading: false
       };
     case COMMENT_ERROR:
