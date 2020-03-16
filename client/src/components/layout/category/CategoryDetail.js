@@ -33,10 +33,9 @@ import {
   getCommentsByPostId,
   updateComment,
   deleteComment,
-  setCurrentComment,
-  clearCurrentComment
+  setCurrentComment
 } from '../../../redux/actions/commentActions';
-import { DialogContent, DialogContentText } from '@material-ui/core';
+import { DialogContent } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -78,8 +77,6 @@ const CategoryDetail = props => {
     setCurrentComment,
     updateComment,
     deleteComment,
-
-    clearCurrentComment,
     auth: { isAuthenticated, user },
     posts: { post },
     comments: { comments, current, status, error }
@@ -92,7 +89,6 @@ const CategoryDetail = props => {
 
   // const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [commentInput, setCommentInput] = useState('');
   const [snack, setSnack] = useState({
@@ -494,8 +490,7 @@ const actions = {
   updateComment,
   deleteComment,
   clearCommentError,
-  setCurrentComment,
-  clearCurrentComment
+  setCurrentComment
 };
 
 export default connect(mapStateToProps, actions)(CategoryDetail);

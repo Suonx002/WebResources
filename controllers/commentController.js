@@ -110,7 +110,7 @@ exports.deleteComment = catchAsync(async (req, res, next) => {
     commentID => commentID.toString() === req.params.commentId
   );
 
-  console.log(removeIndex);
+  // console.log(removeIndex);
 
   post.comments.splice(removeIndex, 1);
   // console.log(post);

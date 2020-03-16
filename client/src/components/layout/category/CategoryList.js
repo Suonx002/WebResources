@@ -11,7 +11,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
-// import Fade from '@material-ui/core/Fade';
 
 import {
   getPostsByCategory,
@@ -53,7 +52,6 @@ const CategoryList = props => {
     match,
     clearCurrentPost
   } = props;
-  // console.log(props);
   const classes = useStyles();
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -90,10 +88,6 @@ const CategoryList = props => {
 
   useEffect(() => {
     getPostsByCategory(match.params.category);
-    // console.log('running in effect of category list');
-    // if (current) {
-    //   clearCurrentPost();
-    // }
 
     // eslint-disable-next-line
   }, [getPostsByCategory, match.params.category]);
@@ -103,7 +97,6 @@ const CategoryList = props => {
       {/* Error handling */}
       {error && error.message === 'Post already liked' && (
         <Snackbar
-          TransitionComponent={Transition}
           open
           onClose={handleSnackClose}
           autoHideDuration={4000}

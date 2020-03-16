@@ -66,7 +66,7 @@ export const updateComment = formData => async dispatch => {
 
 export const deleteComment = formData => async dispatch => {
   try {
-    const res = await axios.delete(
+    await axios.delete(
       `/api/v1/comments/${formData.postId}/${formData.commentId}`
     );
 

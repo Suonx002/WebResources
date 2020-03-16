@@ -18,12 +18,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 // import Alert from '@material-ui/lab/Alert';
 
-import {
-  createPost,
-  updatePost
-  // clearPostError,
-  // clearStatus
-} from '../../../redux/actions/postActions';
+import { createPost, updatePost } from '../../../redux/actions/postActions';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -46,14 +41,8 @@ const CategoryDialog = props => {
     handleDialogClose,
     createPost,
     updatePost,
-    // clearPostError,
 
-    // clearStatus,
-    post: {
-      // error,
-      status,
-      current
-    },
+    post: { current },
     auth: { user },
     categories
   } = props;
@@ -93,22 +82,6 @@ const CategoryDialog = props => {
       setLink('');
       setCategory('');
     }
-
-    // if (status === 'success') {
-    //   handleDialogClose();
-
-    //   setTimeout(() => {
-    // clearStatus();
-    //   }, 1000);
-    // }
-
-    // if (error) {
-    //   setTimeout(() => {
-    //     clearPostError();
-    //   }, 3000);
-    // }
-
-    // console.log('running in category dialog');
 
     // eslint-disable-next-line
   }, [current]);
@@ -299,9 +272,6 @@ const mapStateToProps = state => ({
 const actions = {
   createPost,
   updatePost
-  // clearPostError,
-
-  // clearStatus
 };
 
 export default connect(mapStateToProps, actions)(CategoryDialog);
