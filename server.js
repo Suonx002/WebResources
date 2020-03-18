@@ -27,6 +27,7 @@ connectDB();
 // middlewares
 // bodyparser for req.body
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // development logging
 if (process.env.NODE_ENV === 'development') {
