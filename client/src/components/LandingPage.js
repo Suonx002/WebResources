@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import CategoryCard from './layout/category/CategoryCard';
@@ -6,6 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import Searchbar from './layout/Searchbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import Slide from '@material-ui/core/Slide';
+import Alert from '@material-ui/lab/Alert';
+
+import { clearStatus } from '../redux/actions/authActions';
 
 import {
   filterCategory,
@@ -31,21 +37,44 @@ const useStyles = makeStyles(theme => ({
 const LandingPage = props => {
   // console.log('landing page');
 
-  const classes = useStyles();
-
   const {
     category: { category, filtered },
     filterCategory,
-    clearFilterCategory
+    clearFilterCategory,
+    auth: { status },
+    clearStatus
   } = props;
 
+  const classes = useStyles();
+
+  const [snack, setSnack] = useState({
+    open: false,
+    Transition: Slide,
+    vertical: 'top',
+    horizontal: 'center'
+  });
+
+  const handleSnackClose = (e, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnack({
+      ...snack,
+      open: false
+    });
+  };
+
   useEffect(() => {
-    // console.log('landing page');
     clearFilterCategory();
-    // reload after login/register
+
+    if (status) {
+      setTimeout(() => {
+        clearStatus();
+      }, 3000);
+    }
 
     //eslint-disable-next-line
-  }, []);
+  }, [status]);
 
   return (
     <Grid
@@ -54,6 +83,24 @@ const LandingPage = props => {
       style={{ marginTop: '5rem' }}
       direction="column"
     >
+      {status !== null && status !== undefined && (
+        <Grid item>
+          <Snackbar
+            anchorOrigin={{
+              vertical: snack.vertical,
+              horizontal: snack.horizontal
+            }}
+            open
+            onClose={handleSnackClose}
+            TransitionComponent={snack.Transition}
+          >
+            <Alert severity="success" onClose={handleSnackClose}>
+              {status.message}
+            </Alert>
+          </Snackbar>
+        </Grid>
+      )}
+
       <Grid item style={{ marginBottom: '2rem' }}>
         <Typography align="center" className={classes.title}>
           Resources For the Best Programming Courses & Tutorials
@@ -100,12 +147,14 @@ const LandingPage = props => {
 };
 
 const mapStateToProps = state => ({
-  category: state.category
+  category: state.category,
+  auth: state.auth
 });
 
 const actions = {
   filterCategory,
-  clearFilterCategory
+  clearFilterCategory,
+  clearStatus
 };
 
 export default connect(mapStateToProps, actions)(LandingPage);

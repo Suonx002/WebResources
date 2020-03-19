@@ -36,7 +36,11 @@ export default (state = intialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        token: action.payload.token
+        token: action.payload.token,
+        status: {
+          status: 'Login',
+          message: 'Logged in successfully!'
+        }
       };
     case LOGOUT:
       localStorage.removeItem('jwtToken');
@@ -45,7 +49,11 @@ export default (state = intialState, action) => {
         isAuthenticated: null,
         user: null,
         token: null,
-        error: null
+        error: null,
+        status: {
+          status: 'Logout',
+          message: 'Logout successfully!'
+        }
       };
     case AUTH_ERROR:
     case REGISTER_FAIL:
