@@ -14,7 +14,8 @@ import Slide from '@material-ui/core/Slide';
 
 import {
   getPostsByCategory,
-  clearCurrentPost
+  clearCurrentPost,
+  clearPostError
 } from '../../../redux/actions/postActions';
 
 import CategoryItem from './CategoryItem';
@@ -50,7 +51,8 @@ const CategoryList = props => {
     auth: { isAuthenticated },
     getPostsByCategory,
     match,
-    clearCurrentPost
+    clearCurrentPost,
+    clearPostError
   } = props;
   const classes = useStyles();
 
@@ -87,19 +89,25 @@ const CategoryList = props => {
   };
 
   useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        clearPostError();
+      }, 3000);
+    }
+
     getPostsByCategory(match.params.category);
 
     // eslint-disable-next-line
-  }, [getPostsByCategory, match.params.category]);
+  }, [getPostsByCategory, match.params.category, error]);
 
   return (
     <Container maxWidth="md" style={{ marginTop: '5rem' }}>
       {/* Error handling */}
-      {error && error.message === 'Post already liked' && (
+      {error && error.message === 'Post already liked by you' && (
         <Snackbar
           open
           onClose={handleSnackClose}
-          autoHideDuration={4000}
+          autoHideDuration={3000}
           anchorOrigin={{ vertical, horizontal }}
           TransitionComponent={Transition}
         >
@@ -108,12 +116,12 @@ const CategoryList = props => {
           </Alert>
         </Snackbar>
       )}
-      {error && error.message === 'Post has not yet been liked' && (
+      {error && error.message === 'Post has not yet been liked by you' && (
         <Snackbar
           TransitionComponent={Transition}
           open
           onClose={handleSnackClose}
-          autoHideDuration={4000}
+          autoHideDuration={3000}
           anchorOrigin={{ vertical, horizontal }}
         >
           <Alert severity="warning" style={{ marginBottom: '1rem' }}>
@@ -223,7 +231,8 @@ const mapStateToProps = state => ({
 
 const actions = {
   getPostsByCategory,
-  clearCurrentPost
+  clearCurrentPost,
+  clearPostError
 };
 
 export default connect(mapStateToProps, actions)(CategoryList);

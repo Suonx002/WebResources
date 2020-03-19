@@ -157,7 +157,7 @@ exports.like = catchAsync(async (req, res, next) => {
 
   // check if the post has already been liked
   if (post.likes.filter(like => like.toString() === req.user.id).length > 0) {
-    return next(new AppError('Post already liked'));
+    return next(new AppError('Post already liked by you'));
   }
 
   post.likes.unshift(req.user.id);
@@ -178,7 +178,7 @@ exports.dislike = catchAsync(async (req, res, next) => {
 
   // Check if the post has already been liked
   if (post.likes.filter(like => like.toString() === req.user.id).length === 0) {
-    return next(new AppError('Post has not yet been liked'), 400);
+    return next(new AppError('Post has not yet been liked by you'), 400);
   }
 
   // get remove index

@@ -113,7 +113,7 @@ const CategoryItem = props => {
     post !== null && (
       <ListItem className={classes.listItemContainer}>
         <div className={classes.listItemIcon}>
-          {user !== null && post !== null && user._id !== post.user && (
+          {/* {user !== null && post !== null && user._id !== post.user && (
             <IconButton
               style={{ padding: '2px' }}
               onClick={() => {
@@ -122,17 +122,43 @@ const CategoryItem = props => {
             >
               <ExpandLessIcon className={classes.arrowUpIcon} />
             </IconButton>
-          )}
+          )} */}
+
+          <IconButton
+            disabled={
+              user !== null && post !== null && user._id !== post.user
+                ? false
+                : true
+            }
+            style={{ padding: '2px' }}
+            onClick={() => {
+              likePost(post._id);
+            }}
+          >
+            <ExpandLessIcon className={classes.arrowUpIcon} />
+          </IconButton>
 
           <span className={classes.upvotes}>{post.likes.length}</span>
-          {user !== null && post !== null && user._id !== post.user && (
+          {/* {user !== null && post !== null && user._id !== post.user && (
             <IconButton
               style={{ padding: '2px' }}
               onClick={() => dislikePost(post._id)}
             >
               <ExpandMoreIcon className={classes.arrowDownIcon} />
             </IconButton>
-          )}
+          )} */}
+
+          <IconButton
+            disabled={
+              user !== null && post !== null && user._id !== post.user
+                ? false
+                : true
+            }
+            style={{ padding: '2px' }}
+            onClick={() => dislikePost(post._id)}
+          >
+            <ExpandMoreIcon className={classes.arrowDownIcon} />
+          </IconButton>
         </div>
         {/* <Link to={`/category/${match.params.category}/${1}`} >
       </Link> */}
