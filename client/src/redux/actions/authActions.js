@@ -12,7 +12,9 @@ import {
   AUTH_ERROR,
   UPLOAD_PROFILE,
   UPLOAD_ERROR,
-  CLEAR_STATUS
+  CLEAR_STATUS,
+  UPDATE_PASSWORD,
+  UPDATE_PASSWORD_ERROR
 } from './types';
 
 // const baseURL = 'http://localhost:5000';
@@ -72,10 +74,26 @@ export const loginUser = data => async dispatch => {
 
     dispatch(loadUser());
   } catch (err) {
-    console.log(err.response);
-    console.log(err.response.data);
+    // console.log(err.response);
+    // console.log(err.response.data);
     dispatch({
       type: LOGIN_FAIL,
+      payload: err.response.data
+    });
+  }
+};
+
+export const updatePassword = dataForm => async dispatch => {
+  try {
+    const res = await axios.patch('/api/v1/users/updatePassword', dataForm);
+
+    dispatch({
+      type: UPDATE_PASSWORD,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: UPDATE_PASSWORD_ERROR,
       payload: err.response.data
     });
   }

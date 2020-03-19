@@ -9,7 +9,9 @@ import {
   LOGOUT,
   UPLOAD_PROFILE,
   UPLOAD_ERROR,
-  CLEAR_STATUS
+  CLEAR_STATUS,
+  UPDATE_PASSWORD,
+  UPDATE_PASSWORD_ERROR
 } from '../actions/types';
 
 const intialState = {
@@ -55,12 +57,25 @@ export default (state = intialState, action) => {
         token: null,
         error: action.payload
       };
-
+    case UPDATE_PASSWORD:
+      return {
+        ...state,
+        status: {
+          status: action.payload.status,
+          message: 'Password updated successfully'
+        },
+        loading: false
+      };
+    case UPDATE_PASSWORD_ERROR:
+      return { ...state, error: action.payload, loading: false };
     case UPLOAD_PROFILE:
       return {
         ...state,
         user: { ...state.user, avatar: action.payload.url.url },
-        status: action.payload.status,
+        status: {
+          status: action.payload.status,
+          message: 'Upload profile image successfully'
+        },
         loading: false
       };
     case UPLOAD_ERROR:

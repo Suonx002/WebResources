@@ -9,6 +9,9 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
+export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
+export const UPDATE_PASSWORD_ERROR = 'UPDATE_PASSWORD_ERROR';
+
 export const UPLOAD_PROFILE = 'UPLOAD_PROFILE';
 export const UPLOAD_ERROR = 'UPLOAD_ERROR';
 

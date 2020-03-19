@@ -74,9 +74,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // console.log(user);
 
   if (!(await user.correctPassword(currentPassword, user.password))) {
-    return next(
-      new AppError('Your current password is wrong. Please try again', 401)
-    );
+    return next(new AppError('Current password is incorrect', 401));
   }
 
   // update password

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
@@ -9,6 +11,7 @@ import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
+import Button from '@material-ui/core/Button';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
@@ -16,9 +19,11 @@ import Alert from '@material-ui/lab/Alert';
 
 import {
   uploadProfile,
+  updatePassword,
   clearError,
   clearStatus
 } from '../redux/actions/authActions';
+import { TextField } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   large: {
@@ -27,6 +32,9 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     display: 'none'
+  },
+  textField: {
+    marginBottom: '1rem'
   }
 }));
 
@@ -34,11 +42,23 @@ const Me = props => {
   const {
     auth: { user, error, status },
     uploadProfile,
+    updatePassword,
     clearError,
     clearStatus
   } = props;
   // console.log(user);
   const classes = useStyles();
+  const theme = useTheme();
+
+  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const [userInput, setUserInput] = useState({
+    password: '',
+    passwordConfirm: '',
+    currentPassword: ''
+  });
+
+  const { password, passwordConfirm, currentPassword } = userInput;
 
   const [snack, setSnack] = useState({
     open: false,
@@ -46,6 +66,11 @@ const Me = props => {
     vertical: 'top',
     horizontal: 'center'
   });
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    updatePassword({ password, passwordConfirm, currentPassword });
+  };
 
   const handleSnackClose = (e, reason) => {
     if (reason === 'clickaway') {
@@ -65,6 +90,13 @@ const Me = props => {
     uploadProfile(data);
   };
 
+  const handleInputChange = e => {
+    setUserInput({
+      ...userInput,
+      [e.target.id]: e.target.value
+    });
+  };
+
   useEffect(() => {
     if (error) {
       setTimeout(() => {
@@ -73,6 +105,11 @@ const Me = props => {
     }
 
     if (status) {
+      setUserInput({
+        password: '',
+        passwordConfirm: '',
+        currentPassword: ''
+      });
       setTimeout(() => {
         clearStatus();
       }, 4000);
@@ -110,15 +147,28 @@ const Me = props => {
             TransitionComponent={snack.Transition}
           >
             <Alert severity="success" onClose={handleSnackClose}>
-              Upload New Profile Successfully!
+              {status.message}
             </Alert>
           </Snackbar>
         )}
         <Card style={{ padding: '3rem' }}>
-          <Grid container direction="column">
-            <Grid item container direction="column" alignItems="center">
+          <Grid container direction="row">
+            <Grid
+              item
+              container
+              direction="column"
+              alignItems="center"
+              justify="center"
+              sm
+            >
               <Grid item>
                 <Avatar src={user.avatar} className={classes.large} />
+              </Grid>
+
+              <Grid item>
+                <Typography>
+                  {user.name[0].toUpperCase() + user.name.slice(1)}
+                </Typography>
               </Grid>
               <Grid item>
                 <input
@@ -138,14 +188,68 @@ const Me = props => {
                   </IconButton>
                 </label>
               </Grid>
-              <Grid item>
-                <Typography>
-                  {user.name[0].toUpperCase() + user.name.slice(1)}
-                </Typography>
-              </Grid>
             </Grid>
-            <Grid item container>
-              <Grid item></Grid>
+            <Grid item container direction="column" sm>
+              {matchesSM ? <Divider /> : null}
+              <form onSubmit={handleSubmit}>
+                <Grid item>
+                  <Typography
+                    variant="h4"
+                    align="center"
+                    style={{
+                      marginBottom: '2rem',
+                      marginTop: matchesSM ? '2rem' : null
+                    }}
+                  >
+                    Update Password
+                  </Typography>
+                </Grid>
+                <Grid item className={classes.textField}>
+                  <TextField
+                    type="password"
+                    id="currentPassword"
+                    label="Current Password"
+                    fullWidth
+                    variant="outlined"
+                    value={currentPassword}
+                    onChange={handleInputChange}
+                  />
+                </Grid>
+                <Grid item className={classes.textField}>
+                  <TextField
+                    type="password"
+                    id="password"
+                    label="Password"
+                    fullWidth
+                    variant="outlined"
+                    value={password}
+                    onChange={handleInputChange}
+                  />
+                </Grid>
+                <Grid item className={classes.textField}>
+                  <TextField
+                    type="password"
+                    id="passwordConfirm"
+                    label="Password Confirm"
+                    fullWidth
+                    variant="outlined"
+                    value={passwordConfirm}
+                    onChange={handleInputChange}
+                  />
+                </Grid>
+                <Grid item className={classes.textField}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    disabled={!password || !currentPassword || !passwordConfirm}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              </form>
             </Grid>
           </Grid>
         </Card>
@@ -158,6 +262,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-const actions = { uploadProfile, clearError, clearStatus };
+const actions = { uploadProfile, updatePassword, clearError, clearStatus };
 
 export default connect(mapStateToProps, actions)(Me);
