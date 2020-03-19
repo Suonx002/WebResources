@@ -11,7 +11,8 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   UPLOAD_PROFILE,
-  UPLOAD_ERROR
+  UPLOAD_ERROR,
+  CLEAR_STATUS
 } from './types';
 
 // const baseURL = 'http://localhost:5000';
@@ -99,6 +100,12 @@ export const uploadProfile = dataForm => async dispatch => {
 export const clearError = () => {
   return {
     type: CLEAR_ERROR
+  };
+};
+
+export const clearStatus = () => {
+  return {
+    type: CLEAR_STATUS
   };
 };
 

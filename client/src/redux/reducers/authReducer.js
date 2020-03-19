@@ -8,13 +8,15 @@ import {
   AUTH_ERROR,
   LOGOUT,
   UPLOAD_PROFILE,
-  UPLOAD_ERROR
+  UPLOAD_ERROR,
+  CLEAR_STATUS
 } from '../actions/types';
 
 const intialState = {
   isAuthenticated: null,
   user: null,
   error: null,
+  status: null,
   token: localStorage.getItem('jwtToken')
 };
 
@@ -58,11 +60,13 @@ export default (state = intialState, action) => {
       return {
         ...state,
         user: { ...state.user, avatar: action.payload.url.url },
+        status: action.payload.status,
         loading: false
       };
-
     case UPLOAD_ERROR:
       return { ...state, error: action.payload };
+    case CLEAR_STATUS:
+      return { ...state, status: null };
     case CLEAR_ERROR:
       return { ...state, error: null };
     default:

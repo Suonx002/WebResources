@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,7 +10,15 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
 
-import { uploadProfile } from '../redux/actions/authActions';
+import Snackbar from '@material-ui/core/Snackbar';
+import Slide from '@material-ui/core/Slide';
+import Alert from '@material-ui/lab/Alert';
+
+import {
+  uploadProfile,
+  clearError,
+  clearStatus
+} from '../redux/actions/authActions';
 
 const useStyles = makeStyles(theme => ({
   large: {
@@ -24,13 +32,30 @@ const useStyles = makeStyles(theme => ({
 
 const Me = props => {
   const {
-    auth: { user },
-    uploadProfile
+    auth: { user, error, status },
+    uploadProfile,
+    clearError,
+    clearStatus
   } = props;
   // console.log(user);
   const classes = useStyles();
 
-  // const [fileUpload, setFileUpload] = useState('');
+  const [snack, setSnack] = useState({
+    open: false,
+    Transition: Slide,
+    vertical: 'top',
+    horizontal: 'center'
+  });
+
+  const handleSnackClose = (e, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnack({
+      ...snack,
+      open: false
+    });
+  };
 
   const handleFileChange = e => {
     const files = e.target.files;
@@ -40,10 +65,55 @@ const Me = props => {
     uploadProfile(data);
   };
 
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        clearError();
+      }, 4000);
+    }
+
+    if (status) {
+      setTimeout(() => {
+        clearStatus();
+      }, 4000);
+    }
+  }, [error, status]);
+
   return (
     user !== null &&
     user !== undefined && (
       <Container maxWidth="md" style={{ marginTop: '5rem' }}>
+        {error !== null && error !== undefined && (
+          <Snackbar
+            anchorOrigin={{
+              vertical: snack.vertical,
+              horizontal: snack.horizontal
+            }}
+            open
+            onClose={handleSnackClose}
+            TransitionComponent={snack.Transition}
+          >
+            <Alert severity="error" onClose={handleSnackClose}>
+              {error.message}
+            </Alert>
+          </Snackbar>
+        )}
+
+        {status !== null && status !== undefined && (
+          <Snackbar
+            anchorOrigin={{
+              vertical: snack.vertical,
+              horizontal: snack.horizontal
+            }}
+            open
+            onClose={handleSnackClose}
+            TransitionComponent={snack.Transition}
+          >
+            <Alert severity="success" onClose={handleSnackClose}>
+              Upload New Profile Successfully!
+            </Alert>
+          </Snackbar>
+        )}
         <Card style={{ padding: '3rem' }}>
           <Grid container direction="column">
             <Grid item container direction="column" alignItems="center">
@@ -88,6 +158,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-const actions = { uploadProfile };
+const actions = { uploadProfile, clearError, clearStatus };
 
 export default connect(mapStateToProps, actions)(Me);
