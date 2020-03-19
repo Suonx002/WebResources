@@ -25,15 +25,16 @@ exports.uploadImage = catchAsync(async (req, res, next) => {
   }
 
   const uploader = async path =>
-    await cloudinaryController.uploads(path, 'webresources');
+    await cloudinaryController.uploads(path, 'WebResources');
 
   const { path } = req.file;
 
-  console.log(path);
+  // console.log(path);
+  // console.log(req.file);
 
   const url = await uploader(path);
 
-  console.log(url);
+  // console.log(url);
 
   await User.findByIdAndUpdate(
     req.user.id,

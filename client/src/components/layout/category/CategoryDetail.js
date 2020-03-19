@@ -33,7 +33,8 @@ import {
   getCommentsByPostId,
   updateComment,
   deleteComment,
-  setCurrentComment
+  setCurrentComment,
+  clearCurrentComment
 } from '../../../redux/actions/commentActions';
 import { DialogContent } from '@material-ui/core';
 
@@ -58,6 +59,10 @@ const useStyles = makeStyles(theme => ({
     marginTop: '1rem',
     padding: '6px'
   },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7)
+  },
   // new comment section
   cardContainer: {
     marginBottom: '1rem',
@@ -77,6 +82,7 @@ const CategoryDetail = props => {
     setCurrentComment,
     updateComment,
     deleteComment,
+    clearCurrentComment,
     auth: { isAuthenticated, user },
     posts: { post },
     comments: { comments, current, status, error }
@@ -205,14 +211,17 @@ const CategoryDetail = props => {
                     Author
                   </Typography>
                 </Grid>
-                <Grid item style={{ marginLeft: '0.5rem', minWidth: 50 }}>
-                  <Avatar src="https://randomuser.me/api/portraits/women/70.jpg"></Avatar>
-                </Grid>
                 <Grid item>
+                  <Avatar
+                    src={user !== null && user.avatar}
+                    className={classes.large}
+                  ></Avatar>
+                </Grid>
+
+                <Grid item style={{ minWidth: 50, maxWidth: 200 }}>
                   <Typography
                     variant="subtitle1"
                     // style={{ marginLeft: '0.5rem' }}
-                    style={{ marginLeft: '0.5rem' }}
                   >
                     {post.user.name[0].toUpperCase() + post.user.name.slice(1)}
                   </Typography>
@@ -321,7 +330,10 @@ const CategoryDetail = props => {
                               xs
                             >
                               <Grid item>
-                                <Avatar src="https://randomuser.me/api/portraits/women/65.jpg" />
+                                <Avatar
+                                  src={comment.user.avatar}
+                                  className={classes.large}
+                                />
                               </Grid>
                               <Grid item>
                                 <Typography variant="subtitle2">
@@ -428,6 +440,7 @@ const CategoryDetail = props => {
                         postId: current.post._id,
                         commentId: current._id
                       });
+                      clearCurrentComment();
                       setEditDialog(false);
                     }}
                     disabled={commentInput.length < 20 ? true : false}
@@ -490,7 +503,8 @@ const actions = {
   updateComment,
   deleteComment,
   clearCommentError,
-  setCurrentComment
+  setCurrentComment,
+  clearCurrentComment
 };
 
 export default connect(mapStateToProps, actions)(CategoryDetail);

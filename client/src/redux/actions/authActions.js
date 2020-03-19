@@ -9,7 +9,9 @@ import {
   LOGOUT,
   CLEAR_ERROR,
   USER_LOADED,
-  AUTH_ERROR
+  AUTH_ERROR,
+  UPLOAD_PROFILE,
+  UPLOAD_ERROR
 } from './types';
 
 // const baseURL = 'http://localhost:5000';
@@ -73,6 +75,22 @@ export const loginUser = data => async dispatch => {
     console.log(err.response.data);
     dispatch({
       type: LOGIN_FAIL,
+      payload: err.response.data
+    });
+  }
+};
+
+export const uploadProfile = dataForm => async dispatch => {
+  try {
+    const res = await axios.patch('/api/v1/users/uploadImage', dataForm);
+
+    dispatch({
+      type: UPLOAD_PROFILE,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: UPLOAD_ERROR,
       payload: err.response.data
     });
   }

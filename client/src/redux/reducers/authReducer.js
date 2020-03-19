@@ -6,7 +6,9 @@ import {
   CLEAR_ERROR,
   USER_LOADED,
   AUTH_ERROR,
-  LOGOUT
+  LOGOUT,
+  UPLOAD_PROFILE,
+  UPLOAD_ERROR
 } from '../actions/types';
 
 const intialState = {
@@ -24,7 +26,6 @@ export default (state = intialState, action) => {
         user: action.payload.user,
         isAuthenticated: true
       };
-
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem('jwtToken', action.payload.token);
@@ -33,7 +34,6 @@ export default (state = intialState, action) => {
         isAuthenticated: true,
         token: action.payload.token
       };
-
     case LOGOUT:
       localStorage.removeItem('jwtToken');
       return {
@@ -53,6 +53,16 @@ export default (state = intialState, action) => {
         token: null,
         error: action.payload
       };
+
+    case UPLOAD_PROFILE:
+      return {
+        ...state,
+        user: { ...state.user, avatar: action.payload.url.url },
+        loading: false
+      };
+
+    case UPLOAD_ERROR:
+      return { ...state, error: action.payload };
     case CLEAR_ERROR:
       return { ...state, error: null };
     default:
