@@ -4,6 +4,10 @@ const catchAsync = require('../utils/catchAsync');
 const Post = require('../models/postModel');
 const Comment = require('../models/commentModel');
 
+// @desc      Create Post
+// @route     POST /api/v1/posts
+// @access    Private
+
 exports.createPost = catchAsync(async (req, res, next) => {
   req.body.user = req.user.id;
   const post = await Post.create(req.body);
@@ -13,6 +17,10 @@ exports.createPost = catchAsync(async (req, res, next) => {
     post
   });
 });
+
+// @desc      Get Posts By Category
+// @route     GET /api/v1/posts/category/:categoryId
+// @access    Public
 
 exports.getPostsByCategory = catchAsync(async (req, res, next) => {
   const posts = await Post.find({ category: req.params.categoryId });
@@ -27,6 +35,10 @@ exports.getPostsByCategory = catchAsync(async (req, res, next) => {
   });
 });
 
+// @desc      Get All Post
+// @route     GET /api/v1/posts
+// @access    Public
+
 exports.getAllPosts = catchAsync(async (req, res, next) => {
   const posts = await Post.find();
 
@@ -39,6 +51,10 @@ exports.getAllPosts = catchAsync(async (req, res, next) => {
     posts
   });
 });
+
+// @desc      Get Post By ID
+// @route     GET /api/v1/posts/:postId
+// @access    Public
 
 exports.getPost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.postId).populate({
@@ -55,6 +71,10 @@ exports.getPost = catchAsync(async (req, res, next) => {
     post
   });
 });
+
+// @desc      Update Post
+// @route     PATCH /api/v1/posts/:postId
+// @access    Private
 
 exports.editPost = catchAsync(async (req, res, next) => {
   const { title, summary, tags, category, link } = req.body;
@@ -95,6 +115,10 @@ exports.editPost = catchAsync(async (req, res, next) => {
   });
 });
 
+// @desc      Delete Post By ID
+// @route     DELETE /api/v1/posts/:postId
+// @access    Private
+
 exports.deletePost = catchAsync(async (req, res, next) => {
   let post = await Post.findById(req.params.postId);
 
@@ -122,6 +146,10 @@ exports.deletePost = catchAsync(async (req, res, next) => {
   });
 });
 
+// @desc      Post Like
+// @route     PATCH /api/v1/posts/like/:postId
+// @access    Private
+
 exports.like = catchAsync(async (req, res, next) => {
   const post = await Post.findOne({ _id: req.params.postId });
 
@@ -138,6 +166,10 @@ exports.like = catchAsync(async (req, res, next) => {
     data: 'Successfully like this post!'
   });
 });
+
+// @desc      Post Dislike
+// @route     PATCH /api/v1/posts/dislike/:postId
+// @access    Private
 
 exports.dislike = catchAsync(async (req, res, next) => {
   const post = await Post.findOne({ _id: req.params.postId });

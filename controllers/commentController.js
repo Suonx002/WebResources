@@ -5,6 +5,9 @@ const Comment = require('../models/commentModel');
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
 
+// @desc      Create Comment
+// @route     POST /api/v1/comments/:postId
+// @access    Private
 exports.createComment = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   const post = await Post.findById(req.params.postId);
@@ -44,6 +47,10 @@ exports.createComment = catchAsync(async (req, res, next) => {
   });
 });
 
+// @desc      Get Comments By ID
+// @route     GET /api/v1/comments/:postId
+// @access    Public
+
 exports.getCommentsByPostId = catchAsync(async (req, res, next) => {
   const comments = await Comment.find({ post: req.params.postId });
   // .populate({
@@ -64,6 +71,10 @@ exports.getCommentsByPostId = catchAsync(async (req, res, next) => {
     comments
   });
 });
+
+// @desc      Update Comment
+// @route     PATCH /api/v1/comments/:postId/:commentId
+// @access    Private
 
 exports.editComment = catchAsync(async (req, res, next) => {
   let comment = await Comment.findById(req.params.commentId);
@@ -93,6 +104,10 @@ exports.editComment = catchAsync(async (req, res, next) => {
     comment
   });
 });
+
+// @desc      Delete Comment
+// @route     DELETE /api/v1/comments/:postId/:commentId
+// @access    Private
 
 exports.deleteComment = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.postId);
