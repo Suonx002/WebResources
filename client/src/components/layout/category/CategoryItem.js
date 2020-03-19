@@ -116,7 +116,9 @@ const CategoryItem = props => {
           {user !== null && post !== null && user._id !== post.user && (
             <IconButton
               style={{ padding: '2px' }}
-              onClick={() => likePost(post._id)}
+              onClick={() => {
+                likePost(post._id);
+              }}
             >
               <ExpandLessIcon className={classes.arrowUpIcon} />
             </IconButton>

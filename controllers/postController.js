@@ -23,7 +23,9 @@ exports.createPost = catchAsync(async (req, res, next) => {
 // @access    Public
 
 exports.getPostsByCategory = catchAsync(async (req, res, next) => {
-  const posts = await Post.find({ category: req.params.categoryId });
+  const posts = await Post.find({ category: req.params.categoryId }).sort(
+    req.query.sort
+  );
 
   if (!posts) {
     return next(new AppError('There are no posts with this search', 400));
