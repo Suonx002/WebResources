@@ -44,7 +44,7 @@ exports.uploadImage = catchAsync(async (req, res, next) => {
   const uploader = async path =>
     await cloudinaryController.uploads(path, 'WebResources');
 
-  console.log(req.file);
+  // console.log(req.file);
   const { path } = req.file;
 
   // console.log(path);

@@ -213,7 +213,9 @@ const CategoryDetail = props => {
                 </Grid>
                 <Grid item>
                   <Avatar
-                    src={user !== null && user.avatar}
+                    src={
+                      post !== null && post !== undefined && post.user.avatar
+                    }
                     className={classes.large}
                   ></Avatar>
                 </Grid>
