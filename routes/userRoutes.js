@@ -17,6 +17,7 @@ router.get('/me', userController.getMe);
 router.patch(
   '/uploadImage',
   multerController.single('avatar'),
+  userController.resizeUserPhoto,
   userController.uploadImage
 );
 

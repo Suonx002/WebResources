@@ -1,4 +1,5 @@
 const fs = require('fs');
+const sharp = require('sharp');
 
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
@@ -16,6 +17,22 @@ exports.getMe = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
+  if (!req.file) return next();
+
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+
+  await sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`uploads/${req.file.filename}`);
+
+  req.file.path = `uploads\\${req.file.filename}`;
+
+  next();
+});
+
 exports.uploadImage = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   // console.log(user);
@@ -27,6 +44,7 @@ exports.uploadImage = catchAsync(async (req, res, next) => {
   const uploader = async path =>
     await cloudinaryController.uploads(path, 'WebResources');
 
+  console.log(req.file);
   const { path } = req.file;
 
   // console.log(path);
@@ -41,6 +59,9 @@ exports.uploadImage = catchAsync(async (req, res, next) => {
     { avatar: url.url },
     { new: true, runValidators: true }
   );
+
+  'uploads\\new-tour-1.jpg-1584741690654.jpeg',
+    'uploads\\user-5e7535ec46d7c10017b477d7-1584742562618.jpeg ';
 
   // console.log(user);
   fs.unlinkSync(path);
