@@ -60,8 +60,8 @@ exports.uploadImage = catchAsync(async (req, res, next) => {
     { new: true, runValidators: true }
   );
 
-  'uploads\\new-tour-1.jpg-1584741690654.jpeg',
-    'uploads\\user-5e7535ec46d7c10017b477d7-1584742562618.jpeg ';
+  // 'uploads\\new-tour-1.jpg-1584741690654.jpeg',
+  //   'uploads\\user-5e7535ec46d7c10017b477d7-1584742562618.jpeg ';
 
   // console.log(user);
   fs.unlinkSync(path);
