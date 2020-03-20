@@ -114,6 +114,8 @@ const Me = props => {
         clearStatus();
       }, 4000);
     }
+
+    // eslint-disable-next-line
   }, [error, status]);
 
   return (

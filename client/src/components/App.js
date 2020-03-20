@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { ThemeProvider } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import theme from './layout/Theme';
 
@@ -22,14 +24,29 @@ import CategoryDetail from './layout/category/CategoryDetail';
 import NotFoundPage from './NotFoundPage';
 import Me from './Me';
 
+const useStyles = makeStyles(theme => ({
+  githubButton: {
+    position: 'fixed',
+    right: '2rem',
+    bottom: '2rem',
+    zIndex: '10000',
+    [theme.breakpoints.down('sm')]: {
+      right: '1rem',
+      bottom: '1rem'
+    }
+  }
+}));
+
 const App = () => {
+  const classes = useStyles();
+
   useEffect(() => {
     if (localStorage.jwtToken) {
       setAuthorizationToken(localStorage.jwtToken);
       store.dispatch(loadUser());
     }
   }, []);
-  console.log('running app');
+  // console.log('running app');
 
   return (
     <Provider store={store}>
@@ -56,6 +73,16 @@ const App = () => {
               <Redirect to="/error-404" />
             </Switch>
           </Container>
+          <Fab
+            color="primary"
+            aria-label="github"
+            size="medium"
+            className={classes.githubButton}
+            href="https://github.com/Suonx002/WebResources"
+            target="_blank"
+          >
+            <GitHubIcon style={{ fill: 'white' }} />
+          </Fab>
         </BrowserRouter>
       </ThemeProvider>
     </Provider>
