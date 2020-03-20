@@ -14,6 +14,10 @@
 
 [Backend API](https://documenter.getpostman.com/view/9506861/SzS7PR8D?version=latest)
 
+## User Story
+
+WebResources is an application that allow users to share their favorite online courses and tutorials for current and new users to expand their knowledges and skills.
+
 ## Prerequisites
 
 - Node
@@ -49,10 +53,6 @@ Server
 ```sh
 npm run server
 ```
-
-## User Story
-
-WebResources is an application that allow users to share their favorite online courses and tutorials for current and new users to expand their knowledges and skills.
 
 ## Features
 

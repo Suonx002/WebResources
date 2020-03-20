@@ -19,6 +19,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { logoutUser } from '../../redux/actions/authActions';
 
+import Logo from '../../img/WebResources.png';
+
 const ElevationScroll = props => {
   const { children } = props;
 
@@ -45,9 +47,17 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.5rem',
     textTransform: 'none',
     color: theme.palette.common.white,
+    width: 80,
+    height: 80,
     '&:hover': {
       backgroundColor: 'transparent'
-    }
+    },
+    overflow: 'hidden'
+  },
+  logo: {
+    width: '250%',
+    height: '250%'
+    // overflow: 'hidden'
   },
   tabContainer: {
     marginLeft: 'auto'
@@ -300,7 +310,7 @@ const Header = props => {
               disableRipple
               onClick={() => setValue(0)}
             >
-              Web Resources
+              <img src={Logo} alt="logo" className={classes.logo} />
             </Button>
             {matches ? drawer : tabs}
           </Toolbar>
