@@ -7,15 +7,17 @@
 > Web Resources is an application for learning how to programs with courses and tutorials
 
 ### ✨ Client
+
 [Demo](https://webresources.herokuapp.com/)
 
 ### 💫 Backend API
+
 [Backend API](https://documenter.getpostman.com/view/9506861/SzS7PR8D?version=latest)
 
 ## Prerequisites
 
-- Node 
-- React 
+- Node
+- React
 - Express
 - MongoDB
 - Mongoose
@@ -23,30 +25,37 @@
 ## Install
 
 Client and Server
+
 ```sh
-npm install 
+npm install
 ```
 
 ## Usage
 
 Client & Server
+
 ```sh
 npm run client-prod
 ```
 
 Client
+
 ```sh
 npm run start
 ```
+
 Server
+
 ```sh
 npm run server
 ```
 
 ## User Story
+
 WebResources is an application that allow users to share their favorite online courses and tutorials for current and new users to expand their knowledges and skills.
 
 ## Features
+
 [:heavy_check_mark:] User can register an account
 
 [:heavy_check_mark:] User can login into an account to create resources
@@ -81,6 +90,13 @@ WebResources is an application that allow users to share their favorite online c
 
 [:heavy_check_mark:] User can delete comment by post ID and comment ID
 
+[ ] User can follow each other
+
+[ ] User can unfollow each other
+
+[ ] User can view profile
+
+[ ] Many more features coming soon
 
 ## Author
 
