@@ -33,83 +33,82 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   next();
 });
 
-// exports.uploadImage = catchAsync(async (req, res, next) => {
-//   const user = await User.findById(req.user.id);
-//   // console.log(user);
+exports.uploadImage = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  // console.log(user);
 
-//   if (!user) {
-//     return next(new AppError('Please log in to access this route', 401));
-//   }
-
-//   const uploader = async path =>
-//     await cloudinaryController.uploads(path, 'WebResources');
-
-//   console.log(req.file);
-//   const { path } = req.file;
-
-//   // console.log(path);
-//   // console.log(req.file);
-
-//   const url = await uploader(path);
-
-//   // console.log(url);
-
-//   await User.findByIdAndUpdate(
-//     req.user.id,
-//     { avatar: url.url },
-//     { new: true, runValidators: true }
-//   );
-
-//   // console.log(user);
-//   // fs.unlinkSync(path);
-
-//   res.status(200).json({
-//     status: 'success',
-//     url
-//   });
-// });
-
-exports.uploadImage = async (req, res, next) => {
-  try {
-    const user = await User.findById(req.user.id);
-    // console.log(user);
-
-    if (!user) {
-      return next(new AppError('Please log in to access this route', 401));
-    }
-
-    const uploader = async path =>
-      await cloudinaryController.uploads(path, 'WebResources');
-
-    console.log(req.file);
-    const { path } = req.file;
-
-    // console.log(path);
-    // console.log(req.file);
-
-    const url = await uploader(path);
-
-    // console.log(url);
-
-    await User.findByIdAndUpdate(
-      req.user.id,
-      { avatar: url.url },
-      { new: true, runValidators: true }
-    );
-
-    // console.log(user);
-    // fs.unlinkSync(path);
-
-    res.status(200).json({
-      status: 'success',
-      url
-    });
-  } catch (err) {
-    console.log(err);
-    console.error(err);
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    });
+  if (!user) {
+    return next(new AppError('Please log in to access this route', 401));
   }
-};
+
+  const uploader = async path =>
+    await cloudinaryController.uploads(path, 'WebResources');
+
+  const { path } = req.file;
+
+  // console.log(path);
+  // console.log(req.file);
+
+  const url = await uploader(path);
+
+  // console.log(url);
+
+  await User.findByIdAndUpdate(
+    req.user.id,
+    { avatar: url.url },
+    { new: true, runValidators: true }
+  );
+
+  // console.log(user);
+  // fs.unlinkSync(path);
+
+  res.status(200).json({
+    status: 'success',
+    url
+  });
+});
+
+// exports.uploadImage = async (req, res, next) => {
+//   try {
+//     const user = await User.findById(req.user.id);
+//     // console.log(user);
+
+//     if (!user) {
+//       return next(new AppError('Please log in to access this route', 401));
+//     }
+
+//     const uploader = async path =>
+//       await cloudinaryController.uploads(path, 'WebResources');
+
+//     console.log(req.file);
+//     const { path } = req.file;
+
+//     // console.log(path);
+//     // console.log(req.file);
+
+//     const url = await uploader(path);
+
+//     // console.log(url);
+
+//     await User.findByIdAndUpdate(
+//       req.user.id,
+//       { avatar: url.url },
+//       { new: true, runValidators: true }
+//     );
+
+//     // console.log(user);
+//     // fs.unlinkSync(path);
+
+//     res.status(200).json({
+//       status: 'success',
+//       url
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     console.error(err);
+//     res.status(400).json({
+//       status: 'fail',
+//       message: err
+//     });
+//   }
+// };
