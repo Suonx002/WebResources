@@ -2,18 +2,18 @@ const multer = require('multer');
 const AppError = require('../utils/appError');
 
 // storage engine
-// const multerStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, './uploads');
-//   },
-//   filename: (req, file, cb) => {
-//     const ext = file.mimetype.split('/')[1];
-//     cb(null, `${file.originalname}-${Date.now()}.${ext}`);
-//   }
-// });
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads/images');
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1];
+    cb(null, `${file.originalname}-${Date.now()}.${ext}`);
+  }
+});
 
 //store memory
-const multerStorage = multer.memoryStorage();
+// const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
