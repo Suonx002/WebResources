@@ -17,21 +17,21 @@ exports.getMe = catchAsync(async (req, res, next) => {
   });
 });
 
-// exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
-//   if (!req.file) return next();
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
+  if (!req.file) return next();
 
-//   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
-//   await sharp(req.file.buffer)
-//     .resize(250, 250)
-//     .toFormat('jpeg')
-//     .jpeg({ quality: 90 })
-//     .toFile(`/uploads/${req.file.filename}`);
+  await sharp(req.file.buffer)
+    .resize(250, 250)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`uploads/images/${req.file.filename}`);
 
-//   req.file.path = `/uploads/${req.file.filename}`;
+  req.file.path = `uploads/images/${req.file.filename}`;
 
-//   next();
-// });
+  next();
+});
 
 exports.uploadImage = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
@@ -44,7 +44,7 @@ exports.uploadImage = catchAsync(async (req, res, next) => {
   const uploader = async path =>
     await cloudinaryController.uploads(path, 'WebResources');
 
-  // console.log(req.file);
+  console.log(req.file);
   const { path } = req.file;
 
   // console.log(path);
