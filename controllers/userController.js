@@ -26,9 +26,9 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
     .resize(250, 250)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
-    .toFile(`./uploads/${req.file.filename}`);
+    .toFile(`uploads/${req.file.filename}`);
 
-  req.file.path = `./uploads/${req.file.filename}`;
+  req.file.path = `uploads/${req.file.filename}`;
 
   next();
 });
@@ -64,7 +64,7 @@ exports.uploadImage = catchAsync(async (req, res, next) => {
   //   'uploads\\user-5e7535ec46d7c10017b477d7-1584742562618.jpeg ';
 
   // console.log(user);
-  fs.unlinkSync(path);
+  // fs.unlinkSync(path);
 
   res.status(200).json({
     status: 'success',

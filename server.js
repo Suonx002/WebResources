@@ -52,9 +52,9 @@ if (process.env.NODE_ENV === 'production') {
   // set statis folder for uploads
   app.use(express.static(path.join(__dirname, 'uploads')));
 
-  // app.get('*', (req, res) =>
-  //   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-  // );
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  );
 }
 
 // catach errors (all verbs: get post put patch ,etc.)
