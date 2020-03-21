@@ -26,9 +26,9 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
     .resize(250, 250)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
-    .toFile(`/uploads/${req.file.filename}`);
+    .toFile(`/client/build/${req.file.filename}`);
 
-  req.file.path = `/uploads\\${req.file.filename}`;
+  req.file.path = `/client/build\\${req.file.filename}`;
 
   next();
 });
