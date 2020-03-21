@@ -26,9 +26,9 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
     .resize(250, 250)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
-    .toFile(`client/build/${req.file.filename}`);
+    .toFile(`/uploads/${req.file.filename}`);
 
-  req.file.path = `client/uploads/${req.file.filename}`;
+  req.file.path = `/uploads/${req.file.filename}`;
 
   next();
 });
@@ -44,7 +44,7 @@ exports.uploadImage = catchAsync(async (req, res, next) => {
   const uploader = async path =>
     await cloudinaryController.uploads(path, 'WebResources');
 
-  // console.log(req.file);
+  console.log(req.file);
   const { path } = req.file;
 
   // console.log(path);

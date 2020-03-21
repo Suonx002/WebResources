@@ -41,7 +41,7 @@ app.use(cors());
 // app.options('*', cors());
 
 // set statis folder for uploads
-// app.use(express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 // routes
 app.use('/api/v1/users', userRouter);
