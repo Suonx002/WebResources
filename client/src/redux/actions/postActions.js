@@ -21,9 +21,7 @@ import {
 export const getPostsByCategory = category => async dispatch => {
   try {
     // const res = await axios.get(`${baseURL}/api/v1/posts/category/${category}`);
-    const res = await axios.get(
-      `/api/v1/posts/category/${category}?sort=-likes`
-    );
+    const res = await axios.get(`/api/v1/posts/category/${category}`);
 
     dispatch({
       type: GET_POSTS_BY_CATEGORY,

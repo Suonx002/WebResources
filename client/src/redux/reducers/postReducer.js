@@ -66,19 +66,23 @@ export default (state = initialState, action) => {
     case CLEAR_STATUS:
       return { ...state, status: null, loading: false };
     case LIKE_POST:
+      console.log(action.payload);
       return {
         ...state,
-        loading: false,
         posts: state.posts.map(post =>
           post._id === action.payload
-            ? { ...post, likes: [action.payload, ...post.likes] }
+            ? { ...post, likes: [...post.likes, action.payload] }
             : post
-        )
+        ),
+        status: 'success',
+        loading: false
       };
     case DISLIKE_POST:
+      console.log(action.payload);
+
       return {
         ...state,
-        loading: false,
+
         posts: state.posts.map(post =>
           post._id === action.payload
             ? {
@@ -86,7 +90,9 @@ export default (state = initialState, action) => {
                 likes: post.likes.filter(like => like !== action.payload)
               }
             : post
-        )
+        ),
+        status: 'success',
+        loading: false
       };
     case CLEAR_POST:
       return { ...state, post: null, loading: false };

@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryList = props => {
   const {
-    posts: { posts, error },
+    posts: { posts, error, status },
     auth: { isAuthenticated },
     getPostsByCategory,
     match,
@@ -216,6 +216,7 @@ const CategoryList = props => {
               key={post._id}
               post={post}
               error={error}
+              status={status}
               handleDialogClick={handleDialogClick}
             />
           ))}
