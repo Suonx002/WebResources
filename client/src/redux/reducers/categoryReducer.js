@@ -65,7 +65,7 @@ const initialState = {
     {
       name: 'Node.js',
       icon: 'nodejs',
-      link: 'angular'
+      link: 'nodejs'
     },
     {
       name: 'MongoDB',
