@@ -4,7 +4,7 @@
 ![Prerequisite](https://img.shields.io/badge/node-%5E12-blue.svg)
 [![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](#)
 
-> Web Resources is an application for learning how to programs with courses and tutorials
+> WebResources is an application that allow users to share their favorite online courses and tutorials for current and new users to expand their knowledges and skills.
 
 ### ✨ Client
 
@@ -14,14 +14,31 @@
 
 [Backend API](https://documenter.getpostman.com/view/9506861/SzS7PR8D?version=latest)
 
-## User Story
+## Short Demo
 
-WebResources is an application that allow users to share their favorite online courses and tutorials for current and new users to expand their knowledges and skills.
+![Demo Gif](https://media.giphy.com/media/hXPk2NXodDrOc9kENy/giphy.gif)
 
-## Prerequisites
+## Full Demo
+
+[Full Demo Link](https://www.reddit.com/r/webdev/comments/fmudhx/mern_app_for_list_of_tutorials_and_courses_demo/)
+
+## Homepage
+
+![Homepage](./img/homepage.png)
+
+## Posts Section
+
+![Posts List](./img/posts_list.png)
+
+## Comments Section
+
+![Comments](./img/comments.png)
+
+## Built With
 
 - Node
 - React
+- Material UI
 - Express
 - MongoDB
 - Mongoose

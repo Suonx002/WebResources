@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const path = require('path');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
@@ -9,6 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
+const compression = require('compression');
 
 dotenv.config({ path: './config.env' });
 const app = express();
@@ -36,12 +36,31 @@ if (process.env.NODE_ENV === 'development') {
 
 // implement CORS, set Access-COntrol-Allow-Origin to everywhere
 app.use(cors());
-
+app.options('*', cors());
 // http methods response for preflight phase
 // app.options('*', cors());
 
-// set statis folder for uploads
-// app.use(express.static(path.join(__dirname, 'uploads', 'images')));
+// Set security HTTP headers
+app.use(helmet());
+
+// Limit requests from same API
+const limiter = rateLimit({
+  max: 250,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour!'
+});
+app.use('/api', limiter);
+
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// Data sanitization against XSS
+app.use(xss());
+
+// Prevent parameter pollution
+app.use(hpp());
+
+app.use(compression());
 
 // routes
 app.use('/api/v1/users', userRouter);
