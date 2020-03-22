@@ -23,9 +23,34 @@ exports.createPost = catchAsync(async (req, res, next) => {
 // @access    Public
 
 exports.getPostsByCategory = catchAsync(async (req, res, next) => {
-  const posts = await Post.find({ category: req.params.categoryId }).sort({
-    likes: -1
-  });
+  // const posts = await Post.find({ category: req.params.categoryId }).sort({
+  //   likes: 1
+  // });
+
+  const posts = await Post.aggregate([
+    {
+      $match: { category: req.params.categoryId }
+    },
+    {
+      $project: {
+        title: 1,
+        summary: 1,
+        tags: 1,
+        category: 1,
+        link: 1,
+        user: 1,
+        comments: 1,
+        createdAt: 1,
+        likes: 1,
+        length: { $size: '$likes' }
+      }
+    },
+    {
+      $sort: { length: -1 }
+    }
+  ]);
+
+  // console.log(posts);
 
   if (!posts) {
     return next(new AppError('There are no posts with this search', 400));

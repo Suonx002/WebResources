@@ -67,14 +67,14 @@ export const createPost = dataForm => async dispatch => {
     // const res = await axios.post(`${baseURL}/api/v1/posts/`, dataForm);
     const res = await axios.post(`/api/v1/posts/`, dataForm);
 
-    console.log(res);
+    // console.log(res);
 
     dispatch({
       type: CREATE_POST,
       payload: res.data
     });
   } catch (err) {
-    console.log(err.response);
+    // console.log(err.response);
     // console.log(err);
     // console.error(err);
 
@@ -89,7 +89,7 @@ export const updatePost = dataForm => async dispatch => {
   try {
     const res = await axios.patch(`/api/v1/posts/${dataForm.id}`, dataForm);
 
-    console.log(res.data);
+    // console.log(res.data);
 
     dispatch({
       type: UPDATE_POST,
