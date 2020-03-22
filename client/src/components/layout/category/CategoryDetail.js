@@ -37,6 +37,7 @@ import {
   clearCurrentComment
 } from '../../../redux/actions/commentActions';
 import { DialogContent } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -130,8 +131,11 @@ const CategoryDetail = props => {
   const [deleteDialog, setDeleteDialog] = useState(false);
 
   useEffect(() => {
-    getCommentsByPostId(match.params.categoryId);
-    getPostById(match.params.categoryId);
+    // set timeout for edit & delete comment
+    setTimeout(() => {
+      getCommentsByPostId(match.params.categoryId);
+      getPostById(match.params.categoryId);
+    }, 100);
 
     // console.log('detail page');
 
@@ -278,17 +282,32 @@ const CategoryDetail = props => {
                   justify="flex-end"
                   style={{ marginTop: '1rem' }}
                 >
-                  <Button
-                    type="submit"
-                    color="primary"
-                    variant="contained"
-                    fullWidth={matchesXS ? true : false}
-                    size="large"
-                    disabled={commentInput.length < 20 ? true : false}
-                    helper
-                  >
-                    Add Comment
-                  </Button>
+                  {isAuthenticated !== null && isAuthenticated !== undefined ? (
+                    <Button
+                      type="submit"
+                      color="primary"
+                      variant="contained"
+                      fullWidth={matchesXS ? true : false}
+                      size="large"
+                      disabled={commentInput.length < 20 ? true : false}
+                      // helper
+                    >
+                      Add Comment
+                    </Button>
+                  ) : (
+                    <Button
+                      type="submit"
+                      color="primary"
+                      variant="contained"
+                      fullWidth={matchesXS ? true : false}
+                      size="large"
+                      component={Link}
+                      to="/login"
+                      // helper
+                    >
+                      Login
+                    </Button>
+                  )}
                 </Grid>
               </form>
             </Grid>

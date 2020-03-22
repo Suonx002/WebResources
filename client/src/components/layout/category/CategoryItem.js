@@ -26,7 +26,8 @@ import {
   likePost,
   dislikePost,
   currentPost,
-  deletePost
+  deletePost,
+  getPostsByCategory
 } from '../../../redux/actions/postActions';
 
 const useStyles = makeStyles(theme => ({
@@ -99,6 +100,7 @@ const CategoryItem = props => {
     post,
     likePost,
     dislikePost,
+    getPostsByCategory,
     auth: { user }
   } = props;
 
@@ -132,7 +134,11 @@ const CategoryItem = props => {
             }
             style={{ padding: '2px' }}
             onClick={() => {
+              // console.log(post.category);
               likePost(post._id);
+              setTimeout(() => {
+                getPostsByCategory(post.category);
+              }, 1000);
             }}
           >
             <ExpandLessIcon className={classes.arrowUpIcon} />
@@ -155,7 +161,13 @@ const CategoryItem = props => {
                 : true
             }
             style={{ padding: '2px' }}
-            onClick={() => dislikePost(post._id)}
+            onClick={() => {
+              // console.log(post.category);
+              dislikePost(post._id);
+              setTimeout(() => {
+                getPostsByCategory(post.category);
+              }, 1000);
+            }}
           >
             <ExpandMoreIcon className={classes.arrowDownIcon} />
           </IconButton>
@@ -268,7 +280,8 @@ const actions = {
   likePost,
   dislikePost,
   currentPost,
-  deletePost
+  deletePost,
+  getPostsByCategory
 };
 
 export default connect(mapStateToProps, actions)(withRouter(CategoryItem));

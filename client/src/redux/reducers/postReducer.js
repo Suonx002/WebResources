@@ -66,7 +66,7 @@ export default (state = initialState, action) => {
     case CLEAR_STATUS:
       return { ...state, status: null, loading: false };
     case LIKE_POST:
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         posts: state.posts.map(post =>
@@ -78,7 +78,7 @@ export default (state = initialState, action) => {
         loading: false
       };
     case DISLIKE_POST:
-      console.log(action.payload);
+      // console.log(action.payload);
 
       return {
         ...state,
