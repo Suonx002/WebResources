@@ -93,7 +93,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   listContainer: {
-    width: 200
+    width: 250
   },
   listItem: {
     textAlign: 'center'
@@ -237,6 +237,7 @@ const Header = props => {
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
         open={openDrawer}
+        anchor={'right'}
         onClose={() => setOpenDrawer(false)}
         onOpen={() => setOpenDrawer(true)}
         classes={{ paper: classes.drawer }}
