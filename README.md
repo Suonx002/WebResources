@@ -20,7 +20,7 @@
 
 ## Full Demo
 
-[Full Demo Link](https://www.reddit.com/r/webdev/comments/fmudhx/mern_app_for_list_of_tutorials_and_courses_demo/)
+[Full Demo Link](https://youtu.be/pSWlTuGREMw)
 
 ## Homepage
 
