@@ -193,7 +193,7 @@ const CategoryDetail = props => {
               <Typography variant="h2">{post.title}</Typography>
             </Grid>
             <Grid item container direction="column">
-              <Card style={{ padding: '1rem' }}>
+              <Card variant="outlined" style={{ padding: '1rem' }}>
                 <Grid item>
                   <Typography variant="h4">Summary</Typography>
                 </Grid>
@@ -334,7 +334,11 @@ const CategoryDetail = props => {
                       .split(',');
 
                     return (
-                      <Card key={comment._id} className={classes.cardContainer}>
+                      <Card
+                        variant="outlined"
+                        key={comment._id}
+                        className={classes.cardContainer}
+                      >
                         <Grid item container direction="column">
                           <Grid item container>
                             {/* User image and name */}
