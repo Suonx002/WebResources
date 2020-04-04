@@ -11,7 +11,11 @@ import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import uuid from 'uuid/v4';
 
-import { registerUser, clearError } from '../../redux/actions/authActions';
+import {
+  registerUser,
+  loginUser,
+  clearError
+} from '../../redux/actions/authActions';
 
 const useStyles = makeStyles(theme => ({
   formContainer: {
@@ -28,6 +32,7 @@ const useStyles = makeStyles(theme => ({
 const Register = props => {
   // console.log(props);
   const {
+    loginUser,
     auth: { error, isAuthenticated },
     registerUser,
     clearError,
@@ -147,6 +152,17 @@ const Register = props => {
             >
               Register
             </Button>
+            <Button
+              onClick={() => {
+                loginUser({ email: 'demo@gmail.com', password: '123456' });
+              }}
+              variant="outlined"
+              color="primary"
+              fullWidth
+              style={{ marginLeft: '0.4rem', marginTop: '1rem' }}
+            >
+              Login Demo
+            </Button>
           </Grid>
           <Grid
             item
@@ -182,7 +198,8 @@ const mapStateToProps = state => ({
 
 const actions = {
   registerUser,
-  clearError
+  clearError,
+  loginUser
 };
 
 export default connect(mapStateToProps, actions)(Register);

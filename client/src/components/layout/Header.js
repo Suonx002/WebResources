@@ -259,6 +259,9 @@ const Header = props => {
                 onClick={() => {
                   setOpenDrawer(false);
                   setValue(route.activeIndex);
+                  if (route.logout) {
+                    handleClick();
+                  }
                 }}
               >
                 <ListItemText className={classes.drawerItem} disableTypography>

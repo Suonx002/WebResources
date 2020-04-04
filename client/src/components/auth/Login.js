@@ -119,6 +119,17 @@ const Login = props => {
             >
               Login
             </Button>
+            <Button
+              onClick={() => {
+                loginUser({ email: 'demo@gmail.com', password: '123456' });
+              }}
+              variant="outlined"
+              color="primary"
+              fullWidth
+              style={{ marginLeft: '0.4rem', marginTop: '1rem' }}
+            >
+              Login Demo
+            </Button>
           </Grid>
           <Grid
             item
