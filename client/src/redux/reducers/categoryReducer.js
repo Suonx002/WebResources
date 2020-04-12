@@ -5,7 +5,7 @@ const initialState = {
     {
       name: 'HTML',
       icon: 'html-5',
-      link: 'html5'
+      link: 'html'
     },
     {
       name: 'CSS',
