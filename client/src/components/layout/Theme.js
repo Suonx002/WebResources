@@ -4,6 +4,8 @@ const arcBlue = '#0b72b9';
 const arcOrange = '#ffba60';
 const arcGrey = '#868686';
 
+const defaultTheme = createMuiTheme();
+
 export default createMuiTheme({
   palette: {
     common: {
@@ -30,20 +32,38 @@ export default createMuiTheme({
       fontWeight: 700,
       fontSize: '2.5rem',
       color: arcBlue,
-      letterSpacing: 1
+      letterSpacing: 1,
+      [defaultTheme.breakpoints.down('md')]: {
+        fontSize: '2.2rem'
+      },
+      [defaultTheme.breakpoints.down('sm')]: {
+        fontSize: '2rem'
+      }
     },
     h3: {
       fontFamily: 'Raleway',
       fontSize: '1.75rem',
       color: arcBlue,
-      fontWeight: 700
+      fontWeight: 700,
+      [defaultTheme.breakpoints.down('md')]: {
+        fontSize: '1.65rem'
+      },
+      [defaultTheme.breakpoints.down('sm')]: {
+        fontSize: '1.55rem'
+      }
     },
     h4: {
       fontFamily: 'Raleway',
       fontSize: '1.25rem',
       color: arcBlue,
       fontWeight: 700,
-      letterSpacing: 1
+      letterSpacing: 1,
+      [defaultTheme.breakpoints.down('md')]: {
+        fontSize: '1.2rem'
+      },
+      [defaultTheme.breakpoints.down('sm')]: {
+        fontSize: '1.125rem'
+      }
     },
     h6: {
       fontWeight: 500,
