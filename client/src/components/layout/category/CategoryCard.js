@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     padding: '1rem',
     transition: 'all 0.3s ease-in-out',
+    boxShadow: '2px 4px 8px rgba(0,0,0,0.1)',
     '&:hover': {
       backgroundColor: '#eee',
       transform: 'translateY(-4px)'

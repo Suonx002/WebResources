@@ -33,7 +33,7 @@ import {
 const useStyles = makeStyles(theme => ({
   listItemContainer: {
     padding: '1.5rem',
-    border: '2px solid #eee',
+    border: '2px solid #f8f8f8',
     marginBottom: '0.5rem',
     transition: 'backgroundColor 0.3s',
     '&:hover': {
